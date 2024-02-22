@@ -13,7 +13,7 @@
     <main>
         <section id="register-form-container">
             <h2>Register</h2>
-            <form id="register-form">
+            <form id="register-form" onsubmit="return registerUser(event)" action="start.html">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="email">Email:</label>
