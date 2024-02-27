@@ -42,26 +42,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function registerUser(event) {
     event.preventDefault();
-
+  
     // Get user input from the registration form
     const nameInput = document.getElementById('name').value;
     const emailInput = document.getElementById('email').value;
     const passwordInput = document.getElementById('password').value;
-
+  
     // Validate user input (you can add more validation as needed)
     if (!nameInput || !emailInput || !passwordInput) {
       alert('Please fill in all fields');
       return;
     }
-
+  
     // Simulate a successful registration (replace with your actual registration logic)
     alert('Registration successful!');
-
-    // Redirect to the start page
-    window.location.href = 'start.html';
+  
+    // Redirect to the profile page with user data as query parameters
+    window.location.href = `profile.html?name=${encodeURIComponent(nameInput)}&email=${encodeURIComponent(emailInput)}`;
   }
 
   addBookForm.addEventListener('submit', registerUser);
 
   displayBooks();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ...
+
+  // Retrieve user data from query parameters
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const name = urlParams.get('name');
+  const email = urlParams.get('email');
+
+  // Display user data
+  const nameElement = document.getElementById('name');
+  const emailElement = document.getElementById('email');
+  nameElement.textContent = name || userProfile.name;
+  emailElement.textContent = email || userProfile.email;
+
+  // ...
 });
