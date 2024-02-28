@@ -1,20 +1,32 @@
+import { app } from './firebase';  
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 document.addEventListener('DOMContentLoaded', () => {
   const booksContainer = document.getElementById('books-container');
   const addBookForm = document.getElementById('add-book-form');
   const titleInput = document.getElementById('title');
   const authorInput = document.getElementById('author');
   const ratingSelect = document.getElementById('rating');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const registerForm = document.getElementById('register-form');
 
   let books = [];
 
-  // Add user profile information
-  const userProfile = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    favoriteBook: 'To Kill a Mockingbird',
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+    authDomain: "bookweb-99ef4.firebaseapp.com",
+    projectId: "bookweb-99ef4",
+    storageBucket: "bookweb-99ef4.appspot.com",
+    messagingSenderId: "415676602525",
+    appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+    measurementId: "G-VDFL9E4XYJ"
   };
 
-  // Display user profile information
+  const app = firebase.initializeApp(firebaseConfig);
+
+  
+
   const profileElement = document.createElement('div');
   profileElement.classList.add('profile');
   profileElement.innerHTML = `
@@ -42,44 +54,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function registerUser(event) {
     event.preventDefault();
-  
-    // Get user input from the registration form
-    const nameInput = document.getElementById('name').value;
-    const emailInput = document.getElementById('email').value;
-    const passwordInput = document.getElementById('password').value;
-  
-    // Validate user input (you can add more validation as needed)
-    if (!nameInput || !emailInput || !passwordInput) {
+
+    const nameInputValue = document.getElementById('name').value;
+    const emailInputValue = emailInput.value;
+    const passwordInputValue = passwordInput.value;
+
+    if (!nameInputValue || !emailInputValue || !passwordInputValue) {
       alert('Please fill in all fields');
       return;
     }
-  
-    // Simulate a successful registration (replace with your actual registration logic)
-    alert('Registration successful!');
-  
-    // Redirect to the profile page with user data as query parameters
-    window.location.href = `profile.html?name=${encodeURIComponent(nameInput)}&email=${encodeURIComponent(emailInput)}`;
+
+    // Use the auth() method from the Firebase app instance
+    app.auth().createUserWithEmailAndPassword(emailInputValue, passwordInputValue)
+      .then((userCredential) => {
+        alert('Registration successful!');
+        window.location.href = `profile.html?name=${encodeURIComponent(nameInputValue)}&email=${encodeURIComponent(emailInputValue)}`;
+      })
+      .catch((error) => {
+        alert(`Registration failed: ${error.message}`);
+      });
   }
 
-  addBookForm.addEventListener('submit', registerUser);
+  registerForm.addEventListener('submit', registerUser);
 
   displayBooks();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  // ...
-
-  // Retrieve user data from query parameters
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const name = urlParams.get('name');
-  const email = urlParams.get('email');
-
-  // Display user data
-  const nameElement = document.getElementById('name');
-  const emailElement = document.getElementById('email');
-  nameElement.textContent = name || userProfile.name;
-  emailElement.textContent = email || userProfile.email;
-
-  // ...
 });
