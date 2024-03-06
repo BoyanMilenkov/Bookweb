@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Edit Post</title>
+</head>
+<body>
+    <h1>Edit Post</h1>
+
+    <form id="edit-post-form">
+        <label for="editedRating">Rating (1 to 5):</label>
+        <input type="number" id="editedRating" min="1" max="5" required><br>
+
+        <label for="editedReview">Review:</label>
+        <textarea id="editedReview" required></textarea><br>
+
+        <button type="button" onclick="submitEditedPost()">Save Changes</button>
+    </form>
+
+    <script src="edit-post.js"></script>
+</body>
+</html>
