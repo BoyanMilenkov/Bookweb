@@ -24,5 +24,5 @@ function submitEditedPost() {
         localStorage.setItem('posts', JSON.stringify(existingPosts));
     }
 
-    window.location.href = 'index.html';
+    window.location.href = 'start.html';
 }
