@@ -24,7 +24,7 @@ function submitPost(event) {
 
     localStorage.setItem('posts', JSON.stringify(existingPosts));
 
-    window.location.href = 'index.html';
+    window.location.href = 'start.html';
 }
 function editPost(author, title, rating, review) {
     localStorage.setItem('editAuthor', author);
