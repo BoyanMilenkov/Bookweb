@@ -22,7 +22,9 @@
             </ul>        
         </nav>
     
-        
+        <div id="posts-container">
+            <script src="script.js"></script>
+        </div>
         <!--<main>
             
             <section id="books-container"></section>
@@ -59,7 +61,25 @@
             <p>&copy; 2023 Book Social</p>
         </footer>
         <!--<script src="scripts.js"></script>-->
-        
+        <script>
+            function editPost(author, title, rating, review) {
+                   sessionStorage.setItem('editAuthor', author);
+                   sessionStorage.setItem('editTitle', title);
+                   sessionStorage.setItem('editRating', rating);
+                   sessionStorage.setItem('editReview', review);
+       
+                   window.location.href = 'edit-post.html';
+               }
+               function deletePost(author, title) {
+                   const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
+       
+                   const updatedPosts = existingPosts.filter(post => !(post.author === author && post.title === title));
+       
+                   localStorage.setItem('posts', JSON.stringify(updatedPosts));
+       
+                   window.location.reload();
+               }
+       </script>
     </body>
     </html>
     
