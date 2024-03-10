@@ -60,7 +60,7 @@ document.getElementById('login-form').addEventListener('submit', (event) => {
                 .then((snapshot) => {
                     const userData = snapshot.val();
                     alert('Login successful! Welcome, ' + userData.name);
-                    window.location.href = "start.html"; // Redirect to start.html after login
+                    window.location.href = "profile.html"; // Redirect to start.html after login
                 })
                 .catch((error) => {
                     console.error("Error retrieving user data:", error.message);
