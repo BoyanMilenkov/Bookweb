@@ -69,6 +69,7 @@
                     });
 
                     alert('User created successfully!');
+                    window.location.href = "start.html";
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -76,7 +77,7 @@
                     alert(errorMessage);
                 });
         });
-
+        
 
     </script>
     <!--<script src="auth.js"></script>-->
