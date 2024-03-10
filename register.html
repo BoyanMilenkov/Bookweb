@@ -31,7 +31,7 @@
     <!--<script src="scripts.js"></script>-->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -46,30 +46,38 @@
         };
       
         const app = initializeApp(firebaseConfig);
-        const db= getDatabase(app); 
+        const db = getDatabase(app);
         const auth = getAuth();
 
-        register.addEventListener('click', (e)=>{
+        document.getElementById('register-form').addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-            // Signed up 
-            const user = userCredential.user;
-            alert('userCreated')
-            })
-            .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+                    
+                    // Store user data in the Firebase Realtime Database
+                    const userRef = ref(db, 'users/' + user.uid);
+                    set(userRef, {
+                        name: name,
+                        email: email,
+                    });
 
-            alert('errorMessage');
-             // ..
-            });
-})
-
+                    alert('User created successfully!');
+                    window.location.href = "start.html";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
+        
 
     </script>
     <!--<script src="auth.js"></script>-->
