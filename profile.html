@@ -15,7 +15,10 @@
             <h2>User Profile</h2>
             <p><strong>Name:</strong> <span id="name"></span></p>
             <p><strong>Email:</strong> <span id="email"></span></p>
-            <p><strong>Favorite Book:</strong> To Kill a Mockingbird</p>
+            <h3>Bio</h3>
+            <p id="bio"></p>
+            <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
+            <button id="saveBioButton">Save Bio</button>
         </section>
     </main>
     <footer>
@@ -24,7 +27,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
@@ -44,16 +47,33 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const userRef = ref(db, 'users/' + user.uid);
+                const bioParagraph = document.getElementById('bio');
+                const bioTextarea = document.getElementById('bioTextarea');
+                const saveBioButton = document.getElementById('saveBioButton');
 
                 get(userRef)
                     .then((snapshot) => {
                         const userData = snapshot.val();
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
+                        bioParagraph.textContent = userData.bio || "No bio available.";
+                        bioTextarea.value = userData.bio || '';
                     })
                     .catch((error) => {
                         console.error("Error retrieving user data:", error.message);
                     });
+
+                saveBioButton.addEventListener('click', () => {
+                    const newBio = bioTextarea.value;
+                    set(userRef, { bio: newBio }, (error) => {
+                        if (error) {
+                            console.error("Error updating bio:", error.message);
+                        } else {
+                            console.log("Bio updated successfully");
+                            bioParagraph.textContent = newBio || "No bio available.";
+                        }
+                    });
+                });
             } else {
                 console.log("User is not logged in, redirecting to login page");
                 window.location.href = "login.html";
