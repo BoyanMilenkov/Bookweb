@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="returnHomeButton">Return to Home</button>
     <header>
         <h1>My Profile</h1>
+        
     </header>
     <main>
         <section id="profile-container">
@@ -54,6 +56,7 @@
                 const saveBioButton = document.getElementById('saveBioButton');
                 const editBioButton = document.getElementById('editBioButton');
                 const logoutButton = document.getElementById('logoutButton');
+                const returnHomeButton = document.getElementById('returnHomeButton');
 
                 const updateBioUI = (userBio) => {
                     bioParagraph.textContent = userBio || "No bio available.";
@@ -112,6 +115,10 @@
                     }).catch((error) => {
                         console.error("Error signing out:", error.message);
                     });
+                });
+
+                returnHomeButton.addEventListener('click', () => {
+                    window.location.href = "start.html";
                 });
             } else {
                 console.log("User is not logged in, redirecting to login page");
