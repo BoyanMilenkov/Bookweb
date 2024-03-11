@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="returnHomeButton">Return to Home</button>
     <header>
         <h1>My Profile</h1>
+        
     </header>
     <main>
         <section id="profile-container">
@@ -19,6 +21,8 @@
             <p id="bio"></p>
             <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
             <button id="saveBioButton">Save Bio</button>
+            <button id="editBioButton" style="display: none;">Edit Bio</button>
+            <button id="logoutButton">Logout</button>
         </section>
     </main>
     <footer>
@@ -26,7 +30,7 @@
     </footer>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
@@ -50,14 +54,30 @@
                 const bioParagraph = document.getElementById('bio');
                 const bioTextarea = document.getElementById('bioTextarea');
                 const saveBioButton = document.getElementById('saveBioButton');
+                const editBioButton = document.getElementById('editBioButton');
+                const logoutButton = document.getElementById('logoutButton');
+                const returnHomeButton = document.getElementById('returnHomeButton');
+
+                const updateBioUI = (userBio) => {
+                    bioParagraph.textContent = userBio || "No bio available.";
+                    bioTextarea.value = userBio;
+                    if (userBio) {
+                        editBioButton.style.display = 'block';
+                        saveBioButton.style.display = 'none';
+                        bioTextarea.style.display = 'none';
+                    } else {
+                        editBioButton.style.display = 'none';
+                        saveBioButton.style.display = 'block';
+                        bioTextarea.style.display = 'block';
+                    }
+                };
 
                 get(userRef)
                     .then((snapshot) => {
                         const userData = snapshot.val();
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
-                        bioParagraph.textContent = userData.bio || "No bio available.";
-                        bioTextarea.value = userData.bio || '';
+                        updateBioUI(userData.bio);
                     })
                     .catch((error) => {
                         console.error("Error retrieving user data:", error.message);
@@ -70,9 +90,35 @@
                             console.error("Error updating bio:", error.message);
                         } else {
                             console.log("Bio updated successfully");
-                            bioParagraph.textContent = newBio || "No bio available.";
+                            updateBioUI(newBio);
                         }
                     });
+                });
+
+                editBioButton.addEventListener('click', () => {
+                    editBioButton.style.display = 'none';
+                    saveBioButton.style.display = 'block';
+                    bioTextarea.style.display = 'block';
+                });
+
+                logoutButton.addEventListener('click', () => {
+                    signOut(auth).then(() => {
+                        // Clear the displayed information
+                        document.getElementById('name').textContent = '';
+                        document.getElementById('email').textContent = '';
+                        bioParagraph.textContent = '';
+                        bioTextarea.value = '';
+                        editBioButton.style.display = 'none';
+                        saveBioButton.style.display = 'block';
+                        bioTextarea.style.display = 'block';
+                        window.location.href = "login.html";
+                    }).catch((error) => {
+                        console.error("Error signing out:", error.message);
+                    });
+                });
+
+                returnHomeButton.addEventListener('click', () => {
+                    window.location.href = "start.html";
                 });
             } else {
                 console.log("User is not logged in, redirecting to login page");
