@@ -19,6 +19,7 @@
             <p id="bio"></p>
             <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
             <button id="saveBioButton">Save Bio</button>
+            <button id="editBioButton" style="display: none;">Edit Bio</button>
         </section>
     </main>
     <footer>
@@ -50,14 +51,27 @@
                 const bioParagraph = document.getElementById('bio');
                 const bioTextarea = document.getElementById('bioTextarea');
                 const saveBioButton = document.getElementById('saveBioButton');
+                const editBioButton = document.getElementById('editBioButton');
 
                 get(userRef)
                     .then((snapshot) => {
                         const userData = snapshot.val();
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
-                        bioParagraph.textContent = userData.bio || "No bio available.";
-                        bioTextarea.value = userData.bio || '';
+                        const userBio = userData.bio || "No bio available.";
+                        bioParagraph.textContent = userBio;
+                        bioTextarea.value = userBio;
+
+                        // Show/hide edit button based on whether bio is present
+                        if (userBio) {
+                            editBioButton.style.display = 'block';
+                            saveBioButton.style.display = 'none';
+                            bioTextarea.style.display = 'none';
+                        } else {
+                            editBioButton.style.display = 'none';
+                            saveBioButton.style.display = 'block';
+                            bioTextarea.style.display = 'block';
+                        }
                     })
                     .catch((error) => {
                         console.error("Error retrieving user data:", error.message);
@@ -71,8 +85,17 @@
                         } else {
                             console.log("Bio updated successfully");
                             bioParagraph.textContent = newBio || "No bio available.";
+                            editBioButton.style.display = 'block';
+                            saveBioButton.style.display = 'none';
+                            bioTextarea.style.display = 'none';
                         }
                     });
+                });
+
+                editBioButton.addEventListener('click', () => {
+                    editBioButton.style.display = 'none';
+                    saveBioButton.style.display = 'block';
+                    bioTextarea.style.display = 'block';
                 });
             } else {
                 console.log("User is not logged in, redirecting to login page");
