@@ -50,11 +50,11 @@
         const auth = getAuth();
 
         document.getElementById('register-form').addEventListener('submit', (e) => {
-            e.preventDefault();
+        e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const name = document.getElementById('name').value;
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
@@ -70,15 +70,34 @@
                         email: email,
                     });
 
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+
+                // Debugging: Log user data
+                console.log("User data:", { name, email, uid: user.uid });
+
+                // Store user data in the Firebase Realtime Database
+                const userRef = ref(db, 'users/' + user.uid);
+                set(userRef, {
+                    name: name,
+                    email: email,
+                })
+                .then(() => {
+                    console.log("User data saved successfully!");
                     alert('User created successfully!');
                     window.location.href = "start.html";
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
+                    console.error("Database error:", error);
+                    alert("Error saving user data to the database.");
                 });
-        });
+            })
+            .catch((error) => {
+                console.error("Registration error:", error);
+                alert(error.message);
+            });
+    });
         
 
     </script>
