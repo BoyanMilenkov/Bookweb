@@ -30,12 +30,14 @@
     <footer>
         <p>&copy; 2023 Book Website</p>
     </footer>
-    <!--<script src="scripts.js"></script>-->
+    
     <script type="module">
+        // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
+    
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
@@ -46,51 +48,54 @@
             appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
             measurementId: "G-VDFL9E4XYJ"
         };
-      
+    
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth();
-
+    
+        // Event listener for the 'Return to Home' button
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
         });
-
+    
+        // Event listener for the registration form
         document.getElementById('register-form').addEventListener('submit', (e) => {
             e.preventDefault();
-
+    
+            // Get form values
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const name = document.getElementById('name').value;
-
+    
+            // Object to store user data
+            const userData = {
+                name: name,
+                email: email,
+            };
+    
+            // Create user with email and password
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-
-                    // Use user.uid as a unique identifier for each user
+    
+                    // Reference to the user's data in the database
                     const userRef = ref(db, 'users/' + user.uid);
-                    set(userRef, {
-                        name: name,
-                        email: email,
-                    })
-                    .then(() => {
-                        console.log("User data saved successfully!");
-                        alert('User created successfully!');
-                        window.location.href = "start.html";
-                    })
-                    .catch((error) => {
-                        console.error("Database error:", error);
-                        alert("Error saving user data to the database.");
-                    });
+    
+                    // Set user data in the database
+                    return set(userRef, userData);
+                })
+                .then(() => {
+                    console.log("User data saved successfully!");
+                    alert('User created successfully!');
+                    window.location.href = "start.html";
                 })
                 .catch((error) => {
-                    console.error("Registration error:", error);
-                    alert(error.message);
+                    console.error("Error during registration:", error.message);
+                    alert("Error creating user or saving data to the database.");
                 });
         });
-        
-
     </script>
-    <!--<script src="auth.js"></script>-->
     
 </body>
 </html>

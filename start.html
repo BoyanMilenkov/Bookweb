@@ -1,86 +1,78 @@
-
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <link rel="stylesheet" href="style.css">
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Book Social</title>
-      
-    </head>
-    <body>
-        <h1>Book Social</h1>
-        <nav class="navig">
-            <ul>
-                <li><a id="create-post" href="create-post.html">Create Post</a></li>
-                <li><a id="home" href="start.html">Home</a></li>
-                <li><a id="register" href="register.html">Register</a></li>
-                <li><a id="profile" href="profile.html">Profile</a></li>
-                <li><a id="login" href="login.html">Login</a></li>
-            </ul>        
-        </nav>
-    
-        <div id="posts-container">
-            <script src="script.js"></script>
-        </div>
-        <!--<main>
-            
-            <section id="books-container"></section>
-            <section id="add-book-form-container">
-                <h2>Add a Book</h2>
-                <form id="add-book-form">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required>
-                    <label for="author">Author:</label>
-                    <input type="text" id="author" name="author" required>
-                    <label for="rating">Rating:</label>
-                    <select id="rating" name="rating" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <label for="review">Review:</label>
-                    <textarea id="review" name="review" required></textarea>
-                    <button type="submit">Add Book</button>
-                </form>
-            </section>
-            <section id="user-posts-container">
-                <div class="post">
-                    <h3>Book Review 1</h3>
-                    <p><strong>Author:</strong> John Doe</p>
-                    <p>A great book! I couldn't put it down. Highly recommended.</p>
-                    <p><strong>Date:</strong> 2023-03-01</p>
-                </div>
-            </section>
-        </main>-->
-        <footer>
-            <p>&copy; 2023 Book Social</p>
-        </footer>
-        <!--<script src="scripts.js"></script>-->
-        <script>
-            function editPost(author, title, rating, review) {
-                   sessionStorage.setItem('editAuthor', author);
-                   sessionStorage.setItem('editTitle', title);
-                   sessionStorage.setItem('editRating', rating);
-                   sessionStorage.setItem('editReview', review);
-       
-                   window.location.href = 'edit-post.html';
-               }
-               function deletePost(author, title) {
-                   const existingPosts = JSON.parse(localStorage.getItem('posts')) || [];
-       
-                   const updatedPosts = existingPosts.filter(post => !(post.author === author && post.title === title));
-       
-                   localStorage.setItem('posts', JSON.stringify(updatedPosts));
-       
-                   window.location.reload();
-               }
-       </script>
-    </body>
-    </html>
-    
-    
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Social</title>
+</head>
+<body>
+    <h1>Book Social</h1>
+    <nav class="navig">
+        <ul>
+            <li><a id="home" href="start.html">Home</a></li>
+            <li><a id="create-post" href="create-post.html">Create Post</a></li>
+            <li id="profileLink"><a id="profile" href="profile.html">Profile</a></li>
+            <li id="registerLink"><a id="register" href="register.html">Register</a></li>
+            <li id="loginLink"><a id="login" href="login.html">Login</a></li>
+        </ul>        
+    </nav>
+
+    <div id="posts-container">
+        <script src="script.js"></script>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Book Social</p>
+    </footer>
+
+    <!-- Import Firebase modules using direct CDN links -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Initialize Firebase with your configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
+        initializeApp(firebaseConfig);
+
+        // Function to update links based on authentication status
+        function updateLinksOnAuth() {
+            const registerButton = document.getElementById('register');
+            const loginButton = document.getElementById('login');
+            const profileButton = document.getElementById('profile');
+            const createPostButton = document.getElementById('create-post');
+
+            const user = getAuth().currentUser;
+
+            if (user) {
+                // User is logged in
+                registerButton.style.display = 'none';
+                loginButton.style.display = 'none';
+                profileButton.style.display = 'block';
+                createPostButton.style.display = 'none';
+            } else {
+                // User is not logged in
+                registerButton.style.display = 'block';
+                loginButton.style.display = 'block';
+                profileButton.style.display = 'none';
+                createPostButton.style.display = 'none';
+            }
+        }
+
+        // Call the function to check auth status on page load and whenever authentication state changes
+        getAuth().onAuthStateChanged(function (user) {
+            updateLinksOnAuth();
+        });
+    </script>
+</body>
+</html>
