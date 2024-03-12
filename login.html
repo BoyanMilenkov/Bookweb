@@ -28,69 +28,97 @@
         <p>&copy; 2023 Book Website</p>
     </footer>
     <script type="module">
-       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
-        authDomain: "bookweb-99ef4.firebaseapp.com",
-        databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
-        projectId: "bookweb-99ef4",
-        storageBucket: "bookweb-99ef4.appspot.com",
-        messagingSenderId: "415676602525",
-        appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
-        measurementId: "G-VDFL9E4XYJ"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth();
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth();
 
-    document.getElementById('returnHomeButton').addEventListener('click', () => {
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
-    });
+        });
 
-    document.getElementById('login-form').addEventListener('submit', (e) => {
-        e.preventDefault();
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
 
-                // Retrieve user data from the database
-                const userRef = ref(db, 'users/' + user.uid);
-                get(userRef)
-                    .then((snapshot) => {
-                        if (snapshot.exists()) {
-                            const userData = snapshot.val();
-                            alert('Login successful! Welcome, ' + userData.name);
-                            window.location.href = "profile.html"; // Redirect to profile.html after login
-                        } else {
-                            alert('No data found for the user.');
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error retrieving user data:", error.message);
-                    });
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+            const userRef = ref(db, 'users/' + user.uid);
+            get(userRef)
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        alert('Login successful! Welcome, ' + userData.name);
+                        updateLinksOnAuth(); // Update links on successful login
+                        window.location.href = 'start.html';
+                    } else {
+                        alert('No data found for the user.');
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error retrieving user data:", error.message);
+                });
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-                if (errorCode === 'auth/user-not-found') {
-                    alert('No account with this email exists.');
-                } else if (errorCode === 'auth/wrong-password') {
-                    alert('Incorrect password.');
-                } else {
-                    alert(errorMessage);
-                }
-            });
-    });
-        
+            if (errorCode === 'auth/user-not-found') {
+                alert('No account with this email exists.');
+            } else if (errorCode === 'auth/wrong-password') {
+                alert('Incorrect password.');
+            } else {
+                alert(errorMessage);
+            }
+        });
+});
+
+function updateLinksOnAuth() {
+    // Define the function to update links based on authentication status
+    const registerButton = document.getElementById('register');
+    const loginButton = document.getElementById('login');
+    const profileButton = document.getElementById('profile');
+    const createPostButton = document.getElementById('create-post');
+
+    const user = auth.currentUser;
+
+    if (user) {
+        // User is logged in
+        registerButton.style.display = 'none';
+        loginButton.style.display = 'none';
+        profileButton.style.display = 'block';
+        createPostButton.style.display = 'none';
+    } else {
+        // User is not logged in
+        registerButton.style.display = 'block';
+        loginButton.style.display = 'block';
+        profileButton.style.display = 'none';
+        createPostButton.style.display = 'none';
+    }
+}
+
+// Call the function to check auth status on page load and whenever authentication state changes
+firebase.auth().onAuthStateChanged(function (user) {
+    updateLinksOnAuth();
+});
     </script>
 </body>
 </html>
