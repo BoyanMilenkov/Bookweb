@@ -85,17 +85,23 @@
                         console.error("Error retrieving user data:", error.message);
                     });
 
-                saveBioButton.addEventListener('click', () => {
-                    const newBio = bioTextarea.value;
-                    set(userRef, { bio: newBio }, (error) => {
-                        if (error) {
-                            console.error("Error updating bio:", error.message);
-                        } else {
-                            console.log("Bio updated successfully");
-                            updateBioUI(newBio);
-                        }
+                    saveBioButton.addEventListener('click', () => {
+                        const newBio = bioTextarea.value;
+
+                        // Include email and name when updating user data
+                        set(userRef, {
+                            bio: newBio,
+                            email: userData.email,
+                            name: userData.name, // Use displayName or a default value
+                        }, (error) => {
+                            if (error) {
+                                console.error("Error updating bio:", error.message);
+                            } else {
+                                console.log("Bio updated successfully");
+                                updateBioUI(newBio);
+                            }
+                        });
                     });
-                });
 
                 editBioButton.addEventListener('click', () => {
                     editBioButton.style.display = 'none';
