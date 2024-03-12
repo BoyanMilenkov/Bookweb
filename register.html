@@ -60,7 +60,9 @@
                 .then((userCredential) => {
                     // Signed up 
                     const user = userCredential.user;
-                    
+                    updateProfile(user, {
+                        displayName: name,
+                    });
                     // Store user data in the Firebase Realtime Database
                     const userRef = ref(db, 'users/' + user.uid);
                     set(userRef, {
