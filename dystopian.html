@@ -50,7 +50,7 @@
 
             try {
                 // Reference to the "fantasy" collection in Firestore
-                const fantasyCollection = collection(db, "Adventure");
+                const fantasyCollection = collection(db, "Dystopian");
 
                 // Get all documents in the "fantasy" collection
                 const querySnapshot = await getDocs(fantasyCollection);
@@ -67,7 +67,7 @@
 
         // Function to create HTML element for a book
         function createBookElement(bookData) {
-    console.log("Book Data:", bookData);
+    console.log("Author:", bookData.author);
 
     const bookElement = document.createElement("div");
     bookElement.classList.add("book");
@@ -79,7 +79,6 @@
     `;
     return bookElement;
 }
-
 
         // Event listener for the 'Return to Home' button
         document.getElementById('returnHomeButton').addEventListener('click', () => {
