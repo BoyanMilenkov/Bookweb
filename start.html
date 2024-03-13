@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Social</title>
+    
 </head>
 <body>
     <h1>Book Social</h1>
@@ -13,11 +14,24 @@
         <ul>
             <li><a id="home" href="start.html">Home</a></li>
             <li><a id="create-post" href="create-post.html">Create Post</a></li>
-            <li><a id="list-books" href="listBooks.html">List of Books</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Genres</a>
+                <div class="dropdown-content">
+                    <button onclick="window.location.href='fantasy.html'">Fantasy</button>
+                    <button onclick="handleGenreSelection('Science Fiction')">Science Fiction</button>
+                    <button onclick="handleGenreSelection('Romance')">Romance</button>
+                    <button onclick="handleGenreSelection('Horror')">Horror</button>
+                    <button onclick="handleGenreSelection('Thriller')">Thriller</button>
+                    <button onclick="handleGenreSelection('Adventure')">Adventure</button>
+                    <button onclick="handleGenreSelection('Dystopian')">Dystopian</button>
+                    <button onclick="handleGenreSelection('Historical')">Historical</button>
+                    <button onclick="handleGenreSelection('Memoir and Biography')">Memoir and Biography</button>
+                </div>
+            </li>
             <li id="profileLink"><a id="profile" href="profile.html">Profile</a></li>
             <li id="registerLink"><a id="register" href="register.html">Register</a></li>
             <li id="loginLink"><a id="login" href="login.html">Login</a></li>
-        </ul>        
+        </ul>
     </nav>
 
     <div id="posts-container">
@@ -28,12 +42,10 @@
         <p>&copy; 2023 Book Social</p>
     </footer>
 
-    <!-- Import Firebase modules using direct CDN links -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Initialize Firebase with your configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
@@ -46,7 +58,6 @@
         };
         initializeApp(firebaseConfig);
 
-        // Function to update links based on authentication status
         function updateLinksOnAuth() {
             const registerButton = document.getElementById('register');
             const loginButton = document.getElementById('login');
@@ -56,24 +67,22 @@
             const user = getAuth().currentUser;
 
             if (user) {
-                // User is logged in
                 registerButton.style.display = 'none';
                 loginButton.style.display = 'none';
                 profileButton.style.display = 'block';
-                
             } else {
-                // User is not logged in
                 registerButton.style.display = 'block';
                 loginButton.style.display = 'block';
                 profileButton.style.display = 'none';
-                
             }
         }
 
-        // Call the function to check auth status on page load and whenever authentication state changes
         getAuth().onAuthStateChanged(function (user) {
             updateLinksOnAuth();
         });
+
+      
+       
     </script>
 </body>
 </html>
