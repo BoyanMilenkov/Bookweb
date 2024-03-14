@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Book List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="returnHomeButton">Return to Home</button>
+    <h1>My Book List</h1>
+    <div class="main">
+        <div id="my-book-list-container">
+            <!-- Your book list content goes here -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Book Social</p>
+    </footer>
+
+    <script>
+        // Function to display the book information in the list
+        function displayBookInfo() {
+            const bookListContainer = document.getElementById("my-book-list-container");
+            const bookList = JSON.parse(localStorage.getItem('bookList')) || [];
+            bookList.forEach(bookData => {
+                const bookElement = document.createElement("div");
+                bookElement.classList.add("book");
+                bookElement.innerHTML = `
+                    <h3>${bookData.title}</h3>
+                    <p>Author: ${bookData.author}</p>
+                    <p>Description: ${bookData.description}</p>
+                `;
+                bookListContainer.appendChild(bookElement);
+            });
+        }
+
+        // Call the function to display the book information when the page loads
+        document.addEventListener("DOMContentLoaded", displayBookInfo);
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = 'start.html';
+        });
+    </script>
+</body>
+</html>
