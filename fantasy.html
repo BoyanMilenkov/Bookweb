@@ -45,9 +45,6 @@
         async function displayFantasyBooks() {
             const booksContainer = document.getElementById("books-container");
 
-            // Clear previous content
-            booksContainer.innerHTML = "";
-
             try {
                 // Reference to the "fantasy" collection in Firestore
                 const fantasyCollection = collection(db, "Fantasy");
@@ -73,7 +70,11 @@
                 <h3>${bookData.title}</h3>
                 <p>Author: ${bookData.author}</p>
                 <p>Description: ${bookData.description}</p>
+                <button class="addBookButton">Add</button>
             `;
+            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
+                addBookToList(bookData.title, bookData.author, bookData.description);
+            });
             return bookElement;
         }
 
@@ -81,6 +82,13 @@
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
         });
+
+        // Function to add a book to my-book-list.html
+        function addBookToList(title, author, description) {
+            const bookListContainer = localStorage.getItem('bookList') ? JSON.parse(localStorage.getItem('bookList')) : [];
+            bookListContainer.push({ title, author, description });
+            localStorage.setItem('bookList', JSON.stringify(bookListContainer));
+        }
 
         // Call the function to display fantasy books when the page loads
         document.addEventListener("DOMContentLoaded", displayFantasyBooks);
