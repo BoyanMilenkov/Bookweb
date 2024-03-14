@@ -60,26 +60,49 @@
         initializeApp(firebaseConfig);
 
         function updateLinksOnAuth() {
-            const registerButton = document.getElementById('register');
-            const loginButton = document.getElementById('login');
-            const profileButton = document.getElementById('profile');
-            const createPostButton = document.getElementById('create-post');
+    const registerButton = document.getElementById('register');
+    const loginButton = document.getElementById('login');
+    const profileButton = document.getElementById('profile');
+    const createPostButton = document.getElementById('create-post');
 
+    const user = getAuth().currentUser;
+
+    if (user) {
+        registerButton.style.display = 'none';
+        loginButton.style.display = 'none';
+        profileButton.style.display = 'block';
+        createPostButton.style.display = 'block'; // Show "Create Post" button for logged-in users
+        createPostButton.addEventListener('click', createPost); // Add event listener for creating a post
+    } else {
+        registerButton.style.display = 'block';
+        loginButton.style.display = 'block';
+        profileButton.style.display = 'none';
+        createPostButton.style.display = 'none'; // Hide "Create Post" button for non-logged-in users
+        createPostButton.removeEventListener('click', createPost); // Remove event listener for non-logged-in users
+    }
+}
+
+// Function to handle creating a post
+function createPost() {
+    const user = getAuth().currentUser;
+    if (!user) {
+        window.location.href = 'login.html'; // Redirect to login page if not logged in
+    }
+}
+
+// Call the function to check auth status when the DOM content is loaded
+updateLinksOnAuth();
+
+// Call the function to update links when the auth state changes
+getAuth().onAuthStateChanged(function (user) {
+    updateLinksOnAuth();
+});
+
+        document.getElementById('create-post').addEventListener('click', function() {
             const user = getAuth().currentUser;
-
-            if (user) {
-                registerButton.style.display = 'none';
-                loginButton.style.display = 'none';
-                profileButton.style.display = 'block';
-            } else {
-                registerButton.style.display = 'block';
-                loginButton.style.display = 'block';
-                profileButton.style.display = 'none';
+            if (!user) {
+                window.location.href = 'login.html'; // Redirect to login page if not logged in
             }
-        }
-
-        getAuth().onAuthStateChanged(function (user) {
-            updateLinksOnAuth();
         });
 
         async function fetchPosts() {
