@@ -6,6 +6,7 @@
     <title>Add Book</title>
 </head>
 <body>
+    <button id="returnHomeButton">Return to Home</button>
     <h1>Add a Book to the Collection</h1>
 
     <form id="addBookForm">
@@ -106,6 +107,9 @@ async function submitBook(event) {
 
         // Add event listener for form submission
         document.getElementById('addBookForm').addEventListener('submit', submitBook);
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = 'start.html';
+        });
     </script>
 </body>
 </html>
