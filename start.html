@@ -14,6 +14,7 @@
         <ul>
             <li><a id="home" href="start.html">Home</a></li>
             <li><a id="create-post" href="create-post.html">Create Post</a></li>
+            <li><a id="add-book" href="addbook.html">Add a Book to the Collection</a></li>
             <li class="dropdown">
                 <a href="#" class="dropbtn">Genres</a>
                 <div class="dropdown-content">
@@ -64,6 +65,7 @@
     const loginButton = document.getElementById('login');
     const profileButton = document.getElementById('profile');
     const createPostButton = document.getElementById('create-post');
+    const addBookButton = document.getElementById('add-book');        
 
     const user = getAuth().currentUser;
 
@@ -73,12 +75,14 @@
         profileButton.style.display = 'block';
         createPostButton.style.display = 'block'; // Show "Create Post" button for logged-in users
         createPostButton.addEventListener('click', createPost); // Add event listener for creating a post
+        addBookButton.style.display = 'block';
     } else {
         registerButton.style.display = 'block';
         loginButton.style.display = 'block';
         profileButton.style.display = 'none';
         createPostButton.style.display = 'none'; // Hide "Create Post" button for non-logged-in users
         createPostButton.removeEventListener('click', createPost); // Remove event listener for non-logged-in users
+        addBookButton.style.display = 'none'; 
     }
 }
 
