@@ -34,8 +34,8 @@
         </ul>
     </nav>
 
-    <div id="posts-container">
-        <script src="script.js"></script>
+    <div id="postsContainer">
+        <!-- Posts will be dynamically added here -->
     </div>
 
     <footer>
@@ -45,6 +45,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
@@ -81,7 +82,30 @@
             updateLinksOnAuth();
         });
 
-      
+        async function fetchPosts() {
+            const firestore = getFirestore();
+            const postsRef = collection(firestore, 'books'); // Assuming 'books' is the collection name
+            const querySnapshot = await getDocs(postsRef);
+
+            const postsContainer = document.getElementById('postsContainer');
+
+            querySnapshot.forEach((doc) => {
+                const postData = doc.data();
+                const postHTML = `
+                    <div class="post">
+                        <h2>${postData.title}</h2>
+                        <p><strong>Author:</strong> ${postData.author}</p>
+                        <p><strong>Genre:</strong> ${postData.genre}</p>
+                        <p><strong>Rating:</strong> ${postData.rating}</p>
+                        <p><strong>Review:</strong> ${postData.review}</p>
+                    </div>
+                `;
+                postsContainer.insertAdjacentHTML('beforeend', postHTML);
+            });
+        }
+
+        // Call fetchPosts function when the page loads
+        window.addEventListener('load', fetchPosts);
        
     </script>
 </body>
