@@ -10,7 +10,6 @@
     <button id="returnHomeButton">Return to Home</button>
     <header>
         <h1>My Profile</h1>
-        
     </header>
     <main>
         <section id="profile-container">
@@ -20,7 +19,7 @@
             <h3>Bio</h3>
             <p id="bio"></p>
             <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
-            <button id="saveBioButton">Save Bio</button>
+            <button onclick={saveBioButton} id="saveBioButton">Save Bio</button>
             <button id="editBioButton" style="display: none;">Edit Bio</button>
             <button id="logoutButton">Logout</button>
         </section>
@@ -58,6 +57,8 @@
                 const logoutButton = document.getElementById('logoutButton');
                 const returnHomeButton = document.getElementById('returnHomeButton');
 
+                let userData;
+
                 const updateBioUI = (userBio) => {
                     bioParagraph.textContent = userBio || "No bio available.";
                     bioTextarea.value = userBio;
@@ -74,7 +75,7 @@
 
                 get(userRef)
                     .then((snapshot) => {
-                        const userData = snapshot.val();
+                        userData = snapshot.val();
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
                         updateBioUI(userData.bio);
@@ -85,7 +86,13 @@
 
                 saveBioButton.addEventListener('click', () => {
                     const newBio = bioTextarea.value;
-                    set(userRef, { bio: newBio }, (error) => {
+
+                    // Include email and name when updating user data
+                    set(userRef, {
+                        bio: newBio,
+                        email: userData.email,
+                        name: userData.name, // Use displayName or a default value
+                    }, (error) => {
                         if (error) {
                             console.error("Error updating bio:", error.message);
                         } else {
@@ -111,6 +118,13 @@
                         editBioButton.style.display = 'none';
                         saveBioButton.style.display = 'block';
                         bioTextarea.style.display = 'block';
+
+                        // Toggle visibility of register and login buttons
+                        const registerButton = document.getElementById('register');
+                        const loginButton = document.getElementById('login');
+                        registerButton.style.display = 'block';
+                        loginButton.style.display = 'block';
+
                         window.location.href = "login.html";
                     }).catch((error) => {
                         console.error("Error signing out:", error.message);
@@ -120,6 +134,7 @@
                 returnHomeButton.addEventListener('click', () => {
                     window.location.href = "start.html";
                 });
+
             } else {
                 console.log("User is not logged in, redirecting to login page");
                 window.location.href = "login.html";

@@ -7,20 +7,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="returnHomeButton">Return to Home</button>
     <header>
         <h1>Register</h1>
     </header>
     <main>
         <section id="register-form-container">
             <h2>Register</h2>
-            <form id="register-form" onsubmit="return registerUser(event)" action="start.html">
+            <form id="register-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-                <button type="submit" id='register' name="register_submite" value="Register">Register</button>
+                <button type="submit">Register</button>
             </form>
             <p>Already have an account? <a href="profile.html">Log in</a></p>
         </section>
@@ -28,12 +29,12 @@
     <footer>
         <p>&copy; 2023 Book Website</p>
     </footer>
-    <!--<script src="scripts.js"></script>-->
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
+    
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
@@ -44,43 +45,39 @@
             appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
             measurementId: "G-VDFL9E4XYJ"
         };
-      
+    
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        const db = getFirestore(app);
         const auth = getAuth();
-
-        document.getElementById('register-form').addEventListener('submit', (e) => {
+    
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = 'start.html';
+        });
+    
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-
+    
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    
-                    // Store user data in the Firebase Realtime Database
-                    const userRef = ref(db, 'users/' + user.uid);
-                    set(userRef, {
-                        name: name,
-                        email: email,
-                    });
-
-                    alert('User created successfully!');
-                    window.location.href = "start.html";
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
-        });
-        
-
-    </script>
-    <!--<script src="auth.js"></script>-->
     
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+    
+                // Store user data in Firestore
+                await setDoc(doc(db, 'users', user.uid), {
+                    name: name,
+                    email: email,
+                });
+    
+                alert('User created successfully!');
+                window.location.href = "start.html";
+            } catch (error) {
+                console.error("Error during registration:", error.message);
+                alert("Error creating user or saving data to the database.");
+            }
+        });
+    </script>
 </body>
 </html>

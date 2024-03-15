@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Books</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="returnHomeButton">Return to Home</button>
+    <header>
+        <h1>Romance Books</h1>
+    </header>
+    <main>
+        <section id="books-container">
+            <!-- Fantasy books will be displayed here -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Book Website</p>
+    </footer>
+
+    <!-- Import Firebase modules using direct CDN links -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Initialize Firebase with your configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
+        initializeApp(firebaseConfig);
+
+        // Initialize Firestore
+        const db = getFirestore();
+
+        // Function to fetch and display fantasy books
+        async function displayFantasyBooks() {
+            const booksContainer = document.getElementById("books-container");
+
+            // Clear previous content
+            booksContainer.innerHTML = "";
+
+            try {
+                // Reference to the "fantasy" collection in Firestore
+                const fantasyCollection = collection(db, "Historical");
+
+                // Get all documents in the "fantasy" collection
+                const querySnapshot = await getDocs(fantasyCollection);
+
+                querySnapshot.forEach((doc) => {
+                    const bookData = doc.data();
+                    const bookElement = createBookElement(bookData);
+                    booksContainer.appendChild(bookElement);
+                });
+            } catch (error) {
+                console.error("Error getting fantasy books: ", error);
+            }
+        }
+
+        // Function to create HTML element for a book
+        function createBookElement(bookData) {
+            const bookElement = document.createElement("div");
+            bookElement.classList.add("book");
+            bookElement.innerHTML = `
+                <h3>${bookData.title}</h3>
+                <p>Author: ${bookData.author}</p>
+                <p>Description: ${bookData.description}</p>
+            `;
+            return bookElement;
+        }
+
+        // Event listener for the 'Return to Home' button
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = 'start.html';
+        });
+
+        // Call the function to display fantasy books when the page loads
+        document.addEventListener("DOMContentLoaded", displayFantasyBooks);
+    </script>
+</body>
+</html>
