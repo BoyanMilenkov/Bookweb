@@ -171,3 +171,19 @@ h1 {
 .dropdown-content button:hover {
     background-color: #ddd;
 }
+#my-book-list {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+#my-book-list:hover {
+    background-color: black;
+}
+
+#my-book-list {
+    float: left;
+}
+
