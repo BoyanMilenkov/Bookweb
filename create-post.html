@@ -24,9 +24,15 @@
 
         <label for="genre">Genre:</label>
         <select id="genre" required>
-            <option value="fantasy">Fantasy</option>
-            <option value="science-fiction">Science Fiction</option>
-            <!-- Add more genre options here -->
+            <option value="Fantasy">Fantasy</option>
+            <option value="ScienceFiction">Science Fiction</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Historical">Historical</option>
+            <option value="Horror">Horror</option>
+            <option value="Memoir and Biography">Memoir and Biography</option>
+            <option value="Romance">Romance</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Dystopian">Dystopian</option>
         </select><br>
 
         <button type="submit">Submit</button>
@@ -67,32 +73,41 @@
                 return;
             }
 
-            // Check if the book already exists in Firestore
+            // Check if the book already exists in any specific collection
             const firestore = getFirestore(app);
-            const booksRef = collection(firestore, 'books');
-            const q = query(booksRef, where('author', '==', author), where('title', '==', title));
-            const querySnapshot = await getDocs(q);
-
-            // If the book already exists in Firestore, prompt the user to check the information
-            if (!querySnapshot.empty) {
-                alert("This book already exists in the database. Please verify the information provided.");
-                return;
+            const collectionNames = ['Fantasy', 'ScienceFiction', 'Adventure', 'Historical', 'Horror', 'Memoir and Biography', 'Romance', 'Thriller', 'Dystopian'];
+            let bookExists = false;
+            for (const collectionName of collectionNames) {
+                const collectionRef = collection(firestore, collectionName);
+                const q = query(collectionRef, where('author', '==', author), where('title', '==', title));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    bookExists = true;
+                    break;
+                }
             }
 
-            // Create a new document in the 'books' collection
-            try {
-                await addDoc(collection(firestore, "books"), {
-                    author: author,
-                    title: title,
-                    genre: genre,
-                    rating: rating,
-                    review: review
-                });
-                alert("Post added successfully!");
-                window.location.href = 'start.html'; // Redirect to start page after successful submission
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                alert("Error adding document. Please try again later.");
+            // If the book already exists, proceed with creating the post
+            if (bookExists) {
+                try {
+                    await addDoc(collection(firestore, "posts"), {
+                        author: author,
+                        title: title,
+                        genre: genre,
+                        rating: rating,
+                        review: review
+                    });
+                    alert("Post added successfully!");
+                    window.location.href = 'start.html'; // Redirect to start page after successful submission
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    alert("Error adding document. Please try again later.");
+                }
+            } else {
+                // If the book doesn't exist in any collection, notify the user
+                alert("This book doesn't exist in the database. Please add it first.");
+                // Redirect the user to addbook.html or perform other actions
+                window.location.href = 'addbook.html';
             }
         }
 
