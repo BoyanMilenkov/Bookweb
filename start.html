@@ -62,7 +62,7 @@
 
         async function fetchPosts() {
             const firestore = getFirestore();
-            const postsRef = collection(firestore, 'posts'); // Assuming 'posts' is the collection name
+            const postsRef = collection(firestore, 'books'); // Assuming 'posts' is the collection name
             const querySnapshot = await getDocs(postsRef);
 
             const postsContainer = document.getElementById('postsContainer');
