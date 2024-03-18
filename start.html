@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Social</title>
-    
 </head>
 <body>
     <h1>Book Social</h1>
@@ -61,66 +60,45 @@
         };
         initializeApp(firebaseConfig);
 
-
         function updateLinksOnAuth() {
             const registerButton = document.getElementById('register');
             const loginButton = document.getElementById('login');
             const profileButton = document.getElementById('profile');
             const createPostButton = document.getElementById('create-post');
-            const addBookButton = document.getElementById('add-book');        
+            const addBookButton = document.getElementById('add-book');
             const myBookListButton = document.getElementById('my-book-list');
 
-
-    const user = getAuth().currentUser;
-
-    if (user) {
-        registerButton.style.display = 'none';
-        loginButton.style.display = 'none';
-        profileButton.style.display = 'block';
-        createPostButton.style.display = 'block'; // Show "Create Post" button for logged-in users
-        createPostButton.addEventListener('click', createPost); // Add event listener for creating a post
-        addBookButton.style.display = 'block';
-        myBookListButton.style.display = 'block';
-    } else {
-        registerButton.style.display = 'block';
-        loginButton.style.display = 'block';
-        profileButton.style.display = 'none';
-        createPostButton.style.display = 'none'; // Hide "Create Post" button for non-logged-in users
-        createPostButton.removeEventListener('click', createPost); // Remove event listener for non-logged-in users
-        addBookButton.style.display = 'none'; 
-        myBookListButton.style.display = 'none'; 
-    }
-}
-
-// Function to handle creating a post
-function createPost() {
-    const user = getAuth().currentUser;
-    if (!user) {
-        window.location.href = 'login.html'; // Redirect to login page if not logged in
-    }
-}
-
-// Call the function to check auth status when the DOM content is loaded
-updateLinksOnAuth();
-
-// Call the function to update links when the auth state changes
-getAuth().onAuthStateChanged(function (user) {
-    updateLinksOnAuth();
-});
-
-        document.getElementById('create-post').addEventListener('click', function() {
             const user = getAuth().currentUser;
-            if (!user) {
-                window.location.href = 'login.html'; // Redirect to login page if not logged in
-            }
-        });
 
+            if (user) {
+                registerButton.style.display = 'none';
+                loginButton.style.display = 'none';
+                profileButton.style.display = 'block';
+                createPostButton.style.display = 'block';
+                addBookButton.style.display = 'block';
+                myBookListButton.style.display = 'block';
+            } else {
+                registerButton.style.display = 'block';
+                loginButton.style.display = 'block';
+                profileButton.style.display = 'none';
+                createPostButton.style.display = 'none';
+                addBookButton.style.display = 'none';
+                myBookListButton.style.display = 'none';
+            }
+        }
+
+        // Call the function to check auth status when the DOM content is loaded
+        updateLinksOnAuth();
+
+        // Call the function to update links when the auth state changes
+        getAuth().onAuthStateChanged(function (user) {
+            updateLinksOnAuth();
+        });
 
         async function fetchPosts() {
             const firestore = getFirestore();
-            const postsRef = collection(firestore, 'books'); // Assuming 'posts' is the collection name
+            const postsRef = collection(firestore, 'books');
             const querySnapshot = await getDocs(postsRef);
-
             const postsContainer = document.getElementById('postsContainer');
 
             querySnapshot.forEach((doc) => {
@@ -140,56 +118,6 @@ getAuth().onAuthStateChanged(function (user) {
 
         // Call fetchPosts function when the page loads
         window.addEventListener('load', fetchPosts);
-
-        function updateLinksOnAuth() {
-            const registerButton = document.getElementById('register');
-            const loginButton = document.getElementById('login');
-            const profileButton = document.getElementById('profile');
-            const createPostButton = document.getElementById('create-post');
-            const addBookButton = document.getElementById('add-book');        
-    
-            const user = getAuth().currentUser;
-        
-            if (user) {
-                registerButton.style.display = 'none';
-                loginButton.style.display = 'none';
-                profileButton.style.display = 'block';
-                createPostButton.style.display = 'block'; // Show "Create Post" button for logged-in users
-                createPostButton.addEventListener('click', createPost); // Add event listener for creating a post
-                addBookButton.style.display = 'block';
-            } else {
-                registerButton.style.display = 'block';
-                loginButton.style.display = 'block';
-                profileButton.style.display = 'none';
-                createPostButton.style.display = 'none'; // Hide "Create Post" button for non-logged-in users
-                createPostButton.removeEventListener('click', createPost); // Remove event listener for non-logged-in users
-                addBookButton.style.display = 'none'; 
-            }
-        }
-
-        // Function to handle creating a post
-        function createPost() {
-            const user = getAuth().currentUser;
-            if (!user) {
-                window.location.href = 'login.html'; // Redirect to login page if not logged in
-            }
-        }
-
-        // Call the function to check auth status when the DOM content is loaded
-        updateLinksOnAuth();
-
-        // Call the function to update links when the auth state changes
-        getAuth().onAuthStateChanged(function (user) {
-            updateLinksOnAuth();
-        });
-
-        document.getElementById('create-post').addEventListener('click', function() {
-            const user = getAuth().currentUser;
-            if (!user) {
-                window.location.href = 'login.html'; // Redirect to login page if not logged in
-            }
-        });
-
     </script>
 </body>
 </html>

@@ -41,7 +41,7 @@
     <script type="module">
         // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Initialize Firebase with your configuration
         const firebaseConfig = {
@@ -55,6 +55,7 @@
             measurementId: "G-VDFL9E4XYJ"
         };
         const app = initializeApp(firebaseConfig);
+        const firestore = getFirestore(app);
 
         // Function to submit the post
         async function submitPost(event) {
@@ -65,7 +66,7 @@
             const title = document.getElementById('title').value;
             const rating = document.getElementById('rating').value;
             const review = document.getElementById('review').value;
-            const genre = document.getElementById('genre').value; // New: Get selected genre
+            const genre = document.getElementById('genre').value;
 
             // Check if author and title are provided
             if (!author || !title) {
@@ -73,41 +74,19 @@
                 return;
             }
 
-            // Check if the book already exists in any specific collection
-            const firestore = getFirestore(app);
-            const collectionNames = ['Fantasy', 'ScienceFiction', 'Adventure', 'Historical', 'Horror', 'Memoir and Biography', 'Romance', 'Thriller', 'Dystopian'];
-            let bookExists = false;
-            for (const collectionName of collectionNames) {
-                const collectionRef = collection(firestore, collectionName);
-                const q = query(collectionRef, where('author', '==', author), where('title', '==', title));
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    bookExists = true;
-                    break;
-                }
-            }
-
-            // If the book already exists, proceed with creating the post
-            if (bookExists) {
-                try {
-                    await addDoc(collection(firestore, "posts"), {
-                        author: author,
-                        title: title,
-                        genre: genre,
-                        rating: rating,
-                        review: review
-                    });
-                    alert("Post added successfully!");
-                    window.location.href = 'start.html'; // Redirect to start page after successful submission
-                } catch (error) {
-                    console.error("Error adding document: ", error);
-                    alert("Error adding document. Please try again later.");
-                }
-            } else {
-                // If the book doesn't exist in any collection, notify the user
-                alert("This book doesn't exist in the database. Please add it first.");
-                // Redirect the user to addbook.html or perform other actions
-                window.location.href = 'addbook.html';
+            try {
+                await addDoc(collection(firestore, "books"), {
+                    author: author,
+                    title: title,
+                    genre: genre,
+                    rating: rating,
+                    review: review
+                });
+                alert("Post added successfully!");
+                window.location.href = 'start.html'; // Redirect to start page after successful submission
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Error adding document. Please try again later.");
             }
         }
 
