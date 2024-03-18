@@ -23,7 +23,8 @@
     <!-- Import Firebase modules using direct CDN links -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"; // Add updateDoc and arrayUnion
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         // Initialize Firebase with your configuration
         const firebaseConfig = {
@@ -40,19 +41,17 @@
 
         // Initialize Firestore
         const db = getFirestore();
+        const auth = getAuth(); // Add this line to get the authentication object
 
         // Function to fetch and display fantasy books
         async function displayFantasyBooks() {
             const booksContainer = document.getElementById("books-container");
 
-            // Clear previous content
-            booksContainer.innerHTML = "";
-
             try {
-                // Reference to the "fantasy" collection in Firestore
+                // Reference to the "Fantasy" collection in Firestore
                 const fantasyCollection = collection(db, "Fantasy");
 
-                // Get all documents in the "fantasy" collection
+                // Get all documents in the "Fantasy" collection
                 const querySnapshot = await getDocs(fantasyCollection);
 
                 querySnapshot.forEach((doc) => {
@@ -72,9 +71,12 @@
             bookElement.innerHTML = `
                 <h3>${bookData.title}</h3>
                 <p>Author: ${bookData.author}</p>
-                <p>Genre: ${bookData.genre}</p>
                 <p>Description: ${bookData.description}</p>
+                <button class="addBookButton">Add</button>
             `;
+            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
+                addBookToFirestore(bookData);
+            });
             return bookElement;
         }
 
@@ -82,6 +84,24 @@
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
         });
+
+        // Function to add a book to the user's collection in Firestore
+        async function addBookToFirestore(bookData) {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, 'users', user.uid);
+                    await updateDoc(userDocRef, {
+                        books: arrayUnion(bookData)
+                    });
+                    console.log("Book added to Firestore!");
+                } catch (error) {
+                    console.error("Error adding book to Firestore:", error);
+                }
+            } else {
+                console.log("User is not logged in");
+            }
+        }
 
         // Call the function to display fantasy books when the page loads
         document.addEventListener("DOMContentLoaded", displayFantasyBooks);

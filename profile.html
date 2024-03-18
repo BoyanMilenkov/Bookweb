@@ -19,7 +19,7 @@
             <h3>Bio</h3>
             <p id="bio"></p>
             <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
-            <button onclick={saveBioButton} id="saveBioButton">Save Bio</button>
+            <button id="saveBioButton">Save Bio</button>
             <button id="editBioButton" style="display: none;">Edit Bio</button>
             <button id="logoutButton">Logout</button>
         </section>
@@ -30,12 +30,11 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
-            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
             projectId: "bookweb-99ef4",
             storageBucket: "bookweb-99ef4.appspot.com",
             messagingSenderId: "415676602525",
@@ -45,100 +44,66 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getDatabase(app);
+        const db = getFirestore(app);
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                const userRef = ref(db, 'users/' + user.uid);
-                const bioParagraph = document.getElementById('bio');
-                const bioTextarea = document.getElementById('bioTextarea');
-                const saveBioButton = document.getElementById('saveBioButton');
-                const editBioButton = document.getElementById('editBioButton');
-                const logoutButton = document.getElementById('logoutButton');
-                const returnHomeButton = document.getElementById('returnHomeButton');
-
-                let userData;
-
-                const updateBioUI = (userBio) => {
-                    bioParagraph.textContent = userBio || "No bio available.";
-                    bioTextarea.value = userBio;
-                    if (userBio) {
-                        editBioButton.style.display = 'block';
-                        saveBioButton.style.display = 'none';
-                        bioTextarea.style.display = 'none';
-                    } else {
-                        editBioButton.style.display = 'none';
-                        saveBioButton.style.display = 'block';
-                        bioTextarea.style.display = 'block';
-                    }
-                };
-
-                get(userRef)
-                    .then((snapshot) => {
-                        userData = snapshot.val();
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
-                        updateBioUI(userData.bio);
-                    })
-                    .catch((error) => {
-                        console.error("Error retrieving user data:", error.message);
-                    });
-
-                saveBioButton.addEventListener('click', () => {
-                    const newBio = bioTextarea.value;
-
-                    // Include email and name when updating user data
-                    set(userRef, {
-                        bio: newBio,
-                        email: userData.email,
-                        name: userData.name, // Use displayName or a default value
-                    }, (error) => {
-                        if (error) {
-                            console.error("Error updating bio:", error.message);
-                        } else {
-                            console.log("Bio updated successfully");
-                            updateBioUI(newBio);
-                        }
-                    });
-                });
-
-                editBioButton.addEventListener('click', () => {
-                    editBioButton.style.display = 'none';
-                    saveBioButton.style.display = 'block';
-                    bioTextarea.style.display = 'block';
-                });
-
-                logoutButton.addEventListener('click', () => {
-                    signOut(auth).then(() => {
-                        // Clear the displayed information
-                        document.getElementById('name').textContent = '';
-                        document.getElementById('email').textContent = '';
-                        bioParagraph.textContent = '';
-                        bioTextarea.value = '';
-                        editBioButton.style.display = 'none';
-                        saveBioButton.style.display = 'block';
-                        bioTextarea.style.display = 'block';
-
-                        // Toggle visibility of register and login buttons
-                        const registerButton = document.getElementById('register');
-                        const loginButton = document.getElementById('login');
-                        registerButton.style.display = 'block';
-                        loginButton.style.display = 'block';
-
-                        window.location.href = "login.html";
-                    }).catch((error) => {
-                        console.error("Error signing out:", error.message);
-                    });
-                });
-
-                returnHomeButton.addEventListener('click', () => {
-                    window.location.href = "start.html";
-                });
-
+                        document.getElementById('bio').textContent = userData.bio || "No bio available.";
+                    } else {
+                        console.log("User document not found");
+                    }
+                } catch (error) {
+                    console.error("Error retrieving user data:", error.message);
+                }
             } else {
                 console.log("User is not logged in, redirecting to login page");
                 window.location.href = "login.html";
             }
+        });
+
+        document.getElementById('saveBioButton').addEventListener('click', () => {
+            const newBio = document.getElementById('bioTextarea').value.trim();
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = doc(db, 'users', user.uid);
+                setDoc(userRef, { bio: newBio }, { merge: true })
+                    .then(() => {
+                        console.log("Bio updated successfully");
+                        document.getElementById('bio').textContent = newBio || "No bio available.";
+                        document.getElementById('bioTextarea').value = newBio;
+                        document.getElementById('editBioButton').style.display = 'block';
+                        document.getElementById('saveBioButton').style.display = 'none';
+                        document.getElementById('bioTextarea').style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error("Error updating bio:", error.message);
+                    });
+            }
+        });
+
+        document.getElementById('editBioButton').addEventListener('click', () => {
+            document.getElementById('editBioButton').style.display = 'none';
+            document.getElementById('saveBioButton').style.display = 'block';
+            document.getElementById('bioTextarea').style.display = 'block';
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                console.log("User signed out successfully");
+                window.location.href = "login.html";
+            }).catch((error) => {
+                console.error("Error signing out:", error.message);
+            });
+        });
+
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = "start.html";
         });
     </script>
 </body>
