@@ -18,25 +18,70 @@
         <p>&copy; 2023 Book Social</p>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth();
+
         // Function to display the book information in the list
-        function displayBookInfo() {
+        async function displayBookInfo() {
             const bookListContainer = document.getElementById("my-book-list-container");
-            const bookList = JSON.parse(localStorage.getItem('bookList')) || [];
-            bookList.forEach(bookData => {
-                const bookElement = document.createElement("div");
-                bookElement.classList.add("book");
-                bookElement.innerHTML = `
-                    <h3>${bookData.title}</h3>
-                    <p>Author: ${bookData.author}</p>
-                    <p>Description: ${bookData.description}</p>
-                `;
-                bookListContainer.appendChild(bookElement);
-            });
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, 'users', user.uid);
+                    const userDocSnapshot = await getDoc(userDocRef);
+                    if (userDocSnapshot.exists()) {
+                        const userData = userDocSnapshot.data();
+                        if (userData.books && userData.books.length > 0) {
+                            userData.books.forEach(bookData => {
+                                const bookElement = document.createElement("div");
+                                bookElement.classList.add("book");
+                                bookElement.innerHTML = `
+                                    <h3>${bookData.title}</h3>
+                                    <p>Author: ${bookData.author}</p>
+                                    <p>Description: ${bookData.description}</p>
+                                `;
+                                bookListContainer.appendChild(bookElement);
+                            });
+                        } else {
+                            bookListContainer.innerHTML = "<p>No books added yet.</p>";
+                        }
+                    } else {
+                        console.log("User document not found");
+                    }
+                } catch (error) {
+                    console.error("Error retrieving user's book data:", error.message);
+                }
+            } else {
+                console.log("User is not logged in");
+            }
         }
 
-        // Call the function to display the book information when the page loads
-        document.addEventListener("DOMContentLoaded", displayBookInfo);
+        // Check for authentication state change
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log("User is logged in");
+                // Call the function to display book info if the user is logged in
+                displayBookInfo();
+            }
+        });
+
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
         });
