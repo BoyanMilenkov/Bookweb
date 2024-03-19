@@ -6,16 +6,6 @@
     <title>Profile Page</title>
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        #photoButtons {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        #photoButtons button {
-            margin: 5px;
-        }
-    </style>
 </head>
 <body>
     <button id="returnHomeButton">Return to Home</button>
@@ -37,8 +27,8 @@
             <h3>Bio</h3>
             <p id="bio"></p>
             <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
-            <button id="saveBioButton">Save Bio</button>
-            <button id="editBioButton" style="display: none;">Edit Bio</button>
+            <button id="saveBioButton" style="display: none;">Save Bio</button>
+            <button id="editBioButton">Edit Bio</button>
             <button id="logoutButton">Logout</button>
         </section>
     </main>
@@ -75,6 +65,11 @@
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
                         document.getElementById('bio').textContent = userData.bio || "No bio available.";
+                        if (userData.bio) {
+                            document.getElementById('bioTextarea').style.display = 'none'; // Hide bio textarea
+                            document.getElementById('saveBioButton').style.display = 'none'; // Hide save bio button
+                            document.getElementById('editBioButton').style.display = 'block'; // Show edit bio button
+                        }
                         if (userData.photoURL) {
                             document.getElementById('photoContainer').innerHTML = `
                                 <img src="${userData.photoURL}" alt="Profile Photo" style="max-width: 200px;">
@@ -135,7 +130,7 @@
                         document.getElementById('uploadPhotoButton').style.display = 'none'; // Hide circular button
                         document.getElementById('editPhotoButton').style.display = 'block'; // Show edit button
                         document.getElementById('deletePhotoButton').style.display = 'block'; // Show delete button
-                        // Save photoURL to user document
+                        // Save photo URL to user document
                         updateDoc(doc(db, 'users', user.uid), {
                             photoURL: url
                         });
