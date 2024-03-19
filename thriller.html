@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy Books</title>
+    <title>Thriller Books</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <button id="returnHomeButton">Return to Home</button>
     <header>
-        <h1>Fantasy Books</h1>
+        <h1>Thriller Books</h1>
     </header>
     <main>
         <section id="books-container">
-            <!-- Fantasy books will be displayed here -->
+            <!-- Thriller books will be displayed here -->
         </section>
     </main>
     <footer>
@@ -23,7 +23,8 @@
     <!-- Import Firebase modules using direct CDN links -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         // Initialize Firebase with your configuration
         const firebaseConfig = {
@@ -40,20 +41,21 @@
 
         // Initialize Firestore
         const db = getFirestore();
+        const auth = getAuth();
 
-        // Function to fetch and display fantasy books
-        async function displayFantasyBooks() {
+        // Function to fetch and display thriller books
+        async function displayThrillerBooks() {
             const booksContainer = document.getElementById("books-container");
 
             // Clear previous content
             booksContainer.innerHTML = "";
 
             try {
-                // Reference to the "fantasy" collection in Firestore
-                const fantasyCollection = collection(db, "Thriller");
+                // Reference to the "Thriller" collection in Firestore
+                const thrillerCollection = collection(db, "Thriller");
 
-                // Get all documents in the "fantasy" collection
-                const querySnapshot = await getDocs(fantasyCollection);
+                // Get all documents in the "Thriller" collection
+                const querySnapshot = await getDocs(thrillerCollection);
 
                 querySnapshot.forEach((doc) => {
                     const bookData = doc.data();
@@ -61,7 +63,7 @@
                     booksContainer.appendChild(bookElement);
                 });
             } catch (error) {
-                console.error("Error getting fantasy books: ", error);
+                console.error("Error getting thriller books: ", error);
             }
         }
 
@@ -73,8 +75,30 @@
                 <h3>${bookData.title}</h3>
                 <p>Author: ${bookData.author}</p>
                 <p>Description: ${bookData.description}</p>
+                <button class="addBookButton">Add</button>
             `;
+            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
+                addBookToFirestore(bookData);
+            });
             return bookElement;
+        }
+
+        // Function to add a book to the user's collection in Firestore
+        async function addBookToFirestore(bookData) {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, 'users', user.uid);
+                    await updateDoc(userDocRef, {
+                        books: arrayUnion(bookData)
+                    });
+                    console.log("Book added to Firestore!");
+                } catch (error) {
+                    console.error("Error adding book to Firestore:", error);
+                }
+            } else {
+                console.log("User is not logged in");
+            }
         }
 
         // Event listener for the 'Return to Home' button
@@ -82,8 +106,8 @@
             window.location.href = 'start.html';
         });
 
-        // Call the function to display fantasy books when the page loads
-        document.addEventListener("DOMContentLoaded", displayFantasyBooks);
+        // Call the function to display thriller books when the page loads
+        document.addEventListener("DOMContentLoaded", displayThrillerBooks);
     </script>
 </body>
 </html>
