@@ -4,7 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        #photoButtons {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #photoButtons button {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
     <button id="returnHomeButton">Return to Home</button>
@@ -14,6 +25,13 @@
     <main>
         <section id="profile-container">
             <h2>User Profile</h2>
+            <label for="photoInput" id="uploadPhotoButton">+</label> <!-- Circular upload button -->
+            <input type="file" id="photoInput" accept="image/*" style="display: none;"> <!-- File input for photo upload -->
+            <div id="photoContainer"></div> <!-- Container to display the uploaded photo -->
+            <div id="photoButtons">
+                <button id="editPhotoButton" style="display: none;">Edit Photo</button>
+                <button id="deletePhotoButton" style="display: none;">Delete Photo</button>
+            </div>
             <p><strong>Name:</strong> <span id="name"></span></p>
             <p><strong>Email:</strong> <span id="email"></span></p>
             <h3>Bio</h3>
@@ -30,7 +48,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
@@ -45,6 +64,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -55,6 +75,14 @@
                         document.getElementById('name').textContent = userData.name;
                         document.getElementById('email').textContent = userData.email;
                         document.getElementById('bio').textContent = userData.bio || "No bio available.";
+                        if (userData.photoURL) {
+                            document.getElementById('photoContainer').innerHTML = `
+                                <img src="${userData.photoURL}" alt="Profile Photo" style="max-width: 200px;">
+                            `;
+                            document.getElementById('uploadPhotoButton').style.display = 'none'; // Hide circular button
+                            document.getElementById('editPhotoButton').style.display = 'block'; // Show edit button
+                            document.getElementById('deletePhotoButton').style.display = 'block'; // Show delete button
+                        }
                     } else {
                         console.log("User document not found");
                     }
@@ -64,6 +92,57 @@
             } else {
                 console.log("User is not logged in, redirecting to login page");
                 window.location.href = "login.html";
+            }
+        });
+
+        // Function to delete the photo...
+        function deletePhoto() {
+            const user = auth.currentUser;
+            if (user) {
+                const storageRef = ref(storage, `profilePicture/${user.uid}`);
+                deleteObject(storageRef)
+                    .then(() => {
+                        console.log("Photo deleted successfully");
+                        updateDoc(doc(db, 'users', user.uid), {
+                            photoURL: null // Remove the photoURL from user document
+                        });
+                        document.getElementById('photoContainer').innerHTML = ''; // Remove displayed photo
+                        document.getElementById('uploadPhotoButton').style.display = 'block'; // Show circular button
+                        document.getElementById('editPhotoButton').style.display = 'none'; // Hide edit button
+                        document.getElementById('deletePhotoButton').style.display = 'none'; // Hide delete button
+                    })
+                    .catch(error => {
+                        console.error("Error deleting photo:", error.message);
+                    });
+            }
+        }
+
+        document.getElementById('uploadPhotoButton').addEventListener('click', () => {
+            document.getElementById('photoInput').click();
+        });
+
+        document.getElementById('photoInput').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const user = auth.currentUser;
+            if (user && file) {
+                const storageRef = ref(storage, `profilePicture/${user.uid}`);
+                uploadBytes(storageRef, file).then(() => {
+                    console.log("Photo uploaded successfully");
+                    getDownloadURL(storageRef).then(url => {
+                        document.getElementById('photoContainer').innerHTML = `
+                            <img src="${url}" alt="Profile Photo" style="max-width: 200px;">
+                        `;
+                        document.getElementById('uploadPhotoButton').style.display = 'none'; // Hide circular button
+                        document.getElementById('editPhotoButton').style.display = 'block'; // Show edit button
+                        document.getElementById('deletePhotoButton').style.display = 'block'; // Show delete button
+                        // Save photoURL to user document
+                        updateDoc(doc(db, 'users', user.uid), {
+                            photoURL: url
+                        });
+                    });
+                }).catch(error => {
+                    console.error("Error uploading photo:", error.message);
+                });
             }
         });
 
@@ -104,6 +183,15 @@
 
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = "start.html";
+        });
+
+        document.getElementById('editPhotoButton').addEventListener('click', () => {
+            document.getElementById('photoInput').click();
+        });
+
+        document.getElementById('deletePhotoButton').addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default action of button click
+            deletePhoto();
         });
     </script>
 </body>
