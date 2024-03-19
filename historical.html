@@ -23,7 +23,7 @@
     <!-- Import Firebase modules using direct CDN links -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         // Initialize Firebase with your configuration
@@ -77,9 +77,31 @@
                 <p>Description: ${bookData.description}</p>
                 <button class="addBookButton">Add</button>
             `;
-            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
-                addBookToFirestore(bookData);
-            });
+            
+            // Check if the book is already in the user's collection
+            const user = auth.currentUser;
+            if (user) {
+                const userDocRef = doc(db, 'users', user.uid);
+                getDoc(userDocRef).then((userDocSnapshot) => {
+                    if (userDocSnapshot.exists()) {
+                        const userData = userDocSnapshot.data();
+                        if (userData.books && userData.books.some(userBook => userBook.title === bookData.title)) {
+                            // Book already exists in user's collection, disable the button
+                            const addButton = bookElement.querySelector('.addBookButton');
+                            addButton.disabled = true;
+                            addButton.textContent = "Added";
+                        } else {
+                            // Book doesn't exist in user's collection, add event listener to button
+                            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
+                                addBookToFirestore(bookData);
+                            });
+                        }
+                    }
+                }).catch(error => {
+                    console.error("Error checking user's book collection:", error);
+                });
+            }
+            
             return bookElement;
         }
 
