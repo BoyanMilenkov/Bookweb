@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="returnHomeButton">Return to Home</button>
+    <header>
+        <h1>Friends List</h1>
+    </header>
+    <main>
+        <section id="friends-list-container">
+            <h2>My Friends</h2>
+            <ul id="friends-list">
+                <!-- Friends will be dynamically added here -->
+            </ul>
+            <button id="addFriendButton">Add Friend</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Friends List Page</p>
+    </footer>
+    <script type="module">
+        // Import necessary Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Initialize Firebase app
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(); // Initialize Firebase Auth
+
+        // Function to fetch the UID of the current user from Firestore
+        async function getCurrentUserUID() {
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        return user.uid;
+                    } else {
+                        console.error("User document not found in Firestore");
+                        return null;
+                    }
+                } else {
+                    console.error("User not logged in");
+                    return null;
+                }
+            } catch (error) {
+                console.error("Error fetching user UID:", error);
+                return null;
+            }
+        }
+
+        // Function to render friends list
+        async function renderFriends(currentUserUID) {
+            const friendsListContainer = document.getElementById('friends-list');
+
+            try {
+                const userDoc = await getDoc(doc(db, 'users', currentUserUID)); // Ensure currentUserUID is not null or undefined
+                if (userDoc.exists()) {
+                    const friends = userDoc.data().friends || []; // Ensure friends array exists
+                    friendsListContainer.innerHTML = ""; // Clear previous list
+                    if (friends.length > 0) {
+                        friends.forEach(friend => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = friend.name;
+                            friendsListContainer.appendChild(listItem);
+                        });
+                    } else {
+                        friendsListContainer.innerHTML = "<li>No friends yet</li>";
+                    }
+                } else {
+                    friendsListContainer.innerHTML = "<li>User not found</li>";
+                }
+            } catch (error) {
+                console.error("Error fetching friends:", error);
+                friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
+            }
+        }
+        
+        // Get current user's UID and call renderFriends function
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const currentUserUID = user.uid;
+                await renderFriends(currentUserUID);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+
+        // Event listener for the "Add Friend" button
+        document.getElementById('addFriendButton').addEventListener('click', () => {
+            window.location.href = `add-friend.html`;
+        });
+
+        // Event listener for the return to home button
+        document.getElementById('returnHomeButton').addEventListener('click', () => {
+            window.location.href = 'start.html';
+        });
+    </script>
+</body>
+</html>

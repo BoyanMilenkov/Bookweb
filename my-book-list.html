@@ -21,6 +21,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -56,6 +59,7 @@
                                     <h3>${bookData.title}</h3>
                                     <p>Author: ${bookData.author}</p>
                                     <p>Description: ${bookData.description}</p>
+
                                     <p>Rating: ${bookData.rating !== null ? bookData.rating : 'Not rated'}</p>
                                     <button class="rateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Rate</button>
                                 `;
@@ -109,6 +113,11 @@
                                     }
                                 });
                             });
+
+                                `;
+                                bookListContainer.appendChild(bookElement);
+                            });
+
                         } else {
                             bookListContainer.innerHTML = "<p>No books added yet.</p>";
                         }
