@@ -47,7 +47,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
@@ -94,31 +94,54 @@
         // Call the function to update links when the auth state changes
         getAuth().onAuthStateChanged(function (user) {
             updateLinksOnAuth();
+            if (user) {
+                fetchPosts();
+            } else {
+                console.error("User not authenticated.");
+                // Handle user not authenticated, e.g., redirect to login page
+            }
         });
 
         async function fetchPosts() {
             const firestore = getFirestore();
-            const postsRef = collection(firestore, 'books');
-            const querySnapshot = await getDocs(postsRef);
+            const user = getAuth().currentUser;
+
+            if (!user) {
+                console.error("User not authenticated.");
+                return;
+            }
+
+            const userDocRef = doc(firestore, 'users', user.uid);
+            const userDocSnap = await getDoc(userDocRef);
+
+            if (!userDocSnap.exists()) {
+                console.error("User document not found.");
+                return;
+            }
+
+            const userData = userDocSnap.data();
+            const posts = userData.posts;
+
             const postsContainer = document.getElementById('postsContainer');
+            postsContainer.innerHTML = ''; // Clear previous posts
 
-            querySnapshot.forEach((doc) => {
-                const postData = doc.data();
-                const postHTML = `
-                    <div class="post">
-                        <h2>${postData.title}</h2>
-                        <p><strong>Author:</strong> ${postData.author}</p>
-                        <p><strong>Genre:</strong> ${postData.genre}</p>
-                        <p><strong>Rating:</strong> ${postData.rating}</p>
-                        <p><strong>Review:</strong> ${postData.review}</p>
-                    </div>
-                `;
-                postsContainer.insertAdjacentHTML('beforeend', postHTML);
-            });
+            // Display posts
+            for (const postId in posts) {
+                if (Object.hasOwnProperty.call(posts, postId)) {
+                    const post = posts[postId];
+                    const postHTML = `
+                        <div class="post">
+                            <h3>Posted by: ${userData.name}</h3>
+                            <h2>${postId}</h2>
+                            <p><strong>Author:</strong> ${post.author}</p>
+                            <p><strong>Genre:</strong> ${post.genre}</p>
+                            <p><strong>Review:</strong> ${post.review}</p>
+                        </div>
+                    `;
+                    postsContainer.insertAdjacentHTML('beforeend', postHTML);
+                }
+            }
         }
-
-        // Call fetchPosts function when the page loads
-        window.addEventListener('load', fetchPosts);
     </script>
 </body>
 </html>
