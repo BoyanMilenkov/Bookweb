@@ -14,15 +14,14 @@
     <main>
         <section id="register-form-container">
             <h2>Register</h2>
-            <form id="register-form" onsubmit="return registerUserWithEmailAndPassword(event)" action="start.html">
-
+            <form id="register-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-                <button type="submit" id='register' name="register_submite" value="Register">Register</button>
+                <button type="submit">Register</button>
             </form>
             <p>Already have an account? <a href="profile.html">Log in</a></p>
         </section>
@@ -32,12 +31,10 @@
     </footer>
     
     <script type="module">
-        // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getFirestore, collection, doc, setDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
@@ -49,53 +46,66 @@
             measurementId: "G-VDFL9E4XYJ"
         };
     
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        const db = getFirestore(app);
         const auth = getAuth();
     
-        // Event listener for the 'Return to Home' button
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';
         });
     
-        // Event listener for the registration form
-        document.getElementById('register-form').addEventListener('submit', (e) => {
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
     
-            // Get form values
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
     
-            // Object to store user data
-            const userData = {
-                name: name,
-                email: email,
-            };
+            try {
+                // Check if name is available
+                const nameAvailable = await isNameAvailable(name);
+                if (!nameAvailable) {
+                    alert('Name is already taken. Please choose another one.');
+                    return;
+                }
+                
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
     
-            // Create user with email and password
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-    
-                    // Reference to the user's data in the database
-                    const userRef = ref(db, 'users/' + user.uid);
-    
-                    // Set user data in the database
-                    return set(userRef, userData);
-                })
-                .then(() => {
-                    console.log("User data saved successfully!");
-                    alert('User created successfully!');
-                    window.location.href = "start.html";
-                })
-                .catch((error) => {
-                    console.error("Error during registration:", error.message);
-                    alert("Error creating user or saving data to the database.");
+                // Store user data in Firestore
+                await setDoc(doc(db, 'users', user.uid), {
+                    name: name,
+                    email: email,
                 });
-        });
-    </script>
     
+                alert('User created successfully!');
+                window.location.href = "start.html";
+            } catch (error) {
+                console.error("Error during registration:", error.message);
+                alert("Error creating user or saving data to the database.");
+            }
+        });
+
+        // Function to check if name is available
+        async function isNameAvailable(name) {
+            // Get a reference to the users collection
+            const usersRef = collection(db, 'users');
+
+            try {
+                // Query the users collection for the provided name
+                const querySnapshot = await getDocs(query(usersRef, where('name', '==', name)));
+
+                // If no documents are returned, it means the name is available
+                if (querySnapshot.empty) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error checking name availability:", error);
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
