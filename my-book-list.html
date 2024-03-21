@@ -52,61 +52,86 @@
                             userData.books.forEach(bookData => {
                                 const bookElement = document.createElement("div");
                                 bookElement.classList.add("book");
+                                const ratingInput = '<input type="text" class="ratingInput" placeholder="Enter your rating (1-5)">';
+                                let actionButton = '';
+                                if (bookData.rating === null || isNaN(bookData.rating) || bookData.rating < 1 || bookData.rating > 5) {
+                                    actionButton = `<button class="rateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Rate</button>`;
+                                } else {
+                                    actionButton = `<button class="editRateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Edit</button>`;
+                                }
                                 bookElement.innerHTML = `
                                     <h3>${bookData.title}</h3>
                                     <p>Author: ${bookData.author}</p>
                                     <p>Description: ${bookData.description}</p>
-                                    <p>Rating: ${bookData.rating !== null ? bookData.rating : 'Not rated'}</p>
-                                    <button class="rateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Rate</button>
+                                    <p>Rating: ${bookData.rating !== null ? '<span class="ratingDisplay">' + bookData.rating + '</span>' : 'Not rated'}</p>
+                                    ${actionButton}
+                                    ${ratingInput}
                                 `;
                                 bookListContainer.appendChild(bookElement);
                             });
+
                             // Add event listeners for rate buttons
                             document.querySelectorAll('.rateButton').forEach(button => {
                                 button.addEventListener('click', async () => {
-                                    const bookTitle = button.getAttribute('data-book-title');
-                                    const bookAuthor = button.getAttribute('data-book-author');
-                                    console.log("Book Title:", bookTitle); // Log bookTitle to check if it's correctly retrieved
-                                    console.log("Book Author:", bookAuthor); // Log bookAuthor to check if it's correctly retrieved
-                                    
-                                    const rating = prompt("Please enter your rating (1-5):");
-                                    if (rating !== null && rating !== "") {
-                                        const ratingNumber = parseInt(rating);
-                                        if (!isNaN(ratingNumber) && ratingNumber >= 1 && ratingNumber <= 5) {
-                                            try {
-                                                const userDocRef = doc(db, 'users', user.uid);
-                                                const userDocSnapshot = await getDoc(userDocRef);
-                                                if (userDocSnapshot.exists()) {
-                                                    const userData = userDocSnapshot.data();
-                                                    if (userData.books && userData.books.length > 0) {
-                                                        const updatedBooks = userData.books.map(book => {
-                                                            if (book.title === bookTitle && book.author === bookAuthor) {
-                                                                return {
-                                                                    ...book,
-                                                                    rating: ratingNumber
-                                                                };
-                                                            } else {
-                                                                return book;
-                                                            }
-                                                        });
-                                                        await updateDoc(userDocRef, { books: updatedBooks });
-                                                        console.log("Rating updated successfully!");
-                                                        // Refresh the book list after rating
-                                                        bookListContainer.innerHTML = "";
-                                                        displayBookInfo();
-                                                    } else {
-                                                        console.log("No books added yet.");
-                                                    }
-                                                } else {
-                                                    console.log("User document not found.");
-                                                }
-                                            } catch (error) {
-                                                console.error("Error updating rating:", error.message);
-                                            }
-                                        } else {
-                                            alert("Please enter a valid rating between 1 and 5.");
-                                        }
-                                    }
+                                    document.querySelectorAll('.rateButton').forEach(button => {
+    button.addEventListener('click', async () => {
+        const bookTitle = button.getAttribute('data-book-title');
+        const bookAuthor = button.getAttribute('data-book-author');
+        const ratingInput = button.nextElementSibling;
+
+        if (ratingInput && ratingInput.value) {
+            const rating = ratingInput.value.trim();
+            if (rating !== "" && !isNaN(rating) && rating >= 1 && rating <= 5) {
+                try {
+                    const ratingNumber = parseInt(rating);
+                    const userDocRef = doc(db, 'users', user.uid);
+                    const userDocSnapshot = await getDoc(userDocRef);
+                    if (userDocSnapshot.exists()) {
+                        const userData = userDocSnapshot.data();
+                        if (userData.books && userData.books.length > 0) {
+                            const updatedBooks = userData.books.map(book => {
+                                if (book.title === bookTitle && book.author === bookAuthor) {
+                                    return {
+                                        ...book,
+                                        rating: ratingNumber
+                                    };
+                                } else {
+                                    return book;
+                                }
+                            });
+                            await updateDoc(userDocRef, { books: updatedBooks });
+                            console.log("Rating updated successfully!");
+                            // Refresh the book list after rating
+                            bookListContainer.innerHTML = "";
+                            displayBookInfo();
+                        } else {
+                            console.log("No books added yet.");
+                        }
+                    } else {
+                        console.log("User document not found.");
+                    }
+                } catch (error) {
+                    console.error("Error updating rating:", error.message);
+                }
+            } else {
+                alert("Please enter a valid rating between 1 and 5.");
+            }
+        } else {
+            console.error("Rating input is undefined or has no value.");
+        }
+    });
+});
+                                });
+                            });
+
+                            // Add event listeners for edit rate buttons
+                            document.querySelectorAll('.editRateButton').forEach(button => {
+                                button.addEventListener('click', () => {
+                                    const ratingDisplay = button.previousElementSibling.querySelector('.ratingDisplay');
+                                    const ratingInput = button.nextElementSibling;
+                                    ratingInput.style.display = 'inline-block';
+                                    ratingInput.value = ratingDisplay.innerText;
+                                    ratingDisplay.style.display = 'none';
                                 });
                             });
                         } else {
