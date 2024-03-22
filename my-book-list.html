@@ -57,18 +57,18 @@
                             <p>Author: ${bookData.author}</p>
                             <p>Description: ${bookData.description}</p>
                             <p>Rating: <span class="ratingDisplay">${bookData.rating !== null ? bookData.rating : 'Not rated'}</span></p>
-                            <button class="editRatingButton">Edit Rating</button>
-                            <input type="number" class="newRatingInput" placeholder="Enter new rating (1-5)">
+                            <button class="rateButton">Rate</button>
+                            <input type="number" class="newRatingInput" placeholder="Enter new rating (1-5)" style="display: none;">
                             <button class="submitRatingButton" style="display: none;">Submit Rating</button>
                         `;
                         bookListContainer.appendChild(bookElement);
 
-                        // Add event listener for edit rating button
-                        const editRatingButton = bookElement.querySelector('.editRatingButton');
+                        // Add event listener for rate button
+                        const rateButton = bookElement.querySelector('.rateButton');
                         const newRatingInput = bookElement.querySelector('.newRatingInput');
                         const submitRatingButton = bookElement.querySelector('.submitRatingButton');
-                        editRatingButton.addEventListener('click', () => {
-                            editRatingButton.style.display = 'none';
+                        rateButton.addEventListener('click', () => {
+                            rateButton.style.display = 'none';
                             newRatingInput.style.display = 'inline-block';
                             submitRatingButton.style.display = 'inline-block';
                         });
@@ -89,7 +89,7 @@
                                     ratingDisplay.textContent = newRating;
                                     newRatingInput.style.display = 'none';
                                     submitRatingButton.style.display = 'none';
-                                    editRatingButton.style.display = 'inline-block';
+                                    rateButton.style.display = 'inline-block';
                                 } catch (error) {
                                     console.error("Error updating rating:", error);
                                 }
@@ -111,6 +111,8 @@
         console.log("User is not logged in");
     }
 }
+
+
 
 
 
