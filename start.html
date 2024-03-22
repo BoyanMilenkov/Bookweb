@@ -47,7 +47,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
@@ -104,43 +104,31 @@
 
         async function fetchPosts() {
             const firestore = getFirestore();
-            const user = getAuth().currentUser;
-
-            if (!user) {
-                console.error("User not authenticated.");
-                return;
-            }
-
-            const userDocRef = doc(firestore, 'users', user.uid);
-            const userDocSnap = await getDoc(userDocRef);
-
-            if (!userDocSnap.exists()) {
-                console.error("User document not found.");
-                return;
-            }
-
-            const userData = userDocSnap.data();
-            const posts = userData.posts;
-
             const postsContainer = document.getElementById('postsContainer');
             postsContainer.innerHTML = ''; // Clear previous posts
 
-            // Display posts
-            for (const postId in posts) {
-                if (Object.hasOwnProperty.call(posts, postId)) {
-                    const post = posts[postId];
-                    const postHTML = `
-                        <div class="post">
-                            <h3>Posted by: ${userData.name}</h3>
-                            <h2>${postId}</h2>
-                            <p><strong>Author:</strong> ${post.author}</p>
-                            <p><strong>Genre:</strong> ${post.genre}</p>
-                            <p><strong>Review:</strong> ${post.review}</p>
-                        </div>
-                    `;
-                    postsContainer.insertAdjacentHTML('beforeend', postHTML);
+            const querySnapshot = await getDocs(collection(firestore, 'users'));
+            querySnapshot.forEach(doc => {
+                const userData = doc.data();
+                const posts = userData.posts;
+
+                // Display posts for each user
+                for (const postId in posts) {
+                    if (Object.hasOwnProperty.call(posts, postId)) {
+                        const post = posts[postId];
+                        const postHTML = `
+                            <div class="post">
+                                <h3>Posted by: ${userData.name}</h3>
+                                <h2>${postId}</h2>
+                                <p><strong>Author:</strong> ${post.author}</p>
+                                <p><strong>Genre:</strong> ${post.genre}</p>
+                                <p><strong>Review:</strong> ${post.review}</p>
+                            </div>
+                        `;
+                        postsContainer.insertAdjacentHTML('beforeend', postHTML);
+                    }
                 }
-            }
+            });
         }
     </script>
 </body>
