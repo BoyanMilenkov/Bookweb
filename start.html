@@ -118,7 +118,7 @@
                         const post = posts[postId];
                         const postHTML = `
                             <div class="post">
-                                <h3>Posted by: ${userData.name}</h3>
+                                <h3>Posted by: <a class="username-link" href="user-profile.html?userId=${doc.id}">${userData.name}</a></h3>
                                 <h2>${postId}</h2>
                                 <p><strong>Author:</strong> ${post.author}</p>
                                 <p><strong>Genre:</strong> ${post.genre}</p>
@@ -128,6 +128,22 @@
                         postsContainer.insertAdjacentHTML('beforeend', postHTML);
                     }
                 }
+            });
+
+            // Redirect to user profile page if the logged-in user clicks their own name
+            document.querySelectorAll('.username-link').forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    const user = getAuth().currentUser;
+                    if (user) {
+                        const userId = event.target.getAttribute('href').split('=')[1];
+                        if (userId === user.uid) {
+                            window.location.href = "profile.html";
+                        } else {
+                            window.location.href = event.target.getAttribute('href'); // Redirect to user-profile.html for other users
+                        }
+                    }
+                });
             });
         }
     </script>
