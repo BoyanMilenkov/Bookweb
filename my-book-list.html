@@ -40,111 +40,81 @@
 
         // Function to display the book information in the list
         async function displayBookInfo() {
-            const bookListContainer = document.getElementById("my-book-list-container");
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const userDocRef = doc(db, 'users', user.uid);
-                    const userDocSnapshot = await getDoc(userDocRef);
-                    if (userDocSnapshot.exists()) {
-                        const userData = userDocSnapshot.data();
-                        if (userData.books && userData.books.length > 0) {
-                            userData.books.forEach(bookData => {
-                                const bookElement = document.createElement("div");
-                                bookElement.classList.add("book");
-                                const ratingInput = '<input type="text" class="ratingInput" placeholder="Enter your rating (1-5)" style="display: none;">';
-                                let actionButton = '';
-                                if (bookData.rating === null || isNaN(bookData.rating) || bookData.rating < 1 || bookData.rating > 5) {
-                                    actionButton = `<button class="rateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Rate</button>`;
-                                } else {
-                                    actionButton = `<button class="editRateButton" data-book-title="${bookData.title}" data-book-author="${bookData.author}">Edit</button>`;
-                                }
-                                bookElement.innerHTML = `
-                                    <h3>${bookData.title}</h3>
-                                    <p>Author: ${bookData.author}</p>
-                                    <p>Description: ${bookData.description}</p>
-                                    <p>Rating: ${bookData.rating !== null ? '<span class="ratingDisplay">' + bookData.rating + '</span>' : 'Not rated'}</p>
-                                    ${actionButton}
-                                    ${ratingInput}
-                                `;
-                                bookListContainer.appendChild(bookElement);
-                            });
+    const bookListContainer = document.getElementById("my-book-list-container");
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            const userDocRef = doc(db, 'users', user.uid);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                if (userData.books && userData.books.length > 0) {
+                    userData.books.forEach(async bookData => {
+                        const bookElement = document.createElement("div");
+                        bookElement.classList.add("book");
+                        bookElement.innerHTML = `
+                            <h3>${bookData.title}</h3>
+                            <p>Author: ${bookData.author}</p>
+                            <p>Description: ${bookData.description}</p>
+                            <p>Rating: <span class="ratingDisplay">${bookData.rating !== null ? bookData.rating : 'Not rated'}</span></p>
+                            <button class="editRatingButton">Edit Rating</button>
+                            <input type="number" class="newRatingInput" placeholder="Enter new rating (1-5)">
+                            <button class="submitRatingButton" style="display: none;">Submit Rating</button>
+                        `;
+                        bookListContainer.appendChild(bookElement);
 
-                            // Add event listeners for rate buttons
-                            document.querySelectorAll('.rateButton').forEach(button => {
-                                button.addEventListener('click', async () => {
-                                    const bookTitle = button.getAttribute('data-book-title');
-                                    const bookAuthor = button.getAttribute('data-book-author');
-                                    const ratingInput = button.nextElementSibling;
+                        // Add event listener for edit rating button
+                        const editRatingButton = bookElement.querySelector('.editRatingButton');
+                        const newRatingInput = bookElement.querySelector('.newRatingInput');
+                        const submitRatingButton = bookElement.querySelector('.submitRatingButton');
+                        editRatingButton.addEventListener('click', () => {
+                            editRatingButton.style.display = 'none';
+                            newRatingInput.style.display = 'inline-block';
+                            submitRatingButton.style.display = 'inline-block';
+                        });
 
-                                    if (ratingInput && ratingInput.value) {
-                                        const rating = ratingInput.value.trim();
-                                        if (rating !== "" && !isNaN(rating) && rating >= 1 && rating <= 5) {
-                                            try {
-                                                const ratingNumber = parseInt(rating);
-                                                const userDocRef = doc(db, 'users', user.uid);
-                                                const userDocSnapshot = await getDoc(userDocRef);
-                                                if (userDocSnapshot.exists()) {
-                                                    const userData = userDocSnapshot.data();
-                                                    if (userData.books && userData.books.length > 0) {
-                                                        const updatedBooks = userData.books.map(book => {
-                                                            if (book.title === bookTitle && book.author === bookAuthor) {
-                                                                return {
-                                                                    ...book,
-                                                                    rating: ratingNumber
-                                                                };
-                                                            } else {
-                                                                return book;
-                                                            }
-                                                        });
-                                                        await updateDoc(userDocRef, { books: updatedBooks });
-                                                        console.log("Rating updated successfully!");
-                                                        // Update the rating in the UI
-                                                        const ratingDisplay = button.previousElementSibling.querySelector('.ratingDisplay');
-                                                        ratingDisplay.innerText = ratingNumber;
-                                                        ratingInput.style.display = 'none';
-                                                        ratingDisplay.style.display = 'inline-block';
-                                                    } else {
-                                                        console.log("No books added yet.");
-                                                    }
-                                                } else {
-                                                    console.log("User document not found.");
-                                                }
-                                            } catch (error) {
-                                                console.error("Error updating rating:", error.message);
-                                            }
-                                        } else {
-                                            alert("Please enter a valid rating between 1 and 5.");
+                        // Add event listener for submit rating button
+                        submitRatingButton.addEventListener('click', async () => {
+                            const newRating = parseInt(newRatingInput.value);
+                            if (!isNaN(newRating) && newRating >= 1 && newRating <= 5) {
+                                try {
+                                    const updatedBooks = userData.books.map(book => {
+                                        if (book.title === bookData.title && book.author === bookData.author) {
+                                            return { ...book, rating: newRating };
                                         }
-                                    } else {
-                                        console.error("Rating input is undefined or has no value.");
-                                    }
-                                });
-                            });
-
-                            // Add event listeners for edit rate buttons
-                            document.querySelectorAll('.editRateButton').forEach(button => {
-                                button.addEventListener('click', () => {
-                                    const ratingDisplay = button.previousElementSibling.querySelector('.ratingDisplay');
-                                    const ratingInput = button.nextElementSibling;
-                                    ratingInput.style.display = 'inline-block';
-                                    ratingInput.value = ratingDisplay.innerText;
-                                    ratingDisplay.style.display = 'none';
-                                });
-                            });
-                        } else {
-                            bookListContainer.innerHTML = "<p>No books added yet.</p>";
-                        }
-                    } else {
-                        console.log("User document not found");
-                    }
-                } catch (error) {
-                    console.error("Error retrieving user's book data:", error.message);
+                                        return book;
+                                    });
+                                    await updateDoc(userDocRef, { books: updatedBooks });
+                                    const ratingDisplay = bookElement.querySelector('.ratingDisplay');
+                                    ratingDisplay.textContent = newRating;
+                                    newRatingInput.style.display = 'none';
+                                    submitRatingButton.style.display = 'none';
+                                    editRatingButton.style.display = 'inline-block';
+                                } catch (error) {
+                                    console.error("Error updating rating:", error);
+                                }
+                            } else {
+                                alert('Please enter a valid rating between 1 and 5.');
+                            }
+                        });
+                    });
+                } else {
+                    bookListContainer.innerHTML = "<p>No books added yet.</p>";
                 }
             } else {
-                console.log("User is not logged in");
+                console.log("User document not found");
             }
+        } catch (error) {
+            console.error("Error retrieving user's book data:", error);
         }
+    } else {
+        console.log("User is not logged in");
+    }
+}
+
+
+
+
 
         // Check for authentication state change
         auth.onAuthStateChanged((user) => {
