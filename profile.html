@@ -100,34 +100,45 @@
 
         // Fetch user posts and display them
         async function fetchUserPosts(userId) {
-    const userRef = doc(db, 'users', userId);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const userPosts = userData.posts;
-        if (userPosts) {
-            for (const postId in userPosts) {
-                if (Object.hasOwnProperty.call(userPosts, postId)) {
-                    const postData = userPosts[postId];
-                    const postHTML = `
-                        <div class="post">
-                            <h2>${postId}</h2>
-                            <p><strong>Author:</strong> ${postData.author}</p>
-                            <p><strong>Genre:</strong> ${postData.genre}</p>
-                            <p><strong>Review:</strong> ${postData.review}</p>
-                        </div>
-                    `;
-                    document.getElementById('userPostsContainer').insertAdjacentHTML('beforeend', postHTML);
+            const userRef = doc(db, 'users', userId);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                const userPosts = userData.posts;
+                if (userPosts) {
+                    for (const postId in userPosts) {
+                        if (Object.hasOwnProperty.call(userPosts, postId)) {
+                            const postData = userPosts[postId];
+                            const postHTML = `
+                                <div class="post">
+                                    <h2>${postId}</h2>
+                                    <p><strong>Author:</strong> ${postData.author}</p>
+                                    <p><strong>Genre:</strong> ${postData.genre}</p>
+                                    <p><strong>Review:</strong> ${postData.review}</p>
+                                    <button class="editPostButton" data-postid="${postId}">Edit Post</button>
+                                </div>
+                            `;
+                            document.getElementById('userPostsContainer').insertAdjacentHTML('beforeend', postHTML);
+                        }
+                    }
+                    attachEditEventListeners(); // Attach event listeners to edit buttons
+                } else {
+                    console.log("User has no posts.");
                 }
+            } else {
+                console.log("User document not found.");
             }
-        } else {
-            console.log("User has no posts.");
         }
-    } else {
-        console.log("User document not found.");
-    }
-}
 
+        // Attach event listeners to edit buttons
+        function attachEditEventListeners() {
+            document.querySelectorAll('.editPostButton').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const postId = event.target.getAttribute('data-postid');
+                    window.location.href = `edit_post.html?postId=${postId}`;
+                });
+            });
+        }
 
         // Function to delete the photo...
         function deletePhoto() {
@@ -138,7 +149,7 @@
                     .then(() => {
                         console.log("Photo deleted successfully");
                         updateDoc(doc(db, 'users', user.uid), {
-                            photoURL: null // Remove the photoURL from user document
+                            photoURL: null // Remove the photoURL URL from user document
                         });
                         document.getElementById('photoContainer').innerHTML = ''; // Remove displayed photo
                         document.getElementById('uploadPhotoButton').style.display = 'block'; // Show circular button
