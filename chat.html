@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        /* Your CSS styles here */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat</h1>
+        <h2>Chatting with: <span id="friendName"></span></h2>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Chat messages will be dynamically added here -->
+        </div>
+        <textarea id="messageInput" rows="3" placeholder="Type your message here"></textarea>
+        <button id="sendMessageButton">Send</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+            authDomain: "bookweb-99ef4.firebaseapp.com",
+            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+            projectId: "bookweb-99ef4",
+            storageBucket: "bookweb-99ef4.appspot.com",
+            messagingSenderId: "415676602525",
+            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+            measurementId: "G-VDFL9E4XYJ"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Retrieve current user ID and friend ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentUserUID = urlParams.get('currentUserUID');
+        const friendID = urlParams.get('friendID');
+
+        // Check if currentUserUID and friendID are defined
+        if (!currentUserUID || !friendID) {
+            console.error("currentUserUID or friendID is undefined.");
+        }
+        
+        // Set up references to Firestore and necessary elements
+        const chatMessages = document.getElementById('chatMessages');
+        const friendNameSpan = document.getElementById('friendName');
+        const messageInput = document.getElementById('messageInput');
+        const sendMessageButton = document.getElementById('sendMessageButton');
+        
+        // Function to render chat messages
+        function renderChatMessages(messages) {
+            chatMessages.innerHTML = ''; // Clear previous messages
+            messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `${message.senderName}: ${message.text}`;
+                chatMessages.appendChild(messageElement);
+            });
+        }
+        
+        // Function to send a message
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === '') return;
+        
+            try {
+                // Add message to Firestore
+                await addDoc(collection(db, 'chats', currentUserUID, friendID), {
+                    text: text,
+                    senderID: currentUserUID
+                });
+                // Clear input field after sending message
+                messageInput.value = '';
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
+        }
+        
+        // Event listener for send message button
+        sendMessageButton.addEventListener('click', sendMessage);
+        
+        // Listen for changes in chat messages and update UI
+        const q = query(collection(db, 'chats', currentUserUID, friendID), orderBy('timestamp'));
+        onSnapshot(q, (snapshot) => {
+            const messages = [];
+            snapshot.forEach((doc) => {
+                messages.push(doc.data());
+            });
+            renderChatMessages(messages);
+        });
+        
+        // Fetch friend's name and display it
+        db.collection('users').doc(currentUserUID).collection('friends').doc(friendID).get()
+            .then(doc => {
+                if (doc.exists) {
+                    friendNameSpan.textContent = doc.data().name;
+                } else {
+                    friendNameSpan.textContent = 'Unknown';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching friend name:', error);
+            });
+    </script>
+</body>
+</html>

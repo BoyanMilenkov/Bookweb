@@ -70,13 +70,27 @@ async function renderFriends(currentUserUID) {
                 friends.forEach((friend, index) => {
                     const listItem = document.createElement('li');
                     listItem.textContent = friend.name;
+                    
+                    // Create delete button
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = "Delete";
                     deleteButton.addEventListener('click', async () => {
-                        await deleteFriend(currentUserUID, index); // Pass friend index here
+                        await deleteFriend(currentUserUID, index);
                         renderFriends(currentUserUID);
                     });
+                    
+                    // Create chat button
+                    const chatButton = document.createElement('button');
+                    chatButton.textContent = "Chat";
+                    chatButton.addEventListener('click', () => {
+                        startChat(currentUserUID, friend.id);
+                    });
+
+                    // Append buttons to list item
                     listItem.appendChild(deleteButton);
+                    listItem.appendChild(chatButton);
+
+                    // Append list item to friends list container
                     friendsListContainer.appendChild(listItem);
                 });
             } else {
@@ -90,6 +104,12 @@ async function renderFriends(currentUserUID) {
         friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
     }
 }
+
+async function startChat(currentUserUID, friendID) {
+    // Navigate to chat page with necessary parameters
+    window.location.href = `chat.html?currentUserUID=${currentUserUID}&friendID=${friendID}`;
+}
+
 
 async function deleteFriend(currentUserUID, friendIndex) {
     try {
