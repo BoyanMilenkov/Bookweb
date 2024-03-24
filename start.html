@@ -1,124 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Social</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Book Social</h1>
     <nav class="navig">
-        <ul>
-            <li><a id="home" href="start.html">Home</a></li>
-            <li><a id="create-post" href="create-post.html">Create Post</a></li>
-            <li><a id="add-book" href="addbook.html">Add a Book to the Collection</a></li>
-            <li><a id="my-book-list" href="my-book-list.html">My Book List</a></li>
-            <li><a id="friend-list" href="friends-list.html">Friend List</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Genres</a>
-                <div class="dropdown-content">
-                    <button onclick="window.location.href='fantasy.html'">Fantasy</button>
-                    <button onclick="window.location.href='science-fiction.html'">Science Fiction</button>
-                    <button onclick="window.location.href='romance.html'">Romance</button>
-                    <button onclick="window.location.href='horror.html'">Horror</button>
-                    <button onclick="window.location.href='thriller.html'">Thriller</button>
-                    <button onclick="window.location.href='adventure.html'">Adventure</button>
-                    <button onclick="window.location.href='dystopian.html'">Dystopian</button>
-                    <button onclick="window.location.href='historical.html'">Historical</button>
-                    <button onclick="window.location.href='memoir-and-biography.html'">Memoir and Biography</button>
-                </div>
-            </li>
-            <li id="profileLink"><a id="profile" href="profile.html">Profile</a></li>
-            <li id="registerLink"><a id="register" href="register.html">Register</a></li>
-            <li id="loginLink"><a id="login" href="login.html">Login</a></li>
-        </ul>
+      <ul>
+        <li><a id="home" href="start.html">Home</a></li>
+        <li><a id="create-post" href="create-post.html">Create Post</a></li>
+        <li>
+          <a id="add-book" href="addbook.html">Add a Book to the Collection</a>
+        </li>
+        <li><a id="my-book-list" href="my-book-list.html">My Book List</a></li>
+        <li><a id="friend-list" href="friends-list.html">Friend List</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Genres</a>
+          <div class="dropdown-content">
+            <button onclick="window.location.href='fantasy.html'">
+              Fantasy
+            </button>
+            <button onclick="window.location.href='science-fiction.html'">
+              Science Fiction
+            </button>
+            <button onclick="window.location.href='romance.html'">
+              Romance
+            </button>
+            <button onclick="window.location.href='horror.html'">Horror</button>
+            <button onclick="window.location.href='thriller.html'">
+              Thriller
+            </button>
+            <button onclick="window.location.href='adventure.html'">
+              Adventure
+            </button>
+            <button onclick="window.location.href='dystopian.html'">
+              Dystopian
+            </button>
+            <button onclick="window.location.href='historical.html'">
+              Historical
+            </button>
+            <button onclick="window.location.href='memoir-and-biography.html'">
+              Memoir and Biography
+            </button>
+          </div>
+        </li>
+        <li id="profileLink">
+          <a id="profile" href="profile.html">Profile</a>
+        </li>
+        <li id="registerLink">
+          <a id="register" href="register.html">Register</a>
+        </li>
+        <li id="loginLink"><a id="login" href="login.html">Login</a></li>
+      </ul>
     </nav>
 
     <div id="postsContainer">
-        <!-- Posts will be dynamically added here -->
+      <!-- Posts will be dynamically added here -->
     </div>
 
     <footer>
-        <p>&copy; 2023 Book Social</p>
+      <p>&copy; 2023 Book Social</p>
     </footer>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
-            authDomain: "bookweb-99ef4.firebaseapp.com",
-            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
-            projectId: "bookweb-99ef4",
-            storageBucket: "bookweb-99ef4.appspot.com",
-            messagingSenderId: "415676602525",
-            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
-            measurementId: "G-VDFL9E4XYJ"
-        };
-        initializeApp(firebaseConfig);
+      const firebaseConfig = {
+        apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+        authDomain: "bookweb-99ef4.firebaseapp.com",
+        databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+        projectId: "bookweb-99ef4",
+        storageBucket: "bookweb-99ef4.appspot.com",
+        messagingSenderId: "415676602525",
+        appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+        measurementId: "G-VDFL9E4XYJ",
+      };
+      initializeApp(firebaseConfig);
 
-        function updateLinksOnAuth() {
-            const registerButton = document.getElementById('register');
-            const loginButton = document.getElementById('login');
-            const profileButton = document.getElementById('profile');
-            const createPostButton = document.getElementById('create-post');
-            const addBookButton = document.getElementById('add-book');
-            const myBookListButton = document.getElementById('my-book-list');
+      function updateLinksOnAuth() {
+        const registerButton = document.getElementById("register");
+        const loginButton = document.getElementById("login");
+        const profileButton = document.getElementById("profile");
+        const createPostButton = document.getElementById("create-post");
+        const addBookButton = document.getElementById("add-book");
+        const myBookListButton = document.getElementById("my-book-list");
 
-            const user = getAuth().currentUser;
+        const user = getAuth().currentUser;
 
-            if (user) {
-                registerButton.style.display = 'none';
-                loginButton.style.display = 'none';
-                profileButton.style.display = 'block';
-                createPostButton.style.display = 'block';
-                addBookButton.style.display = 'block';
-                myBookListButton.style.display = 'block';
-            } else {
-                registerButton.style.display = 'block';
-                loginButton.style.display = 'block';
-                profileButton.style.display = 'none';
-                createPostButton.style.display = 'none';
-                addBookButton.style.display = 'none';
-                myBookListButton.style.display = 'none';
-            }
+        if (user) {
+          registerButton.style.display = "none";
+          loginButton.style.display = "none";
+          profileButton.style.display = "block";
+          createPostButton.style.display = "block";
+          addBookButton.style.display = "block";
+          myBookListButton.style.display = "block";
+        } else {
+          registerButton.style.display = "block";
+          loginButton.style.display = "block";
+          profileButton.style.display = "none";
+          createPostButton.style.display = "none";
+          addBookButton.style.display = "none";
+          myBookListButton.style.display = "none";
         }
+      }
 
-        // Call the function to check auth status when the DOM content is loaded
+      // Call the function to check auth status when the DOM content is loaded
+      updateLinksOnAuth();
+
+      // Call the function to update links when the auth state changes
+      getAuth().onAuthStateChanged(function (user) {
         updateLinksOnAuth();
+        if (user) {
+          fetchPosts();
+        } else {
+          console.error("User not authenticated.");
+          // Handle user not authenticated, e.g., redirect to login page
+        }
+      });
 
-        // Call the function to update links when the auth state changes
-        getAuth().onAuthStateChanged(function (user) {
-            updateLinksOnAuth();
+      async function fetchPosts() {
+        const firestore = getFirestore();
+        const postsContainer = document.getElementById("postsContainer");
+        postsContainer.innerHTML = ""; // Clear previous posts
+
+        const querySnapshot = await getDocs(collection(firestore, "users"));
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data();
+          const posts = userData.posts;
+
+          // Display posts for each user
+          for (const postId in posts) {
+            if (Object.hasOwnProperty.call(posts, postId)) {
+              const post = posts[postId];
+              const postHTML = `
+                            <div class="post">
+                                <h3>Posted by: <a class="username-link" href="user-profile.html?userId=${doc.id}">${userData.name}</a></h3>
+                                <h2>${postId}</h2>
+                                <p><strong>Author:</strong> ${post.author}</p>
+                                <p><strong>Genre:</strong> ${post.genre}</p>
+                                <p><strong>Review:</strong> ${post.review}</p>
+                            </div>
+                        `;
+              postsContainer.insertAdjacentHTML("beforeend", postHTML);
+            }
+          }
         });
 
-        async function fetchPosts() {
-            const firestore = getFirestore();
-            const postsRef = collection(firestore, 'books');
-            const querySnapshot = await getDocs(postsRef);
-            const postsContainer = document.getElementById('postsContainer');
-
-            querySnapshot.forEach((doc) => {
-                const postData = doc.data();
-                const postHTML = `
-                    <div class="post">
-                        <h2>${postData.title}</h2>
-                        <p><strong>Author:</strong> ${postData.author}</p>
-                        <p><strong>Genre:</strong> ${postData.genre}</p>
-                        <p><strong>Rating:</strong> ${postData.rating}</p>
-                        <p><strong>Review:</strong> ${postData.review}</p>
-                    </div>
-                `;
-                postsContainer.insertAdjacentHTML('beforeend', postHTML);
-            });
-        }
-
-        // Call fetchPosts function when the page loads
-        window.addEventListener('load', fetchPosts);
+        // Redirect to user profile page if the logged-in user clicks their own name
+        document.querySelectorAll(".username-link").forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            const user = getAuth().currentUser;
+            if (user) {
+              const userId = event.target.getAttribute("href").split("=")[1];
+              if (userId === user.uid) {
+                window.location.href = "profile.html";
+              } else {
+                window.location.href = event.target.getAttribute("href"); // Redirect to user-profile.html for other users
+              }
+            }
+          });
+        });
+      }
     </script>
-</body>
+  </body>
 </html>

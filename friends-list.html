@@ -1,147 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Friends List</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <button id="returnHomeButton">Return to Home</button>
-    <header>
+    <link rel="stylesheet" href="friend-list.css" />
+  </head>
+  <body>
+    <div class="container">
+      <button id="returnHomeButton" class="btn">
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+          />
+        </svg>
+        Back home
+      </button>
+      <header class="header">
         <h1>Friends List</h1>
-    </header>
-    <main>
-        <section id="friends-list-container">
-            <h2>My Friends</h2>
-            <ul id="friends-list">
-                <!-- Friends will be dynamically added here -->
-            </ul>
-            <button id="addFriendButton">Add Friend</button>
+      </header>
+      <main class="main">
+        <section id="friends-list-container" class="mainSection">
+          <h2 class="cardHeader">My Friends</h2>
+          <ul id="friends-list" class="firndsList">
+            <!-- Friends will be dynamically added here -->
+          </ul>
+          <button id="addFriendButton" class="btn">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+              />
+            </svg>
+            Add Friend
+          </button>
         </section>
-    </main>
-    <footer>
+      </main>
+      <footer>
         <p>&copy; 2023 Friends List Page</p>
-    </footer>
+      </footer>
+    </div>
+
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        runTransaction,
+        query,
+        where,
+        getDocs,
+        collection,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
-            authDomain: "bookweb-99ef4.firebaseapp.com",
-            databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
-            projectId: "bookweb-99ef4",
-            storageBucket: "bookweb-99ef4.appspot.com",
-            messagingSenderId: "415676602525",
-            appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
-            measurementId: "G-VDFL9E4XYJ"
-};
+      const firebaseConfig = {
+        apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+        authDomain: "bookweb-99ef4.firebaseapp.com",
+        databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
+        projectId: "bookweb-99ef4",
+        storageBucket: "bookweb-99ef4.appspot.com",
+        messagingSenderId: "415676602525",
+        appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
+        measurementId: "G-VDFL9E4XYJ",
+      };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth();
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth();
 
-async function getCurrentUserUID() {
-    try {
-        const user = auth.currentUser;
-        if (user) {
+      async function getCurrentUserUID() {
+        try {
+          const user = auth.currentUser;
+          if (user) {
             return user.uid;
-        } else {
+          } else {
             console.error("User not logged in");
             return null;
+          }
+        } catch (error) {
+          console.error("Error fetching user UID:", error);
+          return null;
         }
-    } catch (error) {
-        console.error("Error fetching user UID:", error);
-        return null;
-    }
-}
+      }
 
-async function renderFriends(currentUserUID) {
-    const friendsListContainer = document.getElementById('friends-list');
+      async function renderFriends(currentUserUID) {
+        const friendsListContainer = document.getElementById("friends-list");
 
-    try {
-        const userDoc = await getDoc(doc(db, 'users', currentUserUID));
-        if (userDoc.exists()) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", currentUserUID));
+          if (userDoc.exists()) {
             const friends = userDoc.data().friends || [];
             friendsListContainer.innerHTML = "";
             if (friends.length > 0) {
-                friends.forEach((friend, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = friend.name;
-                    
-                    // Create delete button
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = "Delete";
-                    deleteButton.addEventListener('click', async () => {
-                        await deleteFriend(currentUserUID, index);
-                        renderFriends(currentUserUID);
-                    });
-                    
-                    // Create chat button
-                    const chatButton = document.createElement('button');
-                    chatButton.textContent = "Chat";
-                    chatButton.addEventListener('click', () => {
-                        startChat(currentUserUID, friend.id);
-                    });
+              friends.forEach((friend, index) => {
+                const listItem = document.createElement("li");
+                const buttonContainer = document.createElement("div");
+                listItem.textContent = friend.name;
 
-                    // Append buttons to list item
-                    listItem.appendChild(deleteButton);
-                    listItem.appendChild(chatButton);
-
-                    // Append list item to friends list container
-                    friendsListContainer.appendChild(listItem);
+                // Create delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.classList.add("btn");
+                deleteButton.classList.add("deleteBtn");
+                deleteButton.addEventListener("click", async () => {
+                  await deleteFriend(currentUserUID, index);
+                  renderFriends(currentUserUID);
                 });
+
+                // Create chat button
+                const chatButton = document.createElement("button");
+                chatButton.textContent = "Chat";
+                chatButton.classList.add("btn");
+                chatButton.classList.add("chatBtn");
+                chatButton.addEventListener("click", () => {
+                  startChat(currentUserUID, friend.name);
+                });
+
+                // Append buttons to list item
+                buttonContainer.appendChild(deleteButton);
+                buttonContainer.appendChild(chatButton);
+                listItem.appendChild(buttonContainer);
+
+                // Append list item to friends list container
+                friendsListContainer.appendChild(listItem);
+              });
             } else {
-                friendsListContainer.innerHTML = "<li>No friends yet</li>";
+              friendsListContainer.innerHTML = "<li>No friends yet</li>";
             }
-        } else {
+          } else {
             friendsListContainer.innerHTML = "<li>User not found</li>";
+          }
+        } catch (error) {
+          console.error("Error fetching friends:", error);
+          friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
         }
-    } catch (error) {
-        console.error("Error fetching friends:", error);
-        friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
-    }
-}
+      }
 
-async function startChat(currentUserUID, friendID) {
-    // Navigate to chat page with necessary parameters
-    window.location.href = `chat.html?currentUserUID=${currentUserUID}&friendID=${friendID}`;
-}
+      async function startChat(currentUserUID, friendName) {
+        try {
+          const friendID = await getFriendID(currentUserUID, friendName);
+          if (friendID) {
+            // Navigate to chat page with necessary parameters
+            window.location.href = `chat.html?currentUserUID=${currentUserUID}&friendID=${friendID}`;
+          } else {
+            console.error("Error starting chat: Friend ID not found");
+          }
+        } catch (error) {
+          console.error("Error starting chat:", error);
+        }
+      }
 
+      async function getFriendID(currentUserUID, friendName) {
+        try {
+          const userSnapshot = await getDocs(collection(db, "users"));
+          let friendID = null;
+          userSnapshot.forEach((doc) => {
+            const userData = doc.data();
+            if (userData.name === friendName && doc.id !== currentUserUID) {
+              friendID = doc.id;
+            }
+          });
+          return friendID;
+        } catch (error) {
+          console.error("Error fetching friend ID:", error);
+          return null;
+        }
+      }
 
-async function deleteFriend(currentUserUID, friendIndex) {
-    try {
-        const userRef = doc(db, 'users', currentUserUID);
-        await runTransaction(db, async (transaction) => {
+      async function deleteFriend(currentUserUID, friendIndex) {
+        try {
+          const userRef = doc(db, "users", currentUserUID);
+          await runTransaction(db, async (transaction) => {
             const userDoc = await transaction.get(userRef);
             const friends = userDoc.data().friends;
-            const updatedFriends = friends.filter((friend, index) => index !== friendIndex);
+            const updatedFriends = friends.filter(
+              (friend, index) => index !== friendIndex
+            );
             transaction.update(userRef, { friends: updatedFriends });
+          });
+        } catch (error) {
+          console.error("Error deleting friend:", error);
+        }
+      }
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const currentUserUID = user.uid;
+          await renderFriends(currentUserUID);
+        } else {
+          console.error("User not logged in");
+        }
+      });
+
+      document
+        .getElementById("addFriendButton")
+        .addEventListener("click", () => {
+          window.location.href = `add-friend.html`;
         });
-    } catch (error) {
-        console.error("Error deleting friend:", error);
-    }
-}
 
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const currentUserUID = user.uid;
-        await renderFriends(currentUserUID);
-    } else {
-        console.error("User not logged in");
-    }
-});
-
-document.getElementById('addFriendButton').addEventListener('click', () => {
-    window.location.href = `add-friend.html`;
-});
-
-document.getElementById('returnHomeButton').addEventListener('click', () => {
-    window.location.href = 'start.html';
-});
-
+      document
+        .getElementById("returnHomeButton")
+        .addEventListener("click", () => {
+          window.location.href = "start.html";
+        });
     </script>
-</body>
+  </body>
 </html>
