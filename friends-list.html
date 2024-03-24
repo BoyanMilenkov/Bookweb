@@ -24,14 +24,12 @@
         <p>&copy; 2023 Friends List Page</p>
     </footer>
     <script type="module">
-        // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Initialize Firebase app
-        const firebaseConfig = {
-            apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
+const firebaseConfig = {
+    apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
             authDomain: "bookweb-99ef4.firebaseapp.com",
             databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
             projectId: "bookweb-99ef4",
@@ -39,80 +37,91 @@
             messagingSenderId: "415676602525",
             appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
             measurementId: "G-VDFL9E4XYJ"
-        };
+};
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(); // Initialize Firebase Auth
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth();
 
-        // Function to fetch the UID of the current user from Firestore
-        async function getCurrentUserUID() {
-            try {
-                const user = auth.currentUser;
-                if (user) {
-                    const userDoc = await getDoc(doc(db, 'users', user.uid));
-                    if (userDoc.exists()) {
-                        return user.uid;
-                    } else {
-                        console.error("User document not found in Firestore");
-                        return null;
-                    }
-                } else {
-                    console.error("User not logged in");
-                    return null;
-                }
-            } catch (error) {
-                console.error("Error fetching user UID:", error);
-                return null;
-            }
+async function getCurrentUserUID() {
+    try {
+        const user = auth.currentUser;
+        if (user) {
+            return user.uid;
+        } else {
+            console.error("User not logged in");
+            return null;
         }
+    } catch (error) {
+        console.error("Error fetching user UID:", error);
+        return null;
+    }
+}
 
-        // Function to render friends list
-        async function renderFriends(currentUserUID) {
-            const friendsListContainer = document.getElementById('friends-list');
+async function renderFriends(currentUserUID) {
+    const friendsListContainer = document.getElementById('friends-list');
 
-            try {
-                const userDoc = await getDoc(doc(db, 'users', currentUserUID)); // Ensure currentUserUID is not null or undefined
-                if (userDoc.exists()) {
-                    const friends = userDoc.data().friends || []; // Ensure friends array exists
-                    friendsListContainer.innerHTML = ""; // Clear previous list
-                    if (friends.length > 0) {
-                        friends.forEach(friend => {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = friend.name;
-                            friendsListContainer.appendChild(listItem);
-                        });
-                    } else {
-                        friendsListContainer.innerHTML = "<li>No friends yet</li>";
-                    }
-                } else {
-                    friendsListContainer.innerHTML = "<li>User not found</li>";
-                }
-            } catch (error) {
-                console.error("Error fetching friends:", error);
-                friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
-            }
-        }
-        
-        // Get current user's UID and call renderFriends function
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const currentUserUID = user.uid;
-                await renderFriends(currentUserUID);
+    try {
+        const userDoc = await getDoc(doc(db, 'users', currentUserUID));
+        if (userDoc.exists()) {
+            const friends = userDoc.data().friends || [];
+            friendsListContainer.innerHTML = "";
+            if (friends.length > 0) {
+                friends.forEach((friend, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = friend.name;
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = "Delete";
+                    deleteButton.addEventListener('click', async () => {
+                        await deleteFriend(currentUserUID, index); // Pass friend index here
+                        renderFriends(currentUserUID);
+                    });
+                    listItem.appendChild(deleteButton);
+                    friendsListContainer.appendChild(listItem);
+                });
             } else {
-                console.error("User not logged in");
+                friendsListContainer.innerHTML = "<li>No friends yet</li>";
             }
-        });
+        } else {
+            friendsListContainer.innerHTML = "<li>User not found</li>";
+        }
+    } catch (error) {
+        console.error("Error fetching friends:", error);
+        friendsListContainer.innerHTML = "<li>Error fetching friends</li>";
+    }
+}
 
-        // Event listener for the "Add Friend" button
-        document.getElementById('addFriendButton').addEventListener('click', () => {
-            window.location.href = `add-friend.html`;
+async function deleteFriend(currentUserUID, friendIndex) {
+    try {
+        const userRef = doc(db, 'users', currentUserUID);
+        await runTransaction(db, async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            const friends = userDoc.data().friends;
+            const updatedFriends = friends.filter((friend, index) => index !== friendIndex);
+            transaction.update(userRef, { friends: updatedFriends });
         });
+    } catch (error) {
+        console.error("Error deleting friend:", error);
+    }
+}
 
-        // Event listener for the return to home button
-        document.getElementById('returnHomeButton').addEventListener('click', () => {
-            window.location.href = 'start.html';
-        });
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        const currentUserUID = user.uid;
+        await renderFriends(currentUserUID);
+    } else {
+        console.error("User not logged in");
+    }
+});
+
+document.getElementById('addFriendButton').addEventListener('click', () => {
+    window.location.href = `add-friend.html`;
+});
+
+document.getElementById('returnHomeButton').addEventListener('click', () => {
+    window.location.href = 'start.html';
+});
+
     </script>
 </body>
 </html>
