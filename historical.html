@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy Books</title>
+    <title>Historical Books</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <button id="returnHomeButton">Return to Home</button>
     <header>
-        <h1>Fantasy Books</h1>
+        <h1>Historical Books</h1>
     </header>
     <main>
         <section id="books-container">
-            <!-- Fantasy books will be displayed here -->
+            <!-- Historical books will be displayed here -->
         </section>
     </main>
     <footer>
@@ -23,7 +23,8 @@
     <!-- Import Firebase modules using direct CDN links -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         // Initialize Firebase with your configuration
         const firebaseConfig = {
@@ -40,17 +41,21 @@
 
         // Initialize Firestore
         const db = getFirestore();
+        const auth = getAuth();
 
-        // Function to fetch and display fantasy books
-        async function displayFantasyBooks() {
+        // Function to fetch and display historical books
+        async function displayHistoricalBooks() {
             const booksContainer = document.getElementById("books-container");
 
-            try {
-                // Reference to the "fantasy" collection in Firestore
-                const fantasyCollection = collection(db, "Historical");
+            // Clear previous content
+            booksContainer.innerHTML = "";
 
-                // Get all documents in the "fantasy" collection
-                const querySnapshot = await getDocs(fantasyCollection);
+            try {
+                // Reference to the "Historical" collection in Firestore
+                const historicalCollection = collection(db, "Historical");
+
+                // Get all documents in the "Historical" collection
+                const querySnapshot = await getDocs(historicalCollection);
 
                 querySnapshot.forEach((doc) => {
                     const bookData = doc.data();
@@ -58,7 +63,7 @@
                     booksContainer.appendChild(bookElement);
                 });
             } catch (error) {
-                console.error("Error getting fantasy books: ", error);
+                console.error("Error getting historical books: ", error);
             }
         }
 
@@ -72,10 +77,50 @@
                 <p>Description: ${bookData.description}</p>
                 <button class="addBookButton">Add</button>
             `;
-            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
-                addBookToList(bookData.title, bookData.author, bookData.description);
-            });
+            
+            // Check if the book is already in the user's collection
+            const user = auth.currentUser;
+            if (user) {
+                const userDocRef = doc(db, 'users', user.uid);
+                getDoc(userDocRef).then((userDocSnapshot) => {
+                    if (userDocSnapshot.exists()) {
+                        const userData = userDocSnapshot.data();
+                        if (userData.books && userData.books.some(userBook => userBook.title === bookData.title)) {
+                            // Book already exists in user's collection, disable the button
+                            const addButton = bookElement.querySelector('.addBookButton');
+                            addButton.disabled = true;
+                            addButton.textContent = "Added";
+                        } else {
+                            // Book doesn't exist in user's collection, add event listener to button
+                            bookElement.querySelector('.addBookButton').addEventListener('click', () => {
+                                addBookToFirestore(bookData);
+                            });
+                        }
+                    }
+                }).catch(error => {
+                    console.error("Error checking user's book collection:", error);
+                });
+            }
+            
             return bookElement;
+        }
+
+        // Function to add a book to the user's collection in Firestore
+        async function addBookToFirestore(bookData) {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, 'users', user.uid);
+                    await updateDoc(userDocRef, {
+                        books: arrayUnion(bookData)
+                    });
+                    console.log("Book added to Firestore!");
+                } catch (error) {
+                    console.error("Error adding book to Firestore:", error);
+                }
+            } else {
+                console.log("User is not logged in");
+            }
         }
 
         // Event listener for the 'Return to Home' button
@@ -83,15 +128,8 @@
             window.location.href = 'start.html';
         });
 
-        // Function to add a book to my-book-list.html
-        function addBookToList(title, author, description) {
-            const bookListContainer = localStorage.getItem('bookList') ? JSON.parse(localStorage.getItem('bookList')) : [];
-            bookListContainer.push({ title, author, description });
-            localStorage.setItem('bookList', JSON.stringify(bookListContainer));
-        }
-
-        // Call the function to display fantasy books when the page loads
-        document.addEventListener("DOMContentLoaded", displayFantasyBooks);
+        // Call the function to display historical books when the page loads
+        document.addEventListener("DOMContentLoaded", displayHistoricalBooks);
     </script>
 </body>
 </html>

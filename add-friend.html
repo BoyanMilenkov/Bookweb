@@ -47,6 +47,7 @@
             console.log("Current user UID:", auth.currentUser.uid); // Debugging statement
 
             const currentUserUID = auth.currentUser.uid;
+            const currentUserName = auth.currentUser.name;
 
             if (!currentUserUID) {
                 console.error("Current user UID is not available.");
@@ -58,6 +59,11 @@
                 return;
             }
 
+            if (friendName === currentUserName) {
+                alert("You cannot befriend yourself.");
+                return;
+            }
+
             // Query the users collection to check if the friend name exists
             const usersRef = collection(db, 'users');
             const userQuery = query(usersRef, where('name', '==', friendName));
@@ -66,6 +72,11 @@
             if (!userSnapshot.empty) {
                 const userDoc = userSnapshot.docs[0]; // Get the first document in the result set
                 const userUID = userDoc.id; // Obtain the user UID from the document ID
+
+                if (userUID === currentUserUID) {
+                    alert("You cannot befriend yourself.");
+                    return;
+                }
 
                 const userRef = doc(db, 'users', currentUserUID);
 

@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Create Post</title>
+    <title>Edit Post</title>
 </head>
 <body>
-    <h1>Create a New Post</h1>
+    <h1>Edit Post</h1>
 
-    <form id="postForm">
-        <label for="author">Author:</label>
-        <input type="text" id="author" required><br>
+    
 
-        <label for="title">Title of the Book:</label>
-        <input type="text" id="title" required><br>
-
+    <form id="editPostForm">
         <label for="review">Review:</label>
         <textarea id="review" required></textarea><br>
 
@@ -32,14 +28,14 @@
             <option value="Dystopian">Dystopian</option>
         </select><br>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Submit Changes</button>
     </form>
 
     <script type="module">
         // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Initialize Firebase with your configuration
         const firebaseConfig = {
@@ -56,49 +52,66 @@
         const firestore = getFirestore(app);
         const auth = getAuth(app);
 
-        // Function to submit the post
-        async function submitPost(event) {
-            event.preventDefault();
-
-            // Get form values
-            const author = document.getElementById('author').value;
-            const title = document.getElementById('title').value;
-            const review = document.getElementById('review').value;
-            const genre = document.getElementById('genre').value;
-
-            // Check if author and title are provided
-            if (!author || !title) {
-                alert("Please provide both author and title!");
-                return;
-            }
+        // Function to pre-fill form fields with existing post details
+        async function prefillForm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('postId');
 
             try {
                 const user = auth.currentUser;
                 if (user) {
-                    // Save post under the currently logged-in user's document
                     const userDocRef = doc(firestore, "users", user.uid);
+                    const userDocSnap = await getDoc(userDocRef);
+                    if (userDocSnap.exists()) {
+                        const userData = userDocSnap.data();
+                        const postData = userData.posts[postId];
+                        document.getElementById('review').value = postData.review;
+                        document.getElementById('genre').value = postData.genre;
+                    } else {
+                        console.log("User document not found.");
+                    }
+                } else {
+                    console.log("User not signed in.");
+                }
+            } catch (error) {
+                console.error("Error prefilling form: ", error);
+            }
+        }
+
+        // Function to submit the edited post
+        async function submitEditedPost(event) {
+            event.preventDefault();
+
+            // Get form values
+            const review = document.getElementById('review').value;
+            const genre = document.getElementById('genre').value;
+
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const userDocRef = doc(firestore, "users", user.uid);
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const postId = urlParams.get('postId');
                     await updateDoc(userDocRef, {
-                        posts: {
-                            [title]: {
-                                author: author,
-                                genre: genre,
-                                review: review
-                            }
-                        }
+                        [`posts.${postId}.review`]: review,
+                        [`posts.${postId}.genre`]: genre
                     }, { merge: true });
-                    alert("Post added successfully!");
-                    window.location.href = 'start.html'; // Redirect to start page after successful submission
+                    alert("Post edited successfully!");
+                    window.location.href = 'start.html'; // Redirect to start page after successful edit
                 } else {
                     alert("User not signed in.");
                 }
             } catch (error) {
-                console.error("Error adding document: ", error);
-                alert("Error adding document. Please try again later.");
+                console.error("Error editing post: ", error);
+                alert("Error editing post. Please try again later.");
             }
         }
 
         // Event listener for form submission
-        document.getElementById('postForm').addEventListener('submit', submitPost);
+        document.getElementById('editPostForm').addEventListener('submit', submitEditedPost);
+
+        // Pre-fill form when the page loads
+        window.addEventListener('DOMContentLoaded', prefillForm);
 
     </script>
 </body>
