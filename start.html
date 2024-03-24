@@ -131,7 +131,6 @@
         }
       });
 
-
       async function fetchPosts() {
         const firestore = getFirestore();
         const postsContainer = document.getElementById("postsContainer");
@@ -179,63 +178,3 @@
     </script>
   </body>
 </html>
-
-        // Call the function to update links when the auth state changes
-        getAuth().onAuthStateChanged(function (user) {
-            updateLinksOnAuth();
-            if (user) {
-                fetchPosts();
-            } else {
-                console.error("User not authenticated.");
-                // Handle user not authenticated, e.g., redirect to login page
-            }
-        });
-
-        async function fetchPosts() {
-            const firestore = getFirestore();
-            const postsContainer = document.getElementById('postsContainer');
-            postsContainer.innerHTML = ''; // Clear previous posts
-
-            const querySnapshot = await getDocs(collection(firestore, 'users'));
-            querySnapshot.forEach(doc => {
-                const userData = doc.data();
-                const posts = userData.posts;
-
-                // Display posts for each user
-                for (const postId in posts) {
-                    if (Object.hasOwnProperty.call(posts, postId)) {
-                        const post = posts[postId];
-                        const postHTML = `
-                            <div class="post">
-                                <h3>Posted by: <a class="username-link" href="user-profile.html?userId=${doc.id}">${userData.name}</a></h3>
-                                <h2>${postId}</h2>
-                                <p><strong>Author:</strong> ${post.author}</p>
-                                <p><strong>Genre:</strong> ${post.genre}</p>
-                                <p><strong>Review:</strong> ${post.review}</p>
-                            </div>
-                        `;
-                        postsContainer.insertAdjacentHTML('beforeend', postHTML);
-                    }
-                }
-            });
-
-            // Redirect to user profile page if the logged-in user clicks their own name
-            document.querySelectorAll('.username-link').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevent default link behavior
-                    const user = getAuth().currentUser;
-                    if (user) {
-                        const userId = event.target.getAttribute('href').split('=')[1];
-                        if (userId === user.uid) {
-                            window.location.href = "profile.html";
-                        } else {
-                            window.location.href = event.target.getAttribute('href'); // Redirect to user-profile.html for other users
-                        }
-                    }
-                });
-            });
-        }
-    </script>
-</body>
-</html>
-
