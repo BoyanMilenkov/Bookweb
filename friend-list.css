@@ -1,0 +1,73 @@
+body{
+    background-color: #333;
+    color: whitesmoke;
+    font-family: sans-serif;
+}
+
+.container{
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.icon{
+    width: 18px;
+    height: 18px;
+}
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: all .2s;
+    align-self: center;
+}
+
+.btn:hover{
+    background-color: #4e4d4d;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.header, .cardHeader{
+    text-align: center;
+    margin: 0;
+}
+
+.header h1{
+    color: #eb5e28;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
+    box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
+    padding: 2rem;
+}
+
+.firndsList{
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.firndsList li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.firndsList li button{
+    width: 100%;
+}
+
+.mainSection{
+    display: flex;
+    flex-direction: column;
+}
