@@ -96,6 +96,7 @@
             if (friendDoc.exists()) {
               const friendName = friendDoc.data().name;
               friendNameSpan.textContent = friendName;
+              console.log("Friend name:", friendName); // Log friend's name
             } else {
               console.error("Friend not found.");
               return;
@@ -112,10 +113,12 @@
               const messages = [];
               snapshot.forEach((doc) => {
                 const data = doc.data();
+                console.log("Message data:", data); // Log message data
                 if (data.participants.includes(friendID)) {
                   messages.push(data);
                 }
               });
+              console.log("Messages:", messages); // Log messages array
               renderChatMessages(messages);
             });
 
@@ -124,13 +127,30 @@
               if (text === "") return;
 
               try {
+                // Fetch the user's document from Firestore
+                const userDocRef = doc(db, "users", currentUserUID);
+                const userDocSnapshot = await getDoc(userDocRef);
+
+                // Retrieve sender name from the user document
+                let senderName = "Anonymous"; // Default to "Anonymous" if sender name is not available
+                if (userDocSnapshot.exists()) {
+                  const userData = userDocSnapshot.data();
+                  if (userData && userData.name) {
+                    senderName = userData.name;
+                  }
+                }
+
+                console.log("Sender Name:", senderName); // Log sender name
+
+                // Add message to the chat collection
                 await addDoc(chatCollectionRef, {
                   text: text,
                   senderID: currentUserUID,
                   timestamp: new Date(),
-                  senderName: user.displayName, // Assuming user has a display name
-                  participants: [currentUserUID, friendID], // Include both participants
+                  senderName: senderName,
+                  participants: [currentUserUID, friendID],
                 });
+
                 messageInput.value = "";
               } catch (error) {
                 console.error("Error sending message:", error);
