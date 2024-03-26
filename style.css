@@ -1,10 +1,9 @@
-
 body {
     margin: 0px;
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #FDB813; /* Orange background color */
-    color: #000; /* Black text color */
+    background-color: #1a1a1a; /* Dark gray background color */
+    color: #ffffff; /* White text color */
 }
 
 h1 {
@@ -18,14 +17,14 @@ h1 {
 
 .navig ul {
     list-style-type: none;
-    background-color: gray;
+    background-color: #4d4d4d; /* Dark gray background color */
     padding: 0px;
     margin: 0px;
     overflow: hidden;
 }
 
 .navig a {
-    color: white;
+    color: #ffffff; /* White text color */
     text-decoration: none;
     padding: 15px;
     display: block;
@@ -33,7 +32,7 @@ h1 {
 }
 
 .navig a:hover {
-    background-color: black;
+    background-color: #333333; /* Darker gray background color on hover */
 }
 
 .navig li {
@@ -49,7 +48,7 @@ h1 {
 .post,
 #user-posts-container .post,
 .post-details {
-    border-top: 1px solid #FFF; /* White border between details */
+    border-top: 1px solid #ffffff; /* White border between details */
     margin-top: 10px;
     padding-top: 10px;
 }
@@ -58,7 +57,7 @@ h1 {
     display: inline-block;
     margin-right: 10px;
     padding-right: 10px;
-    border-right: 1px solid #FFF; /* White border between details */
+    border-right: 1px solid #ffffff; /* White border between details */
 }
 
 .post-details > div:last-child {
@@ -70,8 +69,8 @@ h1 {
 }
 
 .post-actions button {
-    background-color: #FFA500;
-    color: black;
+    background-color: #ffa500; /* Orange button color */
+    color: #000000; /* Black text color */
     padding: 5px 10px;
     font-size: 12px;
     margin-right: 5px;
@@ -81,7 +80,7 @@ h1 {
 }
 
 .post-actions button:hover {
-    background-color: #FF8C00;
+    background-color: #ff8c00; /* Darker orange color on hover */
 }
 .dropdown {
     display: inline-block;
@@ -113,7 +112,7 @@ h1 {
     background-color: #ddd;
 }
 #my-book-list {
-    color: white;
+    color: #ffffff; /* White text color */
     text-decoration: none;
     padding: 15px;
     display: block;
@@ -121,7 +120,7 @@ h1 {
 }
 
 #my-book-list:hover {
-    background-color: black;
+    background-color: #333333; /* Darker gray background color on hover */
 }
 
 #my-book-list {
@@ -134,7 +133,7 @@ h1 {
     height: 50px;
     border-radius: 50%;
     background-color: #007bff; /* Change color as needed */
-    color: #fff;
+    color: #ffffff; /* White text color */
     text-align: center;
     line-height: 50px;
     cursor: pointer;

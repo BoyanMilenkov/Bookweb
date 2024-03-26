@@ -91,29 +91,29 @@
       initializeApp(firebaseConfig);
 
       function updateLinksOnAuth() {
-        const registerButton = document.getElementById("register");
-        const loginButton = document.getElementById("login");
-        const profileButton = document.getElementById("profile");
-        const createPostButton = document.getElementById("create-post");
-        const addBookButton = document.getElementById("add-book");
-        const myBookListButton = document.getElementById("my-book-list");
+        const profileLink = document.getElementById("profileLink");
+        const registerLink = document.getElementById("registerLink");
+        const loginLink = document.getElementById("loginLink");
+        const createPostLink = document.getElementById("create-post");
+        const addBookLink = document.getElementById("add-book");
+        const myBookListLink = document.getElementById("my-book-list");
 
         const user = getAuth().currentUser;
 
         if (user) {
-          registerButton.style.display = "none";
-          loginButton.style.display = "none";
-          profileButton.style.display = "block";
-          createPostButton.style.display = "block";
-          addBookButton.style.display = "block";
-          myBookListButton.style.display = "block";
+          profileLink.style.display = "block";
+          registerLink.style.display = "none";
+          loginLink.style.display = "none";
+          createPostLink.style.display = "block";
+          addBookLink.style.display = "block";
+          myBookListLink.style.display = "block";
         } else {
-          registerButton.style.display = "block";
-          loginButton.style.display = "block";
-          profileButton.style.display = "none";
-          createPostButton.style.display = "none";
-          addBookButton.style.display = "none";
-          myBookListButton.style.display = "none";
+          profileLink.style.display = "none";
+          registerLink.style.display = "block";
+          loginLink.style.display = "block";
+          createPostLink.style.display = "none";
+          addBookLink.style.display = "none";
+          myBookListLink.style.display = "none";
         }
       }
 
@@ -146,14 +146,14 @@
             if (Object.hasOwnProperty.call(posts, postId)) {
               const post = posts[postId];
               const postHTML = `
-                            <div class="post">
-                                <h3>Posted by: <a class="username-link" href="user-profile.html?userId=${doc.id}">${userData.name}</a></h3>
-                                <h2>${postId}</h2>
-                                <p><strong>Author:</strong> ${post.author}</p>
-                                <p><strong>Genre:</strong> ${post.genre}</p>
-                                <p><strong>Review:</strong> ${post.review}</p>
-                            </div>
-                        `;
+                          <div class="post">
+                              <h3>Posted by: <a class="username-link" href="user-profile.html?userId=${doc.id}">${userData.name}</a></h3>
+                              <h2>${postId}</h2>
+                              <p><strong>Author:</strong> ${post.author}</p>
+                              <p><strong>Genre:</strong> ${post.genre}</p>
+                              <p><strong>Review:</strong> ${post.review}</p>
+                          </div>
+                      `;
               postsContainer.insertAdjacentHTML("beforeend", postHTML);
             }
           }
