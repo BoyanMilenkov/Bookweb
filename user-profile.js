@@ -30,6 +30,7 @@ onAuthStateChanged(auth, async (user) => {
                 document.getElementById('email').textContent = userData.email;
                 document.getElementById('bio').textContent = userData.bio || "No bio available.";
                 fetchUserPosts(userId); // Fetch user posts
+                fetchUserBooks(userId); // Fetch user books
             } else {
                 console.log("User document not found");
             }
@@ -41,6 +42,37 @@ onAuthStateChanged(auth, async (user) => {
         window.location.href = "login.html";
     }
 });
+
+async function fetchUserBooks(userId) {
+    const userRef = doc(db, 'users', userId);
+    try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const userBooks = userData.books;
+            const userBooksContainer = document.getElementById('userBooks');
+            userBooksContainer.innerHTML = ''; // Clear previous books
+
+            if (userBooks && userBooks.length > 0) {
+                userBooks.forEach(book => {
+                    const bookHTML = `
+                        <div class="book">
+                            <h3>${book.title}</h3>
+                            <p>Rating: ${book.rating !== null ? book.rating : 'Not rated'}</p>
+                        </div>
+                    `;
+                    userBooksContainer.insertAdjacentHTML('beforeend', bookHTML);
+                });
+            } else {
+                console.log("User has no books.");
+            }
+        } else {
+            console.log("User document not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching user books:", error.message);
+    }
+}
 
 
  async function fetchUserPosts(userId) {

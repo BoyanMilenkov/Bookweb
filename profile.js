@@ -41,6 +41,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
                             document.getElementById('deletePhotoButton').style.display = 'block'; // Show delete button
                         }
                         fetchUserPosts(user.uid); // Fetch user posts
+
+                        fetchUserBooks(user.uid);
                     } else {
                         console.log("User document not found");
                     }
@@ -53,6 +55,29 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
             }
         });
 
+        async function fetchUserBooks(userId) {
+            const userRef = doc(db, 'users', userId);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+              const userData = userDoc.data();
+              const userBooks = userData.books;
+              if (userBooks) {
+                for (const bookData of userBooks) {
+                  const bookHTML = `
+                    <div class="book">
+                      <h3>${bookData.title}</h3>
+                      <p>Rating: ${bookData.rating !== null ? bookData.rating : 'Not rated'}</p>
+                    </div>
+                  `;
+                  document.getElementById('userBooksContainer').insertAdjacentHTML('beforeend', bookHTML);
+                }
+              } else {
+                console.log("User has no books.");
+              }
+            } else {
+              console.log("User document not found.");
+            }
+          }
         // Fetch user posts and display them
         async function fetchUserPosts(userId) {
             const userRef = doc(db, 'users', userId);
