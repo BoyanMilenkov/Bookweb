@@ -94,6 +94,29 @@ main {
     margin-bottom: 5px;
 }
 
+#userBooks {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#userBooks h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.book {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+.book h3 {
+    margin-bottom: 5px;
+}
+
+
 /* Footer Styles */
 footer {
     background-color: #333;

@@ -1,13 +1,15 @@
 body {
     margin: 0px;
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
     text-align: center;
-    background-color: #1a1a1a; /* Dark gray background color */
-    color: #ffffff; /* White text color */
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
 }
 
 h1 {
     text-align: center;
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    color: #4a3f35; /* Dark brown heading color */
 }
 
 .main {
@@ -17,14 +19,14 @@ h1 {
 
 .navig ul {
     list-style-type: none;
-    background-color: #4d4d4d; /* Dark gray background color */
+    background-color: #5d5d5d; /* Dark gray background color reminiscent of leather */
     padding: 0px;
     margin: 0px;
     overflow: hidden;
 }
 
 .navig a {
-    color: #ffffff; /* White text color */
+    color: #f5f0e1; /* Light beige text color */
     text-decoration: none;
     padding: 15px;
     display: block;
@@ -32,7 +34,7 @@ h1 {
 }
 
 .navig a:hover {
-    background-color: #333333; /* Darker gray background color on hover */
+    background-color: #4a3f35; /* Dark brown background color on hover */
 }
 
 .navig li {
@@ -48,7 +50,7 @@ h1 {
 .post,
 #user-posts-container .post,
 .post-details {
-    border-top: 1px solid #ffffff; /* White border between details */
+    border-top: 1px solid #2c241b; /* Dark brown border between details */
     margin-top: 10px;
     padding-top: 10px;
 }
@@ -57,7 +59,7 @@ h1 {
     display: inline-block;
     margin-right: 10px;
     padding-right: 10px;
-    border-right: 1px solid #ffffff; /* White border between details */
+    border-right: 1px solid #2c241b; /* Dark brown border between details */
 }
 
 .post-details > div:last-child {
@@ -69,8 +71,8 @@ h1 {
 }
 
 .post-actions button {
-    background-color: #ffa500; /* Orange button color */
-    color: #000000; /* Black text color */
+    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
+    color: #f5f0e1; /* Light beige text color */
     padding: 5px 10px;
     font-size: 12px;
     margin-right: 5px;
@@ -80,8 +82,9 @@ h1 {
 }
 
 .post-actions button:hover {
-    background-color: #ff8c00; /* Darker orange color on hover */
+    background-color: #5d4635; /* Darker brown color on hover */
 }
+
 .dropdown {
     display: inline-block;
 }
@@ -89,7 +92,7 @@ h1 {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #f5f0e1; /* Light beige background color */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
@@ -109,10 +112,11 @@ h1 {
 }
 
 .dropdown-content button:hover {
-    background-color: #ddd;
+    background-color: #e0d6c8; /* Lighter beige color on hover */
 }
+
 #my-book-list {
-    color: #ffffff; /* White text color */
+    color: #f5f0e1; /* Light beige text color */
     text-decoration: none;
     padding: 15px;
     display: block;
@@ -120,27 +124,30 @@ h1 {
 }
 
 #my-book-list:hover {
-    background-color: #333333; /* Darker gray background color on hover */
+    background-color: #4a3f35; /* Dark brown background color on hover */
 }
 
 #my-book-list {
     float: left;
 }
-/* CSS for circular button */
+
+/* Additional styles for circular button */
 #uploadPhotoButton {
     position: relative;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #007bff; /* Change color as needed */
-    color: #ffffff; /* White text color */
+    background-color: #7b5f4c; /* Brown button color */
+    color: #f5f0e1; /* Light beige text color */
     text-align: center;
     line-height: 50px;
     cursor: pointer;
 }
+
 #uploadPhotoButton:hover {
-    background-color: #0056b3; /* Darker color on hover */
+    background-color: #5d4635; /* Darker brown color on hover */
 }
+
 #photoInput {
     position: absolute;
     width: 100%;
@@ -150,15 +157,12 @@ h1 {
     top: 0;
     left: 0;
 }
+
 #photoButtons {
     text-align: center;
     margin-top: 10px;
 }
 
-
-
-
 #photoButtons button {
     margin: 5px;
-
 }
