@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "add-friend.js",
+  "main": "script.js",
   "dependencies": {
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
@@ -37,9 +37,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node add-friend.js", 
+    "start": "node script.js", 
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build"
+    "build": "webpack --config webpack.config.js && cp -R public/* dist/"
   },
   "keywords": [],
   "author": "",
