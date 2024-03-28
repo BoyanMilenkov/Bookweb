@@ -35,9 +35,11 @@
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^5.91.0"
+  },
   "scripts": {
-    "start": "node script.js", 
+    "start": "node script.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js && cp -R public/* dist/"
   },
