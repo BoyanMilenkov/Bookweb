@@ -37,6 +37,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    
     "start": "node add-friend.js", 
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build"
