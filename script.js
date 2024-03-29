@@ -34,6 +34,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
           loginButton.style.display = "none";
           profileButton.style.display = "block";
           createPostButton.style.display = "block";
+          
           addBookButton.style.display = "block";
           myBookListButton.style.display = "block";
           friendListButton.style.display = "block";
