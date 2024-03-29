@@ -25,19 +25,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
         const createPostButton = document.getElementById("create-post");
         const addBookButton = document.getElementById("add-book");
         const myBookListButton = document.getElementById("my-book-list");
-        const friendListButton = document.getElementById("friends-list");
-
+        const friendListButton = document.getElementById("friend-list"); // Correct ID
+      
         const user = getAuth().currentUser;
-
+      
         if (user) {
           registerButton.style.display = "none";
           loginButton.style.display = "none";
           profileButton.style.display = "block";
           createPostButton.style.display = "block";
-          
           addBookButton.style.display = "block";
           myBookListButton.style.display = "block";
-          friendListButton.style.display = "block";
+          friendListButton.style.display = "block"; // Show friend list button
         } else {
           registerButton.style.display = "block";
           loginButton.style.display = "block";
@@ -45,9 +44,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
           createPostButton.style.display = "none";
           addBookButton.style.display = "none";
           myBookListButton.style.display = "none";
-          friendListButton.style.display = "none";
+          friendListButton.style.display = "none"; // Hide friend list button
         }
       }
+      
+      
+      
 
       // Call the function to check auth status when the DOM content is loaded
       updateLinksOnAuth();
