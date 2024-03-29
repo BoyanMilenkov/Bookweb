@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "script.js",
+  "main": "add-friend.js",
   "dependencies": {
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
@@ -35,15 +35,12 @@
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
   },
-  "devDependencies": {
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
-  },
+  "devDependencies": {},
   "scripts": {
-    "start": "node script.js",
+    "start": "node add-friend.js", 
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cp -R public/* dist/"
-    },
+    "build": "npm run build"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
