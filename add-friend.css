@@ -1,0 +1,64 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
+}
+
+header {
+    background-color: #4a3f35; /* Dark brown header background color */
+    color: #f5f0e1; /* Light beige text color */
+    padding: 20px;
+}
+
+h1 {
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+}
+
+.main {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#add-friend-container {
+    margin-top: 20px;
+}
+
+#add-friend-container h2 {
+    margin-bottom: 10px;
+}
+
+#add-friend-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#add-friend-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#addFriendButton {
+    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
+    color: #f5f0e1; /* Light beige text color */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addFriendButton:hover {
+    background-color: #5d4635; /* Darker brown color on hover */
+}
+
+footer {
+    background-color: #4a3f35; /* Dark brown footer background color */
+    color: #f5f0e1; /* Light beige text color */
+    padding: 10px 20px;
+    text-align: center;
+}

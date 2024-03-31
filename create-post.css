@@ -1,0 +1,58 @@
+/* style.css */
+
+body {
+    margin: 0px;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+    text-align: center;
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    color: #4a3f35; /* Dark brown heading color */
+}
+
+#postForm {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* White background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+select {
+    width: 100%;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
+    color: #f5f0e1; /* Light beige text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #5d4635; /* Darker brown color on hover */
+}

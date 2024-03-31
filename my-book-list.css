@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    background-color: #f5f0e1;
+    color: #2c241b;
+}
+
+h1 {
+    font-family: 'Old Standard TT', serif;
+    color: #4a3f35;
+}
+
+.search-container {
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.main {
+    margin-top: 20px;
+}
+
+.book {
+    border: 1px solid #2c241b;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+}
+
+.book h3 {
+    margin-top: 0;
+    color: #4a3f35;
+}
+
+.book p {
+    color: #2c241b;
+    margin-bottom: 10px;
+}
+
+.ratingDisplay {
+    font-weight: bold;
+    color: #7b5f4c;
+}
+
+.newRatingInput {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.submitRatingButton {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7b5f4c;
+    color: #f5f0e1;
+    cursor: pointer;
+}
+
+.submitRatingButton:hover {
+    background-color: #5d4635;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+footer p {
+    color: #4a3f35;
+}
