@@ -99,6 +99,24 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
             }
         }
 
+        function filterBooks(query) {
+            const books = document.querySelectorAll('.book');
+            books.forEach(book => {
+              const title = book.querySelector('h3').textContent.toLowerCase();
+              if (title.includes(query.toLowerCase())) {
+                book.style.display = 'block';
+              } else {
+                book.style.display = 'none';
+              }
+            });
+          }
+          
+          // Event listener for the search input field
+          document.getElementById('searchInput').addEventListener('input', (event) => {
+            const searchQuery = event.target.value.trim();
+            filterBooks(searchQuery);
+          });
+
         // Event listener for the 'Return to Home' button
         document.getElementById('returnHomeButton').addEventListener('click', () => {
             window.location.href = 'start.html';

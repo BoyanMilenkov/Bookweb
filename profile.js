@@ -62,7 +62,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Function to fetch and display user books
-async function fetchUserBooks(userId) {
+/*async function fetchUserBooks(userId) {
     const userRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userRef);
     if (userDoc.exists()) {
@@ -84,7 +84,7 @@ async function fetchUserBooks(userId) {
     } else {
         console.log("User document not found.");
     }
-}
+}*/
 
 // Function to fetch and display user posts
 async function fetchUserPosts(userId) {

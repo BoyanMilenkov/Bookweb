@@ -113,3 +113,52 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
           });
         });
       }
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if the user is logged in or registered
+        var isLoggedIn = false; // Change this based on your authentication status
+        var isRegistered = false; // Change this based on your registration status
+    
+        // Function to create and display the login message
+        function displayLoginMessage() {
+            // Check if the message already exists
+            if (!document.getElementById("loginMessage")) {
+                var message = document.createElement("div");
+                message.textContent = "Please make an account or log in, through pressing the button on the navigation bar, to access the site";
+                message.id = "loginMessage"; // Assign an id to the message for easy removal
+    
+                // Insert the message before the posts container
+                var postsContainer = document.getElementById("postsContainer");
+                postsContainer.parentNode.insertBefore(message, postsContainer);
+            }
+        }
+    
+        // Function to remove the login message
+        function removeLoginMessage() {
+            var loginMessage = document.getElementById("loginMessage");
+            if (loginMessage) {
+                loginMessage.parentNode.removeChild(loginMessage);
+            }
+        }
+    
+        // Call appropriate functions based on user authentication status
+        if (!isLoggedIn && !isRegistered) {
+            displayLoginMessage();
+        }
+    
+        // Check for changes in authentication status
+        getAuth().onAuthStateChanged(function (user) {
+            if (user) {
+                isLoggedIn = true;
+                removeLoginMessage();
+            } else {
+                isLoggedIn = false;
+                displayLoginMessage();
+            }
+        });
+    });
+    
+    
+    
+    
+    
+    

@@ -27,7 +27,6 @@ onAuthStateChanged(auth, async (user) => {
             if (userDoc.exists()) {
                 const userData = userDoc.data();
                 document.getElementById('name').textContent = userData.name;
-                document.getElementById('email').textContent = userData.email;
                 document.getElementById('bio').textContent = userData.bio || "No bio available.";
                 fetchUserPosts(userId); // Fetch user posts
                 fetchUserBooks(userId); // Fetch user books

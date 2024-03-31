@@ -166,3 +166,12 @@ h1 {
 #photoButtons button {
     margin: 5px;
 }
+.message {
+    padding: 20px;
+    background-color: #f8d7da; /* Red background color (you can change this) */
+    color: #721c24; /* Dark red text color (you can change this) */
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb; /* Red border (you can change this) */
+    font-size: 18px; /* Larger font size */
+    line-height: 6; /* Increased line height for better readability */
+}
