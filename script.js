@@ -26,7 +26,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
         const addBookButton = document.getElementById("add-book");
         const myBookListButton = document.getElementById("my-book-list");
         const friendListButton = document.getElementById("friend-list"); // Correct ID
-      
+        const genresButton = document.getElementById("genres");
+
         const user = getAuth().currentUser;
       
         if (user) {
@@ -37,6 +38,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
           addBookButton.style.display = "block";
           myBookListButton.style.display = "block";
           friendListButton.style.display = "block"; // Show friend list button
+          genresButton.style.display = "block";
         } else {
           registerButton.style.display = "block";
           loginButton.style.display = "block";
@@ -45,6 +47,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
           addBookButton.style.display = "none";
           myBookListButton.style.display = "none";
           friendListButton.style.display = "none"; // Hide friend list button
+          genresButton.style.display = "none";
+
         }
       }
       
