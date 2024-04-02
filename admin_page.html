@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin_page.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Admin Page</h1>
+    </header>
+    <main>
+      <section id="users-table-container">
+        <h2>User Information</h2>
+        <table id="users-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Password</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <!-- User information will be dynamically added here -->
+          </tbody>
+        </table>
+      </section>
+      <section id="genres-filter-container">
+        <h2>Filter by Genre</h2>
+        <select id="genre-filter">
+          <option value="all">All Genres</option>
+          <option value="adventure">Adventure</option>
+          <option value="dystopian">Dystopian</option>
+          <option value="fantasy">Fantasy</option>
+          <option value="historical">Historical</option>
+          <option value="horror">Horror</option>
+          <option value="memoir">Memoir and Biography</option>
+          <option value="romance">Romance</option>
+          <option value="sciencefiction">Science Fiction</option>
+          <option value="thriller">Thriller</option>
+        </select>
+      </section>
+      <section id="genres-table-container">
+        <h2>Books by Genre</h2>
+        <!-- Tables for each genre will be dynamically added here -->
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 Book Website</p>
+    </footer>
+    <script src="admin_page.js" type="module"></script>
+  </body>
+</html>

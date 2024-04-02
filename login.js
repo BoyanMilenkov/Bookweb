@@ -77,3 +77,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 document.getElementById('returnHomeButton').addEventListener('click', () => {
     window.location.href = 'start.html';
 });
+// Event listener for the admin button
+document.getElementById('adminButton').addEventListener('click', () => {
+    window.location.href = 'admin_login.html';
+});

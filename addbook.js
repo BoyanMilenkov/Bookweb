@@ -20,51 +20,52 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 
         // Function to submit the book to Firestore
         // Function to submit the book to Firestore
-async function submitBook(event) {
-    event.preventDefault();
-
-    // Get form values
-    const author = document.getElementById('author').value;
-    const title = document.getElementById('title').value;
-    const genre = document.getElementById('genre').value;
-    const description = document.getElementById('description').value;
-
-    // Define a mapping of genres to collection names
-    const genreToCollection = {
-        "thriller": "Thriller",
-        "fantasy": "Fantasy",
-        "horror": "Horror",
-        "historical": "Historical",
-        "adventure": "Adventure",
-        "romance": "Romance",
-        "science-fiction": "ScienceFiction",
-        "memoir-and-biography": "Memoir and Biography",
-        "dystopian": "Dystopian"
-        // Add more mappings for other genres if needed
-    };
-
-    // Check if the selected genre has a corresponding collection
-    if (genreToCollection.hasOwnProperty(genre)) {
-        try {
-            // Add a new document with a generated ID to the corresponding collection
-            await addDoc(collection(db, genreToCollection[genre]), {
-                author: author,
-                title: title,
-                description: description
-            });
-            
-            alert("Book added successfully!");
-            // Optionally, redirect the user to another page or perform other actions
-        } catch (error) {
-            console.error("Error adding document: ", error);
-            alert("Error adding document. Please try again later.");
+        async function submitBook(event) {
+            event.preventDefault();
+        
+            // Get form values
+            const author = document.getElementById('author').value;
+            const title = document.getElementById('title').value;
+            const genre = document.getElementById('genre').value;
+            const description = document.getElementById('description').value;
+        
+            // Define a mapping of genres to collection names
+            const genreToCollection = {
+                "thriller": "Thriller",
+                "fantasy": "Fantasy",
+                "horror": "Horror",
+                "historical": "Historical",
+                "adventure": "Adventure",
+                "romance": "Romance",
+                "science-fiction": "ScienceFiction",
+                "memoir-and-biography": "Memoir and Biography",
+                "dystopian": "Dystopian"
+                // Add more mappings for other genres if needed
+            };
+        
+            // Check if the selected genre has a corresponding collection
+            if (genreToCollection.hasOwnProperty(genre)) {
+                try {
+                    // Add a new document with a generated ID to the corresponding collection
+                    await addDoc(collection(db, genreToCollection[genre]), {
+                        author: author,
+                        title: title,
+                        genre: genre, // Adding genre field
+                        description: description
+                    });
+                    
+                    alert("Book added successfully!");
+                    // Optionally, redirect the user to another page or perform other actions
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    alert("Error adding document. Please try again later.");
+                }
+            } else {
+                // Display an error message if the selected genre does not have a corresponding collection
+                alert("No collection found for the selected genre.");
+            }
         }
-    } else {
-        // Display an error message if the selected genre does not have a corresponding collection
-        alert("No collection found for the selected genre.");
-    }
-}
-
+        
 
 
         // Add event listener for form submission

@@ -79,3 +79,16 @@ footer {
 footer p {
     color: #4a3f35;
 }
+button#adminButton {
+    background-color: #7b5f4c;
+    color: #f5f0e1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button#adminButton:hover {
+    background-color: #5d4635;
+}

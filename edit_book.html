@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="edit_book.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Edit Book Description</h1>
+    </header>
+    <main>
+      <form id="edit-book-form">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+        <button type="submit">Update Description</button>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2023 Book Website</p>
+    </footer>
+    <script
+      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
+      type="module"
+    ></script>
+    <script
+      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+      type="module"
+    ></script>
+    <script src="edit_book.js" type="module"></script>
+  </body>
+</html>
