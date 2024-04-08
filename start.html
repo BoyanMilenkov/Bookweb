@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Social</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>Book Social</h1>
@@ -58,19 +54,40 @@
         <li id="registerLink">
           <a id="register" href="register.html">Register</a>
         </li>
-        <li id="loginLink"><a id="login" href="login.html">Login</a></li>
+        <li id="loginLink">
+          <a id="login" href="login.html">Login</a>
+        </li>
       </ul>
     </nav>
 
+    <!-- Filter dropdown menu -->
+    <div class="filter-container">
+      <label for="genre-filter">Filter by Genre:</label>
+      <select id="genre-filter" onchange="applyFilter(this.value)">
+        <option value="">All Genres</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="science-fiction">Science Fiction</option>
+        <option value="romance">Romance</option>
+        <option value="horror">Horror</option>
+        <option value="thriller">Thriller</option>
+        <option value="adventure">Adventure</option>
+        <option value="dystopian">Dystopian</option>
+        <option value="historical">Historical</option>
+        <option value="memoir-and-biography">Memoir and Biography</option>
+      </select>
+    </div>
+
+    <!-- Container for posts -->
     <div id="postsContainer">
       <!-- Posts will be dynamically added here -->
     </div>
 
+    <!-- Footer -->
     <footer>
       <p>&copy; 2023 Book Social</p>
     </footer>
 
+    <!-- Include your JavaScript file -->
     <script type="module" src="script.js"></script>
-    <!-- Include script.js file -->
   </body>
 </html>
