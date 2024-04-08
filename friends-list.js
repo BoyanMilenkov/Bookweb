@@ -256,3 +256,6 @@ onAuthStateChanged(auth, async (user) => {
     console.error("User not logged in");
   }
 });
+document.getElementById("addFriendButton").addEventListener("click", () => {
+  window.location.href = "add-friend.html";
+});
