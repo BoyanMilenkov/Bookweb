@@ -28,33 +28,41 @@
       <header class="header">
         <h1>Friends List</h1>
       </header>
+      <div class="add-friend-button-container">
+        <button class="btn" id="addFriendButton">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+            />
+          </svg>
+          Add Friend
+        </button>
+      </div>
       <main class="main">
-        <section id="friends-list-container" class="mainSection">
+        <section class="mainSection" id="suggested-friends-container">
+          <h2 class="cardHeader">Suggested Friends</h2>
+          <ul class="suggestedFriendsList" id="suggested-friends-list">
+            <!-- Suggested friends will be dynamically added here -->
+          </ul>
+        </section>
+        <section class="mainSection" id="friends-container">
           <h2 class="cardHeader">My Friends</h2>
-          <ul id="friends-list" class="friendsList">
+          <ul class="friendsList" id="friends-list">
             <!-- Friends will be dynamically added here -->
           </ul>
-          <button id="addFriendButton" class="btn">
-            <svg
-              class="icon"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
-              />
-            </svg>
-            Add Friend
-          </button>
         </section>
-        <section id="requests-container" class="mainSection">
+        <section class="mainSection" id="requests-container">
           <h2 class="cardHeader">Friend Requests</h2>
-          <ul id="requests-list" class="requestsList">
+          <ul class="requestsList" id="requests-list">
             <!-- Friend requests will be dynamically added here -->
           </ul>
         </section>

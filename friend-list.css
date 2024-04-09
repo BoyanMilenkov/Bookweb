@@ -1,20 +1,20 @@
-body{
+body {
     background-color: #333;
     color: whitesmoke;
     font-family: sans-serif;
 }
 
-.container{
+.container {
     max-width: 80%;
     margin: 0 auto;
 }
 
-.icon{
+.icon {
     width: 18px;
     height: 18px;
 }
 
-.btn{
+.btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,50 +24,87 @@ body{
     align-self: center;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: #4e4d4d;
     color: whitesmoke;
     cursor: pointer;
 }
 
-.header, .cardHeader{
+.header,
+.cardHeader {
     text-align: center;
     margin: 0;
 }
 
-.header h1{
+.header h1 {
     color: #eb5e28;
 }
 
-.main{
+.cardHeader {
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
-    -moz-box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
-    box-shadow: 0px 0px 3px 3px rgba(255,255,255,1);
-    padding: 2rem;
 }
 
-.firndsList{
+.main {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+}
+
+.suggestedFriendsList,
+.friendsList,
+.requestsList {
     list-style: none;
     padding: 0;
     display: grid;
     gap: 1rem;
 }
 
-.firndsList li{
+.suggestedFriendsList li,
+.friendsList li,
+.requestsList li {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.firndsList li button{
+.suggestedFriendsList li button,
+.friendsList li button,
+.requestsList li button {
     width: 100%;
 }
 
-.mainSection{
+.mainSection {
     display: flex;
     flex-direction: column;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1; /* Allow sections to grow */
+    margin-top: 20px; /* Add margin-top for spacing */
 }
+
+#suggested-friends-container,
+#friends-container,
+#requests-container {
+    width: calc(33.33% - 10px); /* Adjust width to fit three sections side by side with spacing */
+    margin-right: 10px; /* Add margin between sections */
+}
+
+.add-friend-button-container {
+    width: 100%; /* Make container full width */
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px; /* Add margin-top for spacing */
+}
+.smallBtn {
+    font-size: 0.8rem; /* Adjust font size */
+    padding: 0.2rem 0.5rem; /* Adjust padding */
+    width: auto; /* Adjust width */
+    height: auto; /* Adjust height */
+}
+
+
+
+

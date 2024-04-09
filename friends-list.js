@@ -88,21 +88,24 @@ async function renderFriendRequests(currentUserUID) {
   const requestsListContainer = document.getElementById("requests-list");
 
   try {
+    // Clear previous requests from the UI
+    requestsListContainer.innerHTML = "";
+
     // Get the current user's document
     const currentUserDoc = await getDoc(doc(db, "users", currentUserUID));
     if (currentUserDoc.exists()) {
       const friendRequests = currentUserDoc.data().friendRequests || [];
-      requestsListContainer.innerHTML = "";
       if (friendRequests.length > 0) {
         // Loop through each friend request
-        for (const senderUID of friendRequests) {
+        for (const friendRequest of friendRequests) {
+          const senderUID = friendRequest.senderUID;
           // Fetch sender's name based on their UID
           const senderDoc = await getDoc(doc(db, "users", senderUID));
           if (senderDoc.exists()) {
             const senderName = senderDoc.data().name;
             // Create list item with sender's name and buttons for accepting or declining
             const listItem = document.createElement("li");
-            listItem.textContent = senderName;
+            listItem.textContent = `${senderName} has sent you a friend request`;
 
             // Create accept button
             const acceptButton = document.createElement("button");
@@ -145,7 +148,6 @@ async function renderFriendRequests(currentUserUID) {
 }
 
 // Function to handle accepting or declining friend requests
-// Function to handle accepting or declining friend requests
 async function handleFriendRequest(currentUserUID, senderUID, accept) {
   try {
     const currentUserRef = doc(db, "users", currentUserUID);
@@ -160,7 +162,7 @@ async function handleFriendRequest(currentUserUID, senderUID, accept) {
         const senderData = senderDoc.data();
 
         // Remove sender's ID from friend requests
-        const updatedFriendRequests = currentUserData.friendRequests.filter((id) => id !== senderUID);
+        const updatedFriendRequests = currentUserData.friendRequests.filter((request) => request.senderUID !== senderUID);
 
         if (accept) {
           // Add sender to current user's friends
@@ -187,7 +189,6 @@ async function handleFriendRequest(currentUserUID, senderUID, accept) {
     console.error("Error handling friend request:", error);
   }
 }
-
 
 // Function to delete friend
 async function deleteFriend(currentUserUID, friendIndex) {
@@ -239,23 +240,87 @@ async function getFriendID(currentUserUID, friendName) {
   }
 }
 
+// Function to render suggested friends
+async function renderSuggestedFriends(currentUserUID) {
+  const suggestedFriendsListContainer = document.getElementById("suggested-friends-list");
+
+  try {
+    // Fetch all users except the current user
+    const usersSnapshot = await getDocs(collection(db, "users"));
+    const currentUserFriends = (await getDoc(doc(db, "users", currentUserUID))).data().friends || [];
+    
+    suggestedFriendsListContainer.innerHTML = "";
+    
+    usersSnapshot.forEach((userDoc) => {
+      const userData = userDoc.data();
+      const userID = userDoc.id;
+
+      // Check if the user is not the current user and not already a friend
+      if (userID !== currentUserUID && !currentUserFriends.some(friend => friend.uid === userID)) {
+        const listItem = document.createElement("li");
+        const addButton = document.createElement("button");
+        
+        addButton.textContent = "Send Request";
+        addButton.classList.add("btn");
+        addButton.classList.add("smallBtn"); // Add class for small button
+        addButton.addEventListener("click", async () => {
+          await sendFriendRequest(currentUserUID, userID);
+          renderSuggestedFriends(currentUserUID);
+        });
+        
+        listItem.textContent = userData.name;
+        listItem.appendChild(addButton);
+        suggestedFriendsListContainer.appendChild(listItem);
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching suggested friends:", error);
+    suggestedFriendsListContainer.innerHTML = "<li>Error fetching suggested friends</li>";
+  }
+}
+
+// Function to send friend request
+async function sendFriendRequest(currentUserUID, recipientUID) {
+  try {
+    const recipientRef = doc(db, "users", recipientUID);
+    const currentUserDoc = await getDoc(doc(db, "users", currentUserUID));
+
+    if (currentUserDoc.exists()) {
+      const currentUserData = currentUserDoc.data();
+      const updatedFriendRequests = [...(currentUserData.friendRequests || []), { senderUID: currentUserUID, recipientUID }];
+      await runTransaction(db, async (transaction) => {
+        transaction.update(recipientRef, { friendRequests: updatedFriendRequests });
+      });
+      
+      // Show a success message after sending the friend request
+      window.alert("Friend request sent successfully!");
+    }
+  } catch (error) {
+    console.error("Error sending friend request:", error);
+    // Show an error message if there's an issue with sending the friend request
+    window.alert("Error sending friend request. Please try again later.");
+  }
+}
+
 // Event listener for Return Home button
 document.getElementById("returnHomeButton").addEventListener("click", () => {
   window.location.href = "start.html";
 });
 
-// Listen for authentication state changes and render friends and friend requests
+// Listen for authentication state changes and render friends, friend requests, and suggested friends
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const currentUserUID = user.uid;
     await Promise.all([
       renderFriends(currentUserUID),
-      renderFriendRequests(currentUserUID)
+      renderFriendRequests(currentUserUID),
+      renderSuggestedFriends(currentUserUID)
     ]);
   } else {
     console.error("User not logged in");
   }
 });
+
 document.getElementById("addFriendButton").addEventListener("click", () => {
   window.location.href = "add-friend.html";
 });
