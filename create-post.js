@@ -6,6 +6,10 @@ import {
   doc,
   setDoc,
   getDoc,
+  collection,
+  getDocs,
+  query,
+  where,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Initialize Firebase with your configuration
@@ -24,19 +28,39 @@ const firestore = getFirestore(app);
 const auth = getAuth(app);
 
 // Function to validate genre
-function validateGenre(genre) {
-  const validGenres = [
-    "Adventure",
-    "Dystopian",
-    "Fantasy",
-    "Historical",
-    "Horror",
-    "Memoir and Biography",
-    "Romance",
-    "ScienceFiction",
-    "Thriller"
-  ];
-  return validGenres.includes(genre);
+async function validateGenre(genre) {
+  try {
+    const validCollections = [
+      "Adventure",
+      "Dystopian",
+      "Fantasy",
+      "Historical",
+      "Horror",
+      "Memoir and Biography",
+      "Romance",
+      "ScienceFiction",
+      "Thriller"
+    ];
+
+    // Check if the selected genre matches any of the collections
+    return validCollections.includes(genre);
+  } catch (error) {
+    console.error("Error validating genre:", error);
+    return false;
+  }
+}
+
+// Function to check if the book exists in Firestore
+async function bookExists(title) {
+  try {
+    const booksCollectionRef = collection(firestore, "books");
+    const q = query(booksCollectionRef, where("title", "==", title));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  } catch (error) {
+    console.error("Error checking book existence:", error);
+    return false;
+  }
 }
 
 // Function to submit the post
@@ -56,8 +80,14 @@ async function submitPost(event) {
   }
 
   // Validate genre
-  if (!validateGenre(genre)) {
+  if (!(await validateGenre(genre))) {
     alert("Please select a valid genre!");
+    return;
+  }
+
+  // Check if the book exists
+  if (!(await bookExists(title))) {
+    alert("The book does not exist in our database!");
     return;
   }
 
