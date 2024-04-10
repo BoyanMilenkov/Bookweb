@@ -23,19 +23,41 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 const auth = getAuth(app);
 
+// Function to validate genre
+function validateGenre(genre) {
+  const validGenres = [
+    "Adventure",
+    "Dystopian",
+    "Fantasy",
+    "Historical",
+    "Horror",
+    "Memoir and Biography",
+    "Romance",
+    "ScienceFiction",
+    "Thriller"
+  ];
+  return validGenres.includes(genre);
+}
+
 // Function to submit the post
 async function submitPost(event) {
   event.preventDefault();
 
   // Get form values
-  const author = document.getElementById("author").value;
-  const title = document.getElementById("title").value;
-  const review = document.getElementById("review").value;
-  const genre = document.getElementById("genre").value;
+  const author = document.getElementById("author").value.trim();
+  const title = document.getElementById("title").value.trim();
+  const review = document.getElementById("review").value.trim();
+  const genre = document.getElementById("genre").value.trim();
 
   // Check if author and title are provided
   if (!author || !title) {
     alert("Please provide both author and title!");
+    return;
+  }
+
+  // Validate genre
+  if (!validateGenre(genre)) {
+    alert("Please select a valid genre!");
     return;
   }
 
