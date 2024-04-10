@@ -61,31 +61,6 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// Function to fetch and display user books
-/*async function fetchUserBooks(userId) {
-    const userRef = doc(db, 'users', userId);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const userBooks = userData.books;
-        if (userBooks) {
-            for (const bookData of userBooks) {
-                const bookHTML = `
-                    <div class="book">
-                        <h3>${bookData.title}</h3>
-                        <p>Rating: ${bookData.rating !== null ? bookData.rating : 'Not rated'}</p>
-                    </div>
-                `;
-                document.getElementById('userBooksContainer').insertAdjacentHTML('beforeend', bookHTML);
-            }
-        } else {
-            console.log("User has no books.");
-        }
-    } else {
-        console.log("User document not found.");
-    }
-}*/
-
 // Function to fetch and display user posts
 async function fetchUserPosts(userId) {
     const userRef = doc(db, 'users', userId);

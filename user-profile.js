@@ -3,7 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
     authDomain: "bookweb-99ef4.firebaseapp.com",
@@ -13,7 +12,6 @@ const firebaseConfig = {
     appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
     measurementId: "G-VDFL9E4XYJ"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -28,6 +26,11 @@ onAuthStateChanged(auth, async (user) => {
                 const userData = userDoc.data();
                 document.getElementById('name').textContent = userData.name;
                 document.getElementById('bio').textContent = userData.bio || "No bio available.";
+                
+                // Display the profile picture
+                const profilePicture = userData.photoURL || 'default-profile-picture.jpg'; // Default picture if not available
+                document.getElementById('profilePicture').src = profilePicture;
+                
                 fetchUserPosts(userId); // Fetch user posts
                 fetchUserBooks(userId); // Fetch user books
             } else {
@@ -73,8 +76,7 @@ async function fetchUserBooks(userId) {
     }
 }
 
-
- async function fetchUserPosts(userId) {
+async function fetchUserPosts(userId) {
     const userRef = doc(db, 'users', userId);
     try {
         const userDoc = await getDoc(userRef);
@@ -83,7 +85,6 @@ async function fetchUserBooks(userId) {
             const userPosts = userData.posts;
             const userPostsContainer = document.getElementById('userPostsContainer');
             userPostsContainer.innerHTML = ''; // Clear previous posts
-
 
             if (userPosts) {
                 for (const postId in userPosts) {
