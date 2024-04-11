@@ -50,15 +50,15 @@ async function validateGenre(genre) {
   }
 }
 
-// Function to check if the book exists in Firestore
-async function bookExists(title) {
+// Function to check if the book exists in the correct genre collection
+async function bookInCorrectGenre(title, genre) {
   try {
-    const booksCollectionRef = collection(firestore, "books");
-    const q = query(booksCollectionRef, where("title", "==", title));
+    const genreCollectionRef = collection(firestore, genre);
+    const q = query(genreCollectionRef, where("title", "==", title));
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (error) {
-    console.error("Error checking book existence:", error);
+    console.error("Error checking book in correct genre:", error);
     return false;
   }
 }
@@ -85,9 +85,9 @@ async function submitPost(event) {
     return;
   }
 
-  // Check if the book exists
-  if (!(await bookExists(title))) {
-    alert("The book does not exist in our database!");
+  // Check if the book exists in the correct genre
+  if (!(await bookInCorrectGenre(title, genre))) {
+    alert("The book doesn't exist in our database!");
     return;
   }
 
