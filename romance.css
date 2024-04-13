@@ -1,0 +1,110 @@
+/* styles.css */
+
+/* Body styles */
+body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    background-color: #fde6e6; /* Soft pink background */
+    margin: 0;
+    padding: 0;
+    color: #4d4d4d; /* Dark gray text */
+  }
+  
+  /* Header styles */
+  header {
+    background-color: #ffcccc; /* Light pink header */
+    color: #660033; /* Deep pink text */
+    padding: 20px;
+    text-align: center;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  
+  /* Main styles */
+  main {
+    padding: 20px;
+  }
+  
+  /* Book container styles */
+  #books-container {
+    margin-top: 20px;
+  }
+  
+  /* Book styles */
+  .book {
+    background-color: #fff; /* White book background */
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .book h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #660033; /* Deep pink book title */
+  }
+  
+  .book p {
+    margin: 0;
+    font-size: 1rem;
+    color: #4d4d4d; /* Dark gray book text */
+  }
+  
+  .book .addBookButton {
+    background-color: #ff6666; /* Pink button */
+    color: #fff; /* White button text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book .addBookButton:hover {
+    background-color: #ff4d4d; /* Darker pink on hover */
+  }
+  
+  .book .addBookButton:disabled {
+    background-color: #ccc; /* Grayed out button */
+    cursor: not-allowed;
+  }
+  
+  /* Footer styles */
+  footer {
+    background-color: #ffcccc; /* Light pink footer */
+    color: #660033; /* Deep pink footer text */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  footer p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+  
+  /* Button to return home styles */
+  #returnHomeButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #ff6666; /* Pink button */
+    color: #fff; /* White button text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #returnHomeButton:hover {
+    background-color: #ff4d4d; /* Darker pink on hover */
+  }
+  
