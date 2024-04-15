@@ -2,108 +2,107 @@
 
 /* Body styles */
 body {
-    font-family: 'Garamond', serif; /* Garamond font for historical vibe */
-    background-color: #f2e6d9; /* Antique paper background */
-    color: #333; /* Dark text */
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Header styles */
-  header {
-    background-color: #6c4f33; /* Ancient scroll header background */
-    color: #fff; /* White header text */
-    padding: 20px;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 3rem;
-  }
-  
-  /* Main styles */
-  main {
-    padding: 20px;
-  }
-  
-  /* Book container styles */
-  #books-container {
-    margin-top: 20px;
-  }
-  
-  /* Book styles */
-  .book {
-    background-color: #f5deb3; /* Light wheat book background */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
-  }
-  
-  .book h3 {
-    margin-top: 0;
-    font-size: 1.8rem;
-    color: #6c4f33; /* Ancient scroll title */
-  }
-  
-  .book p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #333; /* Dark gray book text */
-  }
-  
-  .book .addBookButton {
-    background-color: #6c4f33; /* Ancient scroll button background */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .book .addBookButton:hover {
-    background-color: #8b6914; /* Darker ancient scroll on hover */
-  }
-  
-  .book .addBookButton:disabled {
-    background-color: #ccc; /* Light gray button when disabled */
-    cursor: not-allowed;
-  }
-  
-  /* Footer styles */
-  footer {
-    background-color: #6c4f33; /* Ancient scroll footer background */
-    color: #fff; /* White footer text */
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  footer p {
-    margin: 0;
-    font-size: 0.8rem;
-  }
-  
-  /* Button to return home styles */
-  #returnHomeButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background-color: #6c4f33; /* Ancient scroll button background */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #returnHomeButton:hover {
-    background-color: #8b6914; /* Darker ancient scroll on hover */
-  }
-  
+  font-family: 'Garamond', serif; /* Garamond font for historical vibe */
+  background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+  color: #2c241b; /* Dark brown text */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: #4a3f35; /* Dark brown header */
+  color: #f5f0e1; /* Light text */
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+/* Main styles */
+main {
+  padding: 20px;
+}
+
+/* Book container styles */
+#books-container {
+  margin-top: 20px;
+}
+
+/* Book styles */
+.book {
+  background-color: #f5f0e1; /* Light beige book background */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.book h3 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #4a3f35; /* Dark brown book title */
+}
+
+.book p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #555; /* Dark gray book text */
+}
+
+.book .addBookButton {
+  background-color: #7b5f4c; /* Brown button */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book .addBookButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}
+
+.book .addBookButton:disabled {
+  background-color: #555; /* Dark gray button when disabled */
+  cursor: not-allowed;
+}
+
+/* Footer styles */
+footer {
+  background-color: #4a3f35; /* Dark brown footer */
+  color: #f5f0e1; /* Light text */
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* Button to return home styles */
+#returnHomeButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #7b5f4c; /* Brown button */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#returnHomeButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}

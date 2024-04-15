@@ -2,109 +2,113 @@
 
 /* Body styles */
 body {
-    font-family: 'Garamond', serif; /* Fantasy-themed serif font */
-    background-color: #f9f7f1; /* Light background */
-    color: #333; /* Dark text */
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Header styles */
-  header {
-    background-color: #663399; /* Royal purple header background */
-    color: #fff; /* White header text */
-    padding: 20px;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 3rem;
-  }
-  
-  /* Main styles */
-  main {
-    padding: 20px;
-  }
-  
-  /* Book container styles */
-  #books-container {
-    margin-top: 20px;
-    float: left; /* Move the container to the left */
-    width: 70%; /* Adjust width */
-  }
-  
-  /* Book styles */
-  .book {
-    background-color: #ffffff; /* White book background */
-    border: 1px solid #663399; /* Purple border */
-    border-radius: 10px;
-    padding: 20px;
-    width: 80%; /* Adjust width to fit the content */
-    margin: 0 auto 20px; /* Center the books and add space between them */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
-  }
-  
-  .book h3 {
-    margin-top: 0;
-    font-size: 1.8rem;
-    color: #663399; /* Dark purple title */
-  }
-  
-  .book p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #333; /* Dark gray book text */
-    text-align: left; /* Align text to the left */
-  }
-  
-  .book .addBookButton {
-    background-color: #663399; /* Purple button background */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .book .addBookButton:hover {
-    background-color: #4b0082; /* Darker purple on hover */
-  }
-  
-  .book .addBookButton:disabled {
-    background-color: #ccc; /* Light gray button when disabled */
-    cursor: not-allowed;
-  }
-  
-  /* Footer styles */
-  footer {
-    background-color: #663399; /* Dark purple footer background */
-    color: #fff; /* White footer text */
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  footer p {
-    margin: 0;
-    font-size: 0.8rem;
-  }
-  
-  /* Button to return home styles */
-  #returnHomeButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background-color: #663399; /* Dark purple button background */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #returnHomeButton:hover {
-    background-color: #4b0082; /* Darker purple on hover */
-  }
-  
+  font-family: 'Garamond', serif; /* Fantasy-themed serif font */
+  background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+  color: #2c241b; /* Dark brown text */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: #4a3f35; /* Dark brown header background */
+  color: #f5f0e1; /* Light text */
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+/* Main styles */
+main {
+  padding: 20px;
+}
+
+/* Book container styles */
+#books-container {
+  margin-top: 20px;
+  float: left; /* Move the container to the left */
+  width: 70%; /* Adjust width */
+}
+
+/* Book styles */
+.book {
+  background-color: #f5f0e1; /* Light beige book background */
+  border: 1px solid #4a3f35; /* Dark brown border */
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%; /* Adjust width to fit the content */
+  margin: 0 auto 20px; /* Center the books and add space between them */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.book h3 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #4a3f35; /* Dark brown title */
+}
+
+.book p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #555; /* Dark gray book text */
+  text-align: left; /* Align text to the left */
+}
+
+.book .addBookButton {
+  background-color: #7b5f4c; /* Brown button background */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book .addBookButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}
+
+.book .addBookButton:disabled {
+  background-color: #555; /* Dark gray button when disabled */
+  cursor: not-allowed;
+}
+
+/* Footer styles */
+/* Footer styles */
+footer {
+  background-color: #4a3f35; /* Dark brown footer background */
+  color: #f5f0e1; /* Light text */
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+
+footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* Button to return home styles */
+#returnHomeButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #7b5f4c; /* Brown button background */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#returnHomeButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}
