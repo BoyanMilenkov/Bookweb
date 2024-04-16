@@ -1,7 +1,15 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
 body {
     margin: 0px;
     font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
-    text-align: center;
+    text-align: center; /* Align everything to the center */
     background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
     color: #2c241b; /* Dark brown text color */
 }
@@ -19,7 +27,7 @@ h1 {
 
 .navig ul {
     list-style-type: none;
-    background-color: #5d5d5d; /* Dark gray background color reminiscent of leather */
+    background-color: #7b5f4c; /* Brown background color reminiscent of leather */
     padding: 0px;
     margin: 0px;
     overflow: hidden;
@@ -34,7 +42,7 @@ h1 {
 }
 
 .navig a:hover {
-    background-color: #4a3f35; /* Dark brown background color on hover */
+    background-color: #5d4635; /* Darker brown background color on hover */
 }
 
 .navig li {
@@ -166,6 +174,7 @@ h1 {
 #photoButtons button {
     margin: 5px;
 }
+
 .message {
     padding: 20px;
     background-color: #f8d7da; /* Red background color (you can change this) */

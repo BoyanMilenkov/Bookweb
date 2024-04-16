@@ -7,41 +7,21 @@
 
 /* Body Styles */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f9f9f9;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+    text-align: left; /* Align everything to the left */
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
 }
 
-/* Button Styles */
-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Header Styles */
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
+h1 {
     text-align: center;
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    color: #4a3f35; /* Dark brown heading color */
 }
 
-header h1 {
-    font-size: 2em;
-}
-
-/* Main Styles */
-main {
-    padding: 20px;
+.main {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 /* Profile Container Styles */
@@ -51,6 +31,7 @@ main {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    border: 1px solid #4a3f35; /* Dark brown border */
 }
 
 #profile-container h2 {
@@ -58,17 +39,26 @@ main {
     margin-bottom: 15px;
 }
 
-#photoContainer {
+#profile-container p {
+    margin-bottom: 10px;
+}
+
+#bio {
     margin-bottom: 20px;
 }
 
-#photoContainer img {
-    max-width: 200px;
-    border-radius: 50%;
+#userBooks {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: 1px solid #4a3f35; /* Dark brown border */
 }
 
-#photoButtons button {
-    margin-right: 10px;
+#userBooks h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
 /* User Posts Styles */
@@ -77,6 +67,7 @@ main {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #4a3f35; /* Dark brown border */
 }
 
 #userPosts h2 {
@@ -85,54 +76,136 @@ main {
 }
 
 .post {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
+    border-bottom: 1px solid #2c241b; /* Dark brown border between posts */
     margin-bottom: 15px;
+    padding-bottom: 15px;
 }
 
 .post h2 {
     margin-bottom: 5px;
 }
 
-#userBooks {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Button Styles */
+button {
+    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
+    color: #f5f0e1; /* Light beige text color */
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
 }
 
-#userBooks h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
+button:hover {
+    background-color: #5d4635; /* Darker brown color on hover */
 }
 
-.book {
-    border-bottom: 1px solid #ccc;
-    padding: 15px 0;
-    margin-bottom: 15px;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f0e1; /* Light beige background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
-.book h3 {
-    margin-bottom: 5px;
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
 
-/* Footer Styles */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
+.dropdown-content button:hover {
+    background-color: #e0d6c8; /* Lighter beige color on hover */
+}
+
+#my-book-list {
+    color: #f5f0e1; /* Light beige text color */
+    text-decoration: none;
+    padding: 15px;
+    display: block;
     text-align: center;
-    margin-top: 20px;
 }
 
-footer p {
-    margin: 0;
+#my-book-list:hover {
+    background-color: #4a3f35; /* Dark brown background color on hover */
 }
 
-/* Media Query for Mobile */
-@media screen and (max-width: 768px) {
-    header h1 {
-        font-size: 1.5em;
-    }
+#my-book-list {
+    float: left;
+}
+
+/* Additional styles for circular button */
+#uploadPhotoButton {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #7b5f4c; /* Brown button color */
+    color: #f5f0e1; /* Light beige text color */
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+#uploadPhotoButton:hover {
+    background-color: #5d4635; /* Darker brown color on hover */
+}
+
+#photoInput {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+}
+
+#photoButtons {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#photoButtons button {
+    margin: 5px;
+}
+
+.message {
+    padding: 20px;
+    background-color: #f8d7da; /* Red background color (you can change this) */
+    color: #721c24; /* Dark red text color (you can change this) */
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb; /* Red border (you can change this) */
+    font-size: 18px; /* Larger font size */
+    line-height: 6; /* Increased line height for better readability */
+}
+
+#profilePicture {
+    width: 150px; /* Set the width */
+    height: 150px; /* Set the height */
+    border-radius: 50%; /* Ensure the picture is rounded */
+}
+
+/* Ensure the uploaded image is also rounded */
+#photoContainer {
+    margin-bottom: 20px;
+    width: 150px; /* Set the width */
+    height: 150px; /* Set the height */
+    border-radius: 50%; /* Make the container round */
+    overflow: hidden; /* Hide any overflow content */
+}
+
+#photoContainer img {
+    width: 100%; /* Ensure the image fills the container */
+    height: 100%; /* Ensure the image fills the container */
+    object-fit: cover; /* Ensure the image covers the entire container */
 }

@@ -1,7 +1,17 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
 body {
-    background-color: #333;
-    color: whitesmoke;
-    font-family: sans-serif;
+    margin: 0px;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+    text-align: left; /* Align everything to the left */
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
 }
 
 .container {
@@ -22,12 +32,15 @@ body {
     padding: 0.5rem;
     transition: all .2s;
     align-self: center;
+    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
+    color: #f5f0e1; /* Light beige text color */
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
 }
 
 .btn:hover {
-    background-color: #4e4d4d;
-    color: whitesmoke;
-    cursor: pointer;
+    background-color: #5d4635; /* Darker brown color on hover */
 }
 
 .header,
@@ -37,7 +50,8 @@ body {
 }
 
 .header h1 {
-    color: #eb5e28;
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    color: #4a3f35; /* Dark brown heading color */
 }
 
 .cardHeader {
@@ -78,11 +92,12 @@ body {
 .mainSection {
     display: flex;
     flex-direction: column;
-    background-color: #444;
+    background-color: #fff; /* White background color */
     padding: 20px;
     border-radius: 5px;
     flex: 1; /* Allow sections to grow */
     margin-top: 20px; /* Add margin-top for spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add box shadow */
 }
 
 #suggested-friends-container,
@@ -98,13 +113,10 @@ body {
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px; /* Add margin-top for spacing */
 }
+
 .smallBtn {
-    font-size: 0.8rem; /* Adjust font size */
-    padding: 0.2rem 0.5rem; /* Adjust padding */
+    font-size: 12px; /* Adjust font size */
+    padding: 5px 10px; /* Adjust padding */
     width: auto; /* Adjust width */
     height: auto; /* Adjust height */
 }
-
-
-
-
