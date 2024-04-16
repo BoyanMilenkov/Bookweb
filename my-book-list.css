@@ -1,14 +1,22 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
 body {
     margin: 0;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
     text-align: center;
-    background-color: #f5f0e1;
-    color: #2c241b;
+    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+    color: #2c241b; /* Dark brown text color */
 }
 
 h1 {
-    font-family: 'Old Standard TT', serif;
-    color: #4a3f35;
+    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    color: #4a3f35; /* Dark brown heading color */
 }
 
 .search-container {
@@ -19,7 +27,7 @@ input[type="text"] {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #4a3f35; /* Dark brown border */
     box-sizing: border-box;
 }
 
@@ -28,33 +36,33 @@ input[type="text"] {
 }
 
 .book {
-    border: 1px solid #2c241b;
+    border: 1px solid #4a3f35; /* Dark brown border */
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .book h3 {
     margin-top: 0;
-    color: #4a3f35;
+    color: #4a3f35; /* Dark brown heading color */
 }
 
 .book p {
-    color: #2c241b;
+    color: #2c241b; /* Dark brown text color */
     margin-bottom: 10px;
 }
 
 .ratingDisplay {
     font-weight: bold;
-    color: #7b5f4c;
+    color: #7b5f4c; /* Brown color */
 }
 
 .newRatingInput {
     margin-top: 10px;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #4a3f35; /* Dark brown border */
 }
 
 .submitRatingButton {
@@ -62,13 +70,13 @@ input[type="text"] {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    background-color: #7b5f4c;
-    color: #f5f0e1;
+    background-color: #7b5f4c; /* Brown button color */
+    color: #f5f0e1; /* Light beige text color */
     cursor: pointer;
 }
 
 .submitRatingButton:hover {
-    background-color: #5d4635;
+    background-color: #5d4635; /* Darker brown color on hover */
 }
 
 footer {
@@ -76,5 +84,5 @@ footer {
 }
 
 footer p {
-    color: #4a3f35;
+    color: #4a3f35; /* Dark brown text color */
 }
