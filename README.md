@@ -16,4 +16,6 @@ Our vision is a world in which people are again reading much more. Being highlt 
 
 ## Usage
 
-\*\*Step 1: Download the resources from our Github repository
+**Step 1: Download the resources from our Github repository**
+
+![alt text](GitHub.png)
