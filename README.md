@@ -18,4 +18,26 @@ Our vision is a world in which people are again reading much more. Being highlt 
 
 **Step 1: Download the resources from our Github repository**
 
-![alt text](GitHub.png)
+![alt text](pics/GitHub.png)
+
+**Step 2: Download and setup Visual Studio code**
+
+You can find the download link here:
+
+**Step 3: Download Live Server from Extensions in Visual Studio Code**
+
+![alt text](pics/liveserver.png)
+
+**Step 4: Now right click on the start.html to start the live server**
+
+![alt text](pics/open.png)
+
+# The Site
+
+**Discover the magic of the books**
+
+We are welcoming you to rediscover the magic of reading. You can find the link for the site here: [BookWeb](https://main--bookwe.netlify.app/start)
+
+## Welcome to the world of books
+
+Discover the beautiful world of reading and book. Here you can find a collection
