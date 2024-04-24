@@ -7,6 +7,52 @@
     <link rel="stylesheet" href="thriller.css" />
   </head>
   <body>
+    <!-- Paste the navigation bar here -->
+    <nav class="navig">
+      <ul>
+        <li><a id="home" href="start.html">Home</a></li>
+        <li><a id="create-post" href="create-post.html">Create Post</a></li>
+        <li>
+          <a id="add-book" href="addbook.html">Add a Book to the Collection</a>
+        </li>
+        <li><a id="my-book-list" href="my-book-list.html">My Book List</a></li>
+        <li><a id="friend-list" href="friends-list.html">Friend List</a></li>
+        <!-- Correct ID -->
+        <li class="dropdown">
+          <a href="#" id="genres" class="dropbtn">Genres</a>
+          <div class="dropdown-content">
+            <button onclick="window.location.href='fantasy.html'">
+              Fantasy
+            </button>
+            <button onclick="window.location.href='science-fiction.html'">
+              Science Fiction
+            </button>
+            <button onclick="window.location.href='romance.html'">
+              Romance
+            </button>
+            <button onclick="window.location.href='horror.html'">Horror</button>
+            <button onclick="window.location.href='thriller.html'">
+              Thriller
+            </button>
+            <button onclick="window.location.href='adventure.html'">
+              Adventure
+            </button>
+            <button onclick="window.location.href='dystopian.html'">
+              Dystopian
+            </button>
+            <button onclick="window.location.href='historical.html'">
+              Historical
+            </button>
+            <button onclick="window.location.href='memoir-and-biography.html'">
+              Memoir and Biography
+            </button>
+          </div>
+        </li>
+        <li id="profileLink">
+          <a id="profile" href="profile.html">Profile</a>
+        </li>
+      </ul>
+    </nav>
     <button id="returnHomeButton">Return to Home</button>
     <header>
       <h1>Thriller Books</h1>
