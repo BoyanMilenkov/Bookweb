@@ -80,3 +80,12 @@ footer {
 footer p {
     color: #4a3f35;
 }
+/* Add this to your CSS */
+
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
