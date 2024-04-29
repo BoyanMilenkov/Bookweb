@@ -1,5 +1,13 @@
-/* styles.css */
+/* add-friend.css */
 
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
 body {
     margin: 0;
     font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
@@ -15,6 +23,8 @@ header {
 
 h1 {
     font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+    text-align: center; /* Center heading */
+    color: #4a3f35; /* Dark brown heading color */
 }
 
 .main {
@@ -22,8 +32,83 @@ h1 {
     margin-right: 20px;
 }
 
+/* Navigation bar styles */
+.navig {
+    display: flex;
+    justify-content: space-around; /* Center horizontally */
+    background-color: #7b5f4c;
+    color: #f5f0e1;
+    align-items: center;
+}
+
+.navig p {
+    font-size: 28px;
+}
+
+.navig ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.navig a {
+    color: #f5f0e1; /* Light beige text color */
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+.navig a:hover {
+    background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+    display: inline-block;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f0e1; /* Light beige background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #e0d6c8; /* Lighter beige color on hover */
+}
+
+footer {
+    background-color: #4a3f35; /* Dark brown footer background color */
+    color: #f5f0e1; /* Light beige text color */
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Add Friend Container */
 #add-friend-container {
     margin-top: 20px;
+    text-align: center; /* Center content */
 }
 
 #add-friend-container h2 {
@@ -33,32 +118,29 @@ h1 {
 #add-friend-container label {
     display: block;
     margin-bottom: 5px;
+    font-size: 18px; /* Adjust font size */
+    color: #5d4635; /* Dark brown text color */
 }
 
 #add-friend-container input[type="text"] {
-    width: 100%;
+    width: 80%; /* Make the width 80% of the container */
+    max-width: 300px; /* Set a maximum width */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Increase margin */
 }
 
-#addFriendButton {
+#sendRequestButton {
     background-color: #7b5f4c; /* Brown button color reminiscent of leather */
     color: #f5f0e1; /* Light beige text color */
-    padding: 10px 20px;
+    padding: 10px 20px; /* Adjust padding */
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px; /* Adjust font size */
 }
 
-#addFriendButton:hover {
+#sendRequestButton:hover {
     background-color: #5d4635; /* Darker brown color on hover */
-}
-
-footer {
-    background-color: #4a3f35; /* Dark brown footer background color */
-    color: #f5f0e1; /* Light beige text color */
-    padding: 10px 20px;
-    text-align: center;
 }

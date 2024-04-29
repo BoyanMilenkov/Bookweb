@@ -1,6 +1,9 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import {
   getFirestore,
   doc,
@@ -11,6 +14,7 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { updateHeader } from "./header.js";
 
 // Initialize Firebase with your configuration
 const firebaseConfig = {
@@ -39,7 +43,7 @@ async function validateGenre(genre) {
       "Memoir and Biography",
       "Romance",
       "ScienceFiction",
-      "Thriller"
+      "Thriller",
     ];
 
     // Check if the selected genre matches any of the collections
@@ -135,6 +139,13 @@ async function submitPost(event) {
 }
 
 // Event listener for form submission
-document
-  .getElementById("postForm")
-  .addEventListener("submit", submitPost);
+document.getElementById("postForm").addEventListener("submit", submitPost);
+
+// Update header when DOM content is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const headerContainer = document.getElementById("headerContainer");
+  // Call updateHeader function to update the header
+  onAuthStateChanged(auth, (user) => {
+    headerContainer.innerHTML = updateHeader(user);
+  });
+});

@@ -104,43 +104,29 @@ button:hover {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f5f0e1; /* Light beige background color */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9; /* Light grey background color */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+}
+
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: #f9f9f9; /* Light grey background color */
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-content button:hover {
+    background-color: #ddd; /* Grey background color on hover */
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-
-.dropdown-content button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    text-align: left;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.dropdown-content button:hover {
-    background-color: #e0d6c8; /* Lighter beige color on hover */
-}
-
-#my-book-list {
-    color: #f5f0e1; /* Light beige text color */
-    text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;
-}
-
-#my-book-list:hover {
-    background-color: #4a3f35; /* Dark brown background color on hover */
-}
-
-#my-book-list {
-    float: left;
 }
 
 /* Additional styles for circular button */
@@ -170,13 +156,17 @@ button:hover {
     left: 0;
 }
 
+#photoContainer {
+    margin-right: 20px;
+}
+
 #photoButtons {
-    text-align: center;
-    margin-top: 10px;
+    display: flex;
+    margin-top: 10px; /* Add margin to separate buttons from info */
 }
 
 #photoButtons button {
-    margin: 5px;
+    margin-right: 10px; /* Add margin between buttons */
 }
 
 .message {
@@ -208,4 +198,118 @@ button:hover {
     width: 100%; /* Ensure the image fills the container */
     height: 100%; /* Ensure the image fills the container */
     object-fit: cover; /* Ensure the image covers the entire container */
+}
+
+/* Header styles from style.css */
+header {
+    background-color: #7b5f4c; /* Dark brown header */
+    color: #f5f0e1; /* Light text */
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Navigation bar styles */
+.navig {
+    display: flex;
+    justify-content: space-around; /* Center horizontally */
+    background-color: #7b5f4c;
+    color: #f5f0e1;
+    align-items: center;
+}
+
+.navig p {
+    font-size: 28px;
+}
+
+.navig ul {
+    list-style-type: none; /* Brown background color reminiscent of leather */
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navig a {
+    color: #f5f0e1; /* Light beige text color */
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+.navig a:hover {
+    background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+    display: inline-block; /* Change from float to inline-block */
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f0e1; /* Light beige background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #e0d6c8; /* Lighter beige color on hover */
+}
+
+/* New Styles */
+#profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items at the start of the container */
+    margin-bottom: 20px;
+}
+
+#photoContainer {
+    margin-right: 20px;
+}
+
+#photoButtons {
+    display: flex;
+    margin-top: 10px; /* Add margin to separate buttons from info */
+}
+
+#photoButtons button {
+    margin-right: 10px; /* Add margin between buttons */
+}
+
+#bioContainer {
+    margin-top: 20px; /* Adjust the top margin as needed */
+    margin-bottom: 20px; /* Adjust the bottom margin as needed */
+}
+
+#bioContainer h3 {
+    margin-bottom: 10px; /* Adjust the margin below the bio heading */
+}
+
+#bioContainer p,
+#bioTextarea {
+    margin-bottom: 10px; /* Adjust the margin between bio text and textarea */
 }

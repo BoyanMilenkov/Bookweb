@@ -1,111 +1,167 @@
-/* styles.css */
+/* horror.css */
 
 /* Body styles */
 body {
-    font-family: "Creepster", sans-serif;
-    background-color: #1a1a1a; /* Dark background */
-    color: #fff; /* Light text */
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Header styles */
-  header {
-    background-color: #2c2c2c; /* Dark header */
-    color: #b20000; /* Dark red header text */
-    padding: 20px;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 3.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for eerie effect */
-  }
-  
-  /* Main styles */
-  main {
-    padding: 20px;
-  }
-  
-  /* Book container styles */
-  #books-container {
-    margin-top: 20px;
-  }
-  
-  /* Book styles */
-  .book {
-    background-color: #333; /* Dark book background */
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .book h3 {
-    margin-top: 0;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #b20000; /* Dark red book title */
-  }
-  
-  .book p {
-    margin: 0;
-    font-size: 1rem;
-    color: #aaa; /* Light gray book text */
-  }
-  
-  .book .addBookButton {
-    background-color: #b20000; /* Dark red button */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .book .addBookButton:hover {
-    background-color: #8c0000; /* Darker red on hover */
-  }
-  
-  .book .addBookButton:disabled {
-    background-color: #555; /* Dark gray button when disabled */
-    cursor: not-allowed;
-  }
-  
-  /* Footer styles */
-  footer {
-    background-color: #2c2c2c; /* Dark footer */
-    color: #b20000; /* Dark red footer text */
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  footer p {
-    margin: 0;
-    font-size: 0.8rem;
-  }
-  
-  /* Button to return home styles */
-  #returnHomeButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background-color: #b20000; /* Dark red button */
-    color: #fff; /* White button text */
-    border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #returnHomeButton:hover {
-    background-color: #8c0000; /* Darker red on hover */
-  }
-  
+  font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+  background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+  color: #2c241b; /* Dark brown text color */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  margin-left: 3%; /* Margin adjustment */
+}
+
+/* Navigation bar styles */
+.navig {
+  display: flex;
+  justify-content: space-around; /* Center horizontally */
+  background-color: #7b5f4c; /* Brown background color */
+  color: #f5f0e1; /* Light text color */
+  align-items: center;
+}
+
+.navig p {
+  font-size: 28px;
+}
+
+.navig ul {
+  list-style-type: none; /* Brown background color reminiscent of leather */
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.navig a {
+  color: #f5f0e1; /* Light beige text color */
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+
+.navig a:hover {
+  background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+  display: inline-block; /* Change from float to inline-block */
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f5f0e1; /* Light beige background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #e0d6c8; /* Lighter beige color on hover */
+}
+
+/* Main styles */
+main {
+  padding: 20px;
+}
+
+/* Book container styles */
+#books-container {
+  margin-top: 20px;
+}
+
+/* Book styles */
+.book {
+  background-color: #f5f0e1; /* Light beige book background */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.book h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c241b; /* Dark brown book title */
+}
+
+.book p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555; /* Dark gray book text */
+}
+
+.book .addBookButton {
+  background-color: #7b5f4c; /* Brown button */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.book .addBookButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}
+
+.book .addBookButton:disabled {
+  background-color: #555; /* Dark gray button when disabled */
+  cursor: not-allowed;
+}
+
+/* Footer styles */
+footer {
+  background-color: #4a3f35; /* Dark brown footer */
+  color: #f5f0e1; /* Light text */
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+/* Button to return home styles */
+#returnHomeButton {
+  position: fixed;
+  top: 10px; /* Adjusted top position */
+  left: 10px; /* Adjusted left position */
+  background-color: #7b5f4c; /* Brown button */
+  color: #f5f0e1; /* Light text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#returnHomeButton:hover {
+  background-color: #5d4635; /* Darker brown on hover */
+}

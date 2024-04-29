@@ -1,25 +1,85 @@
-/* styles.css */
+/* fantasy.css */
 
 /* Body styles */
 body {
-  font-family: 'Garamond', serif; /* Fantasy-themed serif font */
+  font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
   background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
-  color: #2c241b; /* Dark brown text */
+  color: #2c241b; /* Dark brown text color */
   margin: 0;
   padding: 0;
 }
 
 /* Header styles */
-header {
-  background-color: #4a3f35; /* Dark brown header background */
-  color: #f5f0e1; /* Light text */
-  padding: 20px;
+
+
+header h1 {
+  margin-left: 3%;
+}
+
+/* Navigation bar styles */
+.navig {
+  display: flex;
+  justify-content: space-around; /* Center horizontally */
+  background-color: #7b5f4c;
+  color: #f5f0e1;
+  align-items: center;
+}
+
+.navig p {
+  font-size: 28px;
+}
+
+.navig ul {
+  list-style-type: none; /* Brown background color reminiscent of leather */
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.navig a {
+  color: #f5f0e1; /* Light beige text color */
+  text-decoration: none;
+  padding: 15px;
+  display: block;
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 3rem;
+.navig a:hover {
+  background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+  display: inline-block; /* Change from float to inline-block */
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f5f0e1; /* Light beige background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #e0d6c8; /* Lighter beige color on hover */
 }
 
 /* Main styles */
@@ -30,41 +90,38 @@ main {
 /* Book container styles */
 #books-container {
   margin-top: 20px;
-  float: left; /* Move the container to the left */
-  width: 70%; /* Adjust width */
 }
 
 /* Book styles */
 .book {
   background-color: #f5f0e1; /* Light beige book background */
-  border: 1px solid #4a3f35; /* Dark brown border */
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 20px;
-  width: 80%; /* Adjust width to fit the content */
-  margin: 0 auto 20px; /* Center the books and add space between them */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .book h3 {
   margin-top: 0;
-  font-size: 1.8rem;
-  color: #4a3f35; /* Dark brown title */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c241b; /* Dark brown book title */
 }
 
 .book p {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #555; /* Dark gray book text */
-  text-align: left; /* Align text to the left */
 }
 
 .book .addBookButton {
-  background-color: #7b5f4c; /* Brown button background */
+  background-color: #7b5f4c; /* Brown button */
   color: #f5f0e1; /* Light text */
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
+  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -78,9 +135,8 @@ main {
 }
 
 /* Footer styles */
-/* Footer styles */
 footer {
-  background-color: #4a3f35; /* Dark brown footer background */
+  background-color: #4a3f35; /* Dark brown footer */
   color: #f5f0e1; /* Light text */
   text-align: center;
   padding: 10px 0;
@@ -88,7 +144,6 @@ footer {
   bottom: 0;
   width: 100%;
 }
-
 
 footer p {
   margin: 0;
@@ -98,13 +153,13 @@ footer p {
 /* Button to return home styles */
 #returnHomeButton {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: #7b5f4c; /* Brown button background */
+  top: 10px; /* Adjusted top position */
+  left: 10px; /* Adjusted left position */
+  background-color: #7b5f4c; /* Brown button */
   color: #f5f0e1; /* Light text */
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

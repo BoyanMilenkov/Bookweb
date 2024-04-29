@@ -5,84 +5,196 @@
     box-sizing: border-box;
 }
 
-/* Body Styles */
+/* Body styles */
 body {
-    margin: 0;
     font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
-    text-align: center;
     background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
     color: #2c241b; /* Dark brown text color */
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
-    color: #4a3f35; /* Dark brown heading color */
+/* Header styles */
+header {
+    background-color: #4a3f35; /* Dark brown header */
+    color: #f5f0e1; /* Light text */
+    padding: 20px;
+    text-align: center;
 }
 
-.search-container {
-    margin-top: 20px;
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
 }
 
-input[type="text"] {
+/* Navigation bar styles */
+.navig {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+}
+
+.navig ul {
+    list-style-type: none;
+    background-color: #7b5f4c; /* Brown background color reminiscent of leather */
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navig a {
+    color: #f5f0e1; /* Light beige text color */
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+.navig a:hover {
+    background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+    display: inline-block; /* Change from float to inline-block */
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f0e1; /* Light beige background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    display: block;
     width: 100%;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #4a3f35; /* Dark brown border */
-    box-sizing: border-box;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
-.main {
-    margin-top: 20px;
+.dropdown-content button:hover {
+    background-color: #e0d6c8; /* Lighter beige color on hover */
 }
 
+/* Main styles */
+main {
+    padding: 20px;
+}
+
+/* Book container styles */
+#my-book-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Book styles */
 .book {
-    border: 1px solid #4a3f35; /* Dark brown border */
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #fff;
+    background-color: #eae2d7; /* Vintage book background color */
+    border-radius: 10px; /* Rounded corners for vintage look */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px; /* Adjusted margin for spacing */
+    max-width: 300px; /* Limiting book width for better layout */
 }
 
 .book h3 {
     margin-top: 0;
-    color: #4a3f35; /* Dark brown heading color */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a3f35; /* Dark brown book title */
 }
 
 .book p {
-    color: #2c241b; /* Dark brown text color */
-    margin-bottom: 10px;
+    margin: 0;
+    font-size: 1rem;
+    color: #2c241b; /* Dark brown book text */
 }
 
-.ratingDisplay {
-    font-weight: bold;
-    color: #7b5f4c; /* Brown color */
-}
-
-.newRatingInput {
-    margin-top: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #4a3f35; /* Dark brown border */
-}
-
-.submitRatingButton {
-    margin-top: 10px;
-    padding: 5px 10px;
+.rateButton {
+    background-color: #7b5f4c; /* Brown button */
+    color: #f5f0e1; /* Light text */
     border: none;
-    border-radius: 5px;
-    background-color: #7b5f4c; /* Brown button color */
-    color: #f5f0e1; /* Light beige text color */
+    padding: 10px 20px;
+    border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.submitRatingButton:hover {
-    background-color: #5d4635; /* Darker brown color on hover */
+.rateButton:hover {
+    background-color: #5d4635; /* Darker brown on hover */
 }
 
+.rateButton:disabled {
+    background-color: #555; /* Dark gray button when disabled */
+    cursor: not-allowed;
+}
+
+/* Footer styles */
 footer {
-    margin-top: 20px;
+    background-color: #4a3f35; /* Dark brown footer */
+    color: #f5f0e1; /* Light text */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 footer p {
-    color: #4a3f35; /* Dark brown text color */
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+/* Button to return home styles */
+#returnHomeButton {
+    position: fixed;
+    top: 10px; /* Adjusted top position */
+    left: 10px; /* Adjusted left position */
+    background-color: #7b5f4c; /* Brown button */
+    color: #f5f0e1; /* Light text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#returnHomeButton:hover {
+    background-color: #5d4635; /* Darker brown on hover */
+}
+
+/* Centering title and search bar */
+h1 {
+    text-align: center;
+    margin-top: 20px; /* Add margin top for spacing */
+}
+
+.search-container {
+    text-align: center;
+    margin-bottom: 20px; /* Add margin bottom for spacing */
+}
+
+/* Add styles for the "Read more" option */
+.read-more {
+    color: #7b5f4c; /* Brown color */
+    font-weight: bold;
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Change cursor style on hover */
+.read-more:hover {
+    text-decoration: underline; /* Underline the text on hover */
+    cursor: pointer; /* Change cursor to pointer */
 }

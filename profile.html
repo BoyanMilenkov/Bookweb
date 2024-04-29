@@ -7,13 +7,42 @@
     <link rel="stylesheet" href="profile.css" />
   </head>
   <body>
-    <button id="returnHomeButton">Return to Home</button>
-    <header>
-      <h1>My Profile</h1>
-    </header>
-    <main>
+    <div id="headerContainer"></div>
+    <!-- Header will be inserted here -->
+    <!--<header>
+    <h1>My Profile</h1>
+</header>
+<main>-->
+    <div id="profile-header">
+      <div id="photoContainer"></div>
+      <div id="photoButtons">
+        <button id="editPhotoButton" style="display: none">Edit Photo</button>
+        <button id="deletePhotoButton" style="display: none">
+          Delete Photo
+        </button>
+        <button id="logoutButton">Logout</button>
+      </div>
+      <div id="userInfo" class="button-info">
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <div id="bioContainer">
+          <h3>Bio</h3>
+          <div id="userInfo" class="button-info">
+            <p id="bio"></p>
+            <textarea
+              id="bioTextarea"
+              placeholder="Write your bio..."
+            ></textarea>
+            <button id="saveBioButton" style="display: none">Save Bio</button>
+            <button id="editBioButton">Edit Bio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="profile-content">
       <section id="profile-container">
-        <h2>User Profile</h2>
+        <!--<h2>User Profile</h2>-->
         <label for="photoInput" id="uploadPhotoButton">+</label>
         <!-- Circular upload button -->
         <input
@@ -23,21 +52,8 @@
           style="display: none"
         />
         <!-- File input for photo upload -->
-        <div id="photoContainer"></div>
-        <!-- Container to display the uploaded photo -->
-        <div id="photoButtons">
-          <button id="editPhotoButton" style="display: none">Edit Photo</button>
-          <button id="deletePhotoButton" style="display: none">
-            Delete Photo
-          </button>
-        </div>
-        <p><strong>Name:</strong> <span id="name"></span></p>
-        <p><strong>Email:</strong> <span id="email"></span></p>
-        <h3>Bio</h3>
-        <p id="bio"></p>
-        <textarea id="bioTextarea" placeholder="Write your bio..."></textarea>
-        <button id="saveBioButton" style="display: none">Save Bio</button>
-        <button id="editBioButton">Edit Bio</button>
+        <!--<p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>-->
       </section>
 
       <section id="userPosts">
@@ -48,16 +64,19 @@
       </section>
 
       <!--<section id="userBooks">
-        <h2>User Books</h2>
-        <div id="userBooksContainer">
-           User books will be dynamically added here 
-        </div>
-      </section>-->
-    </main>
-    <button id="logoutButton">Logout</button>
+            <h2>User Books</h2>
+            <div id="userBooksContainer">
+                User books will be dynamically added here
+            </div>
+        </section>-->
+    </div>
+    <!--</main>-->
+    <!--<button id="logoutButton">Logout</button>-->
     <footer>
       <p>&copy; 2023 Profile Page</p>
     </footer>
     <script src="profile.js" type="module"></script>
+    <script src="header.js" type="module"></script>
+    <!-- Import the header.js script -->
   </body>
 </html>

@@ -1,0 +1,189 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  margin: 0px;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  background-color: #f5f0e1;
+  color: #2c241b;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container is at least the height of the viewport */
+}
+
+/* Header Styles */
+h1 {
+  text-align: center;
+  font-family: 'Old Standard TT', serif;
+  color: #4a3f35;
+}
+
+/* Container Styles */
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Filter Styles */
+.filter-container {
+  margin-top: 20px;
+}
+
+.filter-container label {
+  font-weight: bold;
+}
+
+.filter-container select {
+  margin-left: 10px;
+}
+
+/* Posts Styles */
+.posts-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Stack posts vertically */
+  flex-grow: 1;
+  margin-top: 20px; /* Add some space between posts and filter */
+  padding: 30px; /* Increase the padding */
+}
+
+.post {
+  background-color: #e0d6c8;
+  border: 1px solid #000;
+  margin: 20px auto; /* Increase margin to create more space between posts */
+  padding: 20px; /* Set the padding for each post */
+  max-width: 600px; /* Set a larger max-width for better readability */
+  text-align: left;
+  width: 100%; /* Make each post take up the full width */
+}
+
+.post > * {
+  margin-bottom: 15px; /* Add margin between each component inside the post */
+}
+
+.post h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #5d4635;
+}
+
+.post p {
+  font-size: 16px;
+  color: #5d4635;
+  margin-bottom: 10px;
+}
+
+.post .posted-by-container p,
+.post .review-container p {
+  font-size: 16px;
+  color: #5d4635;
+  margin-bottom: 5px;
+}
+
+.post .username-link {
+  color: #007bff; /* Adjust link color */
+}
+
+.post .username-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Footer Styles */
+footer {
+  background-color: #4a3f35;
+  color: #ffffff;
+  padding: 20px;
+}
+
+/* Read More and Read Less Styles */
+.read-more,
+.read-less {
+  font-size: 14px;
+  color: #5d4635; /* Dark brown text color */
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.read-more:hover,
+.read-less:hover {
+  text-decoration: underline;
+}
+
+header {
+  margin-left: 3%; /* Margin adjustment */
+}
+
+/* Navigation bar styles */
+.navig {
+  display: flex;
+  justify-content: space-around; /* Center horizontally */
+  background-color: #7b5f4c; /* Brown background color */
+  color: #f5f0e1; /* Light text color */
+  align-items: center;
+}
+
+.navig p {
+  font-size: 28px;
+}
+
+.navig ul {
+  list-style-type: none; /* Brown background color reminiscent of leather */
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.navig a {
+  color: #f5f0e1; /* Light beige text color */
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+
+.navig a:hover {
+  background-color: #5d4635; /* Darker brown background color on hover */
+}
+
+.navig li {
+  display: inline-block; /* Change from float to inline-block */
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f5f0e1; /* Light beige background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #e0d6c8; /* Lighter beige color on hover */
+}

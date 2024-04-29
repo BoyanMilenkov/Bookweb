@@ -7,61 +7,51 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>BookWeb</h1>
-    <nav class="navig">
-      <ul>
-        <li><a id="home" href="start.html">Home</a></li>
-        <li><a id="create-post" href="create-post.html">Create Post</a></li>
-        <li>
-          <a id="add-book" href="addbook.html">Add a Book to the Collection</a>
-        </li>
-        <li><a id="my-book-list" href="my-book-list.html">My Book List</a></li>
-        <li><a id="friend-list" href="friends-list.html">Friend List</a></li>
-        <!-- Correct ID -->
-        <li class="dropdown">
-          <a href="#" id="genres" class="dropbtn">Genres</a>
-          <div class="dropdown-content">
-            <button onclick="window.location.href='fantasy.html'">
-              Fantasy
-            </button>
-            <button onclick="window.location.href='science-fiction.html'">
-              Science Fiction
-            </button>
-            <button onclick="window.location.href='romance.html'">
-              Romance
-            </button>
-            <button onclick="window.location.href='horror.html'">Horror</button>
-            <button onclick="window.location.href='thriller.html'">
-              Thriller
-            </button>
-            <button onclick="window.location.href='adventure.html'">
-              Adventure
-            </button>
-            <button onclick="window.location.href='dystopian.html'">
-              Dystopian
-            </button>
-            <button onclick="window.location.href='historical.html'">
-              Historical
-            </button>
-            <button onclick="window.location.href='memoir-and-biography.html'">
-              Memoir and Biography
-            </button>
-          </div>
-        </li>
-        <li id="profileLink">
-          <a id="profile" href="profile.html">Profile</a>
-        </li>
-        <li id="registerLink">
-          <a id="register" href="register.html">Register</a>
-        </li>
-        <li id="loginLink">
-          <a id="login" href="login.html">Login</a>
-        </li>
-      </ul>
-    </nav>
+    <div id="headerContainer"></div>
 
-    <!-- Filter dropdown menu -->
-    <div class="filter-container">
+    <div class="img">
+      <img src="./pics/homePageBG.jpg" alt="" />
+      <div class="homeContent">
+        <h1>BookWeb</h1>
+        <p>Welcome to BookWeb, the world of books and making new friends!</p>
+      </div>
+    </div>
+    <div class="genres">
+      <div><a href="fantasy.html">Fantasy</a></div>
+      <div><a href="science-fiction.html">Science fiction</a></div>
+      <div><a href="romance.html">Romance</a></div>
+      <div><a href="horror.html">Horror</a></div>
+      <div><a href="thriller.html">Thriller</a></div>
+      <div><a href="adventure.html">Adventure</a></div>
+      <div><a href="dystopian.html">Dystopian</a></div>
+      <div><a href="historical.html">Historical</a></div>
+      <div><a href="memoir-and-biography.html">Memoir and Biography</a></div>
+    </div>
+    <div class="bookToWatch">
+      <h4>Must Read Books</h4>
+      <div class="genre">
+        <h5>Fantasy</h5>
+        <div class="fantasyBook"></div>
+        <h5>Science Fiction</h5>
+        <div class="scienceFictionBook"></div>
+        <h5>Romance</h5>
+        <div class="romanceBook"></div>
+        <h5>Horror</h5>
+        <div class="horrorBook"></div>
+        <h5>Thriller</h5>
+        <div class="thrillerBook"></div>
+        <h5>Adventure</h5>
+        <div class="adventureBook"></div>
+        <h5>Dystopian</h5>
+        <div class="dystopianBook"></div>
+        <h5>Historical</h5>
+        <div class="historicalBook"></div>
+        <h5>Memoir and Biography</h5>
+        <div class="memoirAndBiographyBook"></div>
+      </div>
+    </div>
+
+    <!--<div class="filter-container">
       <label for="genre-filter">Filter by Genre:</label>
       <select id="genre-filter" onchange="applyFilter(this.value)">
         <option value="">All Genres</option>
@@ -75,19 +65,20 @@
         <option value="historical">Historical</option>
         <option value="memoir-and-biography">Memoir and Biography</option>
       </select>
-    </div>
+    </div>-->
 
-    <!-- Container for posts -->
-    <div id="postsContainer">
-      <!-- Posts will be dynamically added here -->
+    <!--<div id="postsContainer">
+       Posts will be dynamically added here
+    </div> -->
+    <div class="posts" style="background-image: url('./pics/friends.webp')">
+      <h2>Discover people's thoughts.</h2>
+      <p>Here you can discover other people's posts regarding other books.</p>
+      <a href="post.html" class="see-posts">See Posts</a>
     </div>
-
-    <!-- Footer -->
     <footer>
       <p>&copy; 2023 BookWeb</p>
     </footer>
 
-    <!-- Include your JavaScript file -->
     <script type="module" src="script.js"></script>
   </body>
 </html>

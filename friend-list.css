@@ -120,3 +120,68 @@ body {
     width: auto; /* Adjust width */
     height: auto; /* Adjust height */
 }
+/* Navigation bar styles */
+.navig {
+    display: flex;
+    justify-content: space-around; /* Center horizontally */
+    background-color: #7b5f4c;
+    color: #f5f0e1;
+    align-items: center;
+  }
+  
+  .navig p {
+    font-size: 28px;
+  }
+  
+  .navig ul {
+    list-style-type: none; /* Brown background color reminiscent of leather */
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+  }
+  
+  .navig a {
+    color: #f5f0e1; /* Light beige text color */
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+  }
+  
+  .navig a:hover {
+    background-color: #5d4635; /* Darker brown background color on hover */
+  }
+  
+  .navig li {
+    display: inline-block; /* Change from float to inline-block */
+  }
+  
+  .dropdown {
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f0e1; /* Light beige background color */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .dropdown-content button:hover {
+    background-color: #e0d6c8; /* Lighter beige color on hover */
+  }

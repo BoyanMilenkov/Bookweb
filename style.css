@@ -1,186 +1,308 @@
 /* Reset CSS */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Body Styles */
 body {
-    margin: 0px;
-    font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
-    text-align: center; /* Align everything to the center */
-    background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
-    color: #2c241b; /* Dark brown text color */
+  margin: 0px;
+  font-family: 'Times New Roman', Times, serif; /* Change to a vintage font */
+  text-align: center; /* Align everything to the center */
+  background-color: #f5f0e1; /* Light beige background color reminiscent of parchment */
+  color: #2c241b; /* Dark brown text color */
+  background-color: #7b5f4c;
 }
 
 h1 {
-    text-align: center;
-    font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
-    color: #4a3f35; /* Dark brown heading color */
+  text-align: center;
+  font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+  color: #4a3f35; /* Dark brown heading color */
+}
+
+.bookToWatch h4 {
+  text-align: center;
+  font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+  color: #e0d6c8;
+  font-size: 60px;
+}
+
+.bookToWatch h5 {
+  display: flex;
+  text-align: left;
+  font-family: 'Old Standard TT', serif; /* Change to a classic serif font */
+  color: #5d4635;
+  font-size: 42px;
+  padding: 3%;
+  margin-left: -24px;
 }
 
 .main {
-    margin-left: 20px;
-    margin-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Navigation bar styles */
+.navig {
+  display: flex;
+  justify-content: space-around; /* Center horizontally */
+  background-color: #7b5f4c;
+  color: #f5f0e1;
+  align-items: center;
+}
+
+.navig p {
+  font-size: 28px;
 }
 
 .navig ul {
-    list-style-type: none;
-    background-color: #7b5f4c; /* Brown background color reminiscent of leather */
-    padding: 0px;
-    margin: 0px;
-    overflow: hidden;
+  list-style-type: none; /* Brown background color reminiscent of leather */
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
 }
 
 .navig a {
-    color: #f5f0e1; /* Light beige text color */
-    text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;
+  color: #f5f0e1; /* Light beige text color */
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  text-align: center;
 }
 
 .navig a:hover {
-    background-color: #5d4635; /* Darker brown background color on hover */
+  background-color: #5d4635; /* Darker brown background color on hover */
 }
 
 .navig li {
-    float: left;
-}
-
-#posts-container,
-#user-posts-container,
-#profile-container {
-    margin-top: 20px;
-}
-
-.post,
-#user-posts-container .post,
-.post-details {
-    border-top: 1px solid #2c241b; /* Dark brown border between details */
-    margin-top: 10px;
-    padding-top: 10px;
-}
-
-.post-details > div {
-    display: inline-block;
-    margin-right: 10px;
-    padding-right: 10px;
-    border-right: 1px solid #2c241b; /* Dark brown border between details */
-}
-
-.post-details > div:last-child {
-    border-right: none;
-}
-
-.post-actions {
-    margin-top: 10px;
-}
-
-.post-actions button {
-    background-color: #7b5f4c; /* Brown button color reminiscent of leather */
-    color: #f5f0e1; /* Light beige text color */
-    padding: 5px 10px;
-    font-size: 12px;
-    margin-right: 5px;
-    cursor: pointer;
-    border: none;
-    border-radius: 3px;
-}
-
-.post-actions button:hover {
-    background-color: #5d4635; /* Darker brown color on hover */
+  display: inline-block; /* Change from float to inline-block */
 }
 
 .dropdown {
-    display: inline-block;
+  display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f5f0e1; /* Light beige background color */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f5f0e1; /* Light beige background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block;
 }
 
 .dropdown-content button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    text-align: left;
-    border: none;
-    background: none;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .dropdown-content button:hover {
-    background-color: #e0d6c8; /* Lighter beige color on hover */
+  background-color: #e0d6c8; /* Lighter beige color on hover */
 }
 
-#my-book-list {
-    color: #f5f0e1; /* Light beige text color */
-    text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;
+.img {
+  width: 100%;
+  height: 600px;
+  position: relative;
 }
 
-#my-book-list:hover {
-    background-color: #4a3f35; /* Dark brown background color on hover */
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
-#my-book-list {
-    float: left;
+.img .homeContent {
+  position: absolute;
+  top: 40%;
+  left: 50%;
 }
 
-/* Additional styles for circular button */
-#uploadPhotoButton {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #7b5f4c; /* Brown button color */
-    color: #f5f0e1; /* Light beige text color */
-    text-align: center;
-    line-height: 50px;
-    cursor: pointer;
+.img .homeContent h1 {
+  width: 90%;
+  font-size: 48px;
+  margin-bottom: 18px;
+  color: beige;
 }
 
-#uploadPhotoButton:hover {
-    background-color: #5d4635; /* Darker brown color on hover */
+.img .homeContent p {
+  width: 90%;
+  font-size: 18px;
+  color: beige;
 }
 
-#photoInput {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    top: 0;
-    left: 0;
+.img::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #4a3f35;
+  opacity: 0.5;
 }
 
-#photoButtons {
-    text-align: center;
-    margin-top: 10px;
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+  background-color: #e0d6c8;
 }
 
-#photoButtons button {
-    margin: 5px;
+.genres div {
+  padding: 60px;
+  width: 200px;
+  height: 100%;
+}
+
+.genres div:hover {
+  background-color: #b8afa3;
+}
+
+.genres a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  text-align: center;
+}
+
+.genres a:hover {
+  text-decoration: underline; /* Underline on hover */
 }
 
 .message {
-    padding: 20px;
-    background-color: #f8d7da; /* Red background color (you can change this) */
-    color: #721c24; /* Dark red text color (you can change this) */
-    margin-bottom: 20px;
-    border: 1px solid #f5c6cb; /* Red border (you can change this) */
-    font-size: 18px; /* Larger font size */
-    line-height: 6; /* Increased line height for better readability */
+  padding: 20px;
+  background-color: #f8d7da; /* Red background color (you can change this) */
+  color: #721c24; /* Dark red text color (you can change this) */
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb; /* Red border (you can change this) */
+  font-size: 18px; /* Larger font size */
+  line-height: 6; /* Increased line height for better readability */
+}
+
+.genre {
+  background-color: #e0d6c8;
+  padding: 60px;
+}
+
+.fantasyBook,
+.scienceFictionBook,
+.romanceBook,
+.horrorBook,
+.thrillerBook,
+.adventureBook,
+.dystopianBook,
+.historicalBook,
+.memoirAndBiographyBook {
+  display: flex; /* Use flexbox to display books next to each other */
+  flex-wrap: wrap; /* Allow books to wrap to the next row if needed */
+}
+
+.book {
+  /* flex: 1; Equal width for both books */
+  background-color: #e0d6c8; /* White background */
+  border: 1px solid #000; /* Black border */
+  margin: 10px; /* Margin around each book */
+  padding: 20px; /* Padding inside each book */
+  text-align: left; /* Align text to the left */
+  box-sizing: border-box; /* Include padding and border in the total width */
+  width: 400px; /* Maximum width of each book */
+  height: 100%; /* Ensure all books have the same height */
+  display: flex; /* Use flexbox for text alignment */
+  flex-direction: column; /* Align text vertically */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.book h3 {
+  font-size: 20px; /* Increase font size for title */
+  margin-bottom: 10px; /* Add space below the title */
+}
+
+.book p {
+  margin-bottom: 5px; /* Add space below each paragraph */
+}
+
+.book .description {
+  margin-bottom: 10px; /* Add space below description */
+}
+
+.book h3,
+.book p {
+  white-space: normal;
+  color: #5d4635;
+  font-size: 17px; /* Allow text to wrap naturally */
+}
+
+.book p {
+  flex-grow: 1; /* Allow text to grow vertically */
+  color: #5d4635;
+}
+
+.read-more,
+.read-less {
+  font-size: 16px; /* Increase font size for read more/less */
+  margin-top: 10px; /* Add space above read more/less */
+}
+
+.read-more,
+.read-less {
+  color: #5d4635; /* Blue color for links */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.read-more:hover,
+.read-less:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.posts {
+  background-image: url('./pics/postBG.jpg'); /* Background image */
+  background-size: cover; /* Cover the entire background */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  margin-top: 40px; /* Add space at the top */
+  color: #ffffff; /* White text color */
+  padding: 100px 20px; /* Add padding */
+}
+
+.posts h2 {
+  font-size: 60px; /* Increase font size for title */
+  color: #ffffff; /* Dark brown heading color */
+  margin-bottom: 20px; /* Add space below the title */
+}
+
+.posts p {
+  font-size: 18px; /* Set font size for paragraph */
+  color: #ffffff; /* Dark brown text color */
+  margin-bottom: 20px; /* Add space below paragraph */
+}
+
+.posts .see-posts {
+  display: inline-block;
+  padding: 10px 20px; /* Adjust padding */
+  background-color: #7b5f4c; /* Brown button color */
+  color: #f5f0e1; /* Light beige text color */
+  text-decoration: none; /* Remove underline */
+  border-radius: 10px; /* Add border radius */
+}
+
+.posts .see-posts:hover {
+  background-color: #5d4635; /* Darker brown color on hover */
+}
+
+footer {
+  background-color: #4a3f35;
+  color: #ffffff;
+  padding: 20px;
 }
