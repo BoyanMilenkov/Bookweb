@@ -10,7 +10,7 @@ body {
 }
 
 /* Header styles */
-/* Navigation bar styles */
+
 .navig {
   display: flex;
   justify-content: space-around; /* Center horizontally */
