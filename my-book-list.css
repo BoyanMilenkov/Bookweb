@@ -15,65 +15,58 @@ body {
 }
 
 /* Header styles */
-header {
-    background-color: #4a3f35; /* Dark brown header */
-    color: #f5f0e1; /* Light text */
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-/* Navigation bar styles */
 .navig {
     display: flex;
-    justify-content: center; /* Center horizontally */
-}
-
-.navig ul {
-    list-style-type: none;
-    background-color: #7b5f4c; /* Brown background color reminiscent of leather */
+    justify-content: space-around; /* Center horizontally */
+    background-color: #7b5f4c; /* Brown background color */
+    color: #f5f0e1; /* Light text color */
+    align-items: center;
+  }
+  
+  .navig p {
+    font-size: 28px;
+  }
+  
+  .navig ul {
+    list-style-type: none; /* Brown background color reminiscent of leather */
     padding: 0px;
     margin: 0px;
     overflow: hidden;
-}
-
-.navig a {
+  }
+  
+  .navig a {
     color: #f5f0e1; /* Light beige text color */
     text-decoration: none;
     padding: 15px;
     display: block;
     text-align: center;
-}
-
-.navig a:hover {
+  }
+  
+  .navig a:hover {
     background-color: #5d4635; /* Darker brown background color on hover */
-}
-
-.navig li {
+  }
+  
+  .navig li {
     display: inline-block; /* Change from float to inline-block */
-}
-
-.dropdown {
+  }
+  
+  .dropdown {
     display: inline-block;
-}
-
-.dropdown-content {
+  }
+  
+  .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f5f0e1; /* Light beige background color */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
+  }
+  
+  .dropdown:hover .dropdown-content {
     display: block;
-}
-
-.dropdown-content button {
+  }
+  
+  .dropdown-content button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -81,11 +74,11 @@ header h1 {
     border: none;
     background: none;
     cursor: pointer;
-}
-
-.dropdown-content button:hover {
+  }
+  
+  .dropdown-content button:hover {
     background-color: #e0d6c8; /* Lighter beige color on hover */
-}
+  }
 
 /* Main styles */
 main {
@@ -150,12 +143,12 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-footer p {
+  }
+  
+  footer p {
     margin: 0;
     font-size: 0.8rem;
-}
+  }
 
 /* Button to return home styles */
 #returnHomeButton {

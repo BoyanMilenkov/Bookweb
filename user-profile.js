@@ -9,10 +9,13 @@ import {
   doc,
   getDoc,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { updateHeader } from "./header.js";
 
+// Initialize Firebase app with the provided configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDSVB_m--vKWpFjpa1PSyZoF7slhTdGN08",
   authDomain: "bookweb-99ef4.firebaseapp.com",
+  databaseURL: "https://bookweb-99ef4-default-rtdb.firebaseio.com",
   projectId: "bookweb-99ef4",
   storageBucket: "bookweb-99ef4.appspot.com",
   messagingSenderId: "415676602525",
@@ -24,9 +27,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// Check the authentication state of the user
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
+      // User is authenticated, proceed with fetching user data
+
+      // Insert the header into the headerContainer element
+      const headerContainer = document.getElementById("headerContainer");
+      headerContainer.innerHTML = updateHeader();
+
+      // Fetch user profile data and posts
       const userId = window.location.search.substring(1).split("=")[1]; // Extract user ID from URL query parameter
       const userDoc = await getDoc(doc(db, "users", userId));
       if (userDoc.exists()) {
@@ -49,6 +60,7 @@ onAuthStateChanged(auth, async (user) => {
       console.error("Error retrieving user data:", error.message);
     }
   } else {
+    // If user is not authenticated, redirect to the login page
     console.log("User is not logged in, redirecting to login page");
     window.location.href = "login.html";
   }

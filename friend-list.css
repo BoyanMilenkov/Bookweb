@@ -185,3 +185,18 @@ body {
   .dropdown-content button:hover {
     background-color: #e0d6c8; /* Lighter beige color on hover */
   }
+
+  footer {
+    background-color: #4a3f35; /* Dark brown footer */
+    color: #f5f0e1; /* Light text */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  footer p {
+    margin: 0;
+    font-size: 0.8rem;
+  }

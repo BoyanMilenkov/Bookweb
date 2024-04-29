@@ -168,7 +168,3 @@ searchInput.addEventListener("input", () => {
   const searchQuery = searchInput.value.toLowerCase();
   filterBooks(searchQuery);
 });
-
-document.getElementById("returnHomeButton").addEventListener("click", () => {
-  window.location.href = "start.html";
-});
