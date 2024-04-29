@@ -63,18 +63,17 @@ async function fetchPosts() {
   addReadMoreAndLessFunctionality();
 }
 
-// Function to apply filter based on genre selection
 function applyFilter(genre) {
   const posts = document.querySelectorAll(".post");
 
-  // Show or hide posts based on genre
   posts.forEach((post) => {
     const postGenre = post
       .querySelector("h2")
       .textContent.split("-")[1]
       .trim()
       .toLowerCase();
-    if (genre === "" || postGenre === genre) {
+
+    if (genre === "" || postGenre === genre.toLowerCase()) {
       post.style.display = "block";
     } else {
       post.style.display = "none";
@@ -82,7 +81,6 @@ function applyFilter(genre) {
   });
 }
 
-// Function to add "Read More" and "Read Less" functionality to each post
 // Function to add "Read More" and "Read Less" functionality to each post
 function addReadMoreAndLessFunctionality() {
   const posts = document.querySelectorAll(".post");
