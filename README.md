@@ -40,4 +40,34 @@ We are welcoming you to rediscover the magic of reading. You can find the link f
 
 ## Welcome to the world of books
 
-Discover the beautiful world of reading and book. Here you can find a collection
+Discover the beautiful world of reading and book. Here you can find a collection you will find yourself reading.
+
+![alt text](pics/books.png)
+
+## Join The Book Community
+
+We are hoping that with our app you will discover the great in the book community through finding friends from our app.
+
+![alt text](pics/frie.png)
+
+## Firebase Database
+
+**Overview**
+
+BookWeb uses Firebase Database to store and bring to life some of is contents such as the posts, books and the users authentication. It offers real-time data syncronization, which is the perfects solution for the need of our application.
+
+**Firebase Authentication**
+
+The Firebase Authentication provides the easy and secure login methods for BookWeb
+
+**Firebase Firestore**
+
+Database which helps us store data such as the books in one place, while also offering advanced queries and real-time updates for some of our features.
+
+## Technologies Used
+
+The heart and soul of the project is the triad of technologies also known as HTML, CSS and JavaScript. Their job is to bring to life our app, which then turns into a seamless and responsive user experience, not like any other. Join us by exploring our website.
+
+## Get in Touch
+
+If you want to get in touch with regarding some questions, general feedback or you are passion for books is just that unmatched, we suggest you contact us through this email: boyanbbmilenkov@gmail.com
