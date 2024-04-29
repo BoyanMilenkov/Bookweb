@@ -77,12 +77,10 @@ a:hover {
 }
 
 footer {
-    margin-top: 20px;
-}
-
-footer p {
-    color: #4a3f35;
-}
+    background-color: #4a3f35;
+    color: #ffffff;
+    padding: 20px;
+  }
 /* Add this to your CSS */
 
 .alert {
