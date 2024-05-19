@@ -183,14 +183,3 @@ async function login(email, password) {
     throw error;
   }
 }
-
-// Logout
-async function logout() {
-  try {
-    await signOut(auth);
-    console.log("User logged out");
-  } catch (error) {
-    console.error("Error logging out:", error.message);
-    throw error;
-  }
-}
