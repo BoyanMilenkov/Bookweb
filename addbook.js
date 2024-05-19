@@ -3,6 +3,9 @@ import {
   getFirestore,
   collection,
   addDoc,
+  query,
+  where,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import {
   getAuth,
@@ -42,6 +45,21 @@ function capitalizeGenre(genre) {
   return genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 }
 
+async function bookExistsInAnyGenre(author, title) {
+  for (const collectionName of Object.values(genreToCollection)) {
+    const q = query(
+      collection(db, collectionName),
+      where("author", "==", author),
+      where("title", "==", title)
+    );
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      return true;
+    }
+  }
+  return false;
+}
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is authenticated, proceed with book submission functionality
@@ -78,6 +96,13 @@ onAuthStateChanged(auth, (user) => {
 
       console.log("Normalized genre:", genre); // Debugging statement
 
+      // Check if the book already exists in any genre
+      const exists = await bookExistsInAnyGenre(author, title);
+      if (exists) {
+        alert("This book already exists in the collection.");
+        return;
+      }
+
       // Check if the selected genre has a corresponding collection
       if (genreToCollection.hasOwnProperty(genre)) {
         try {
@@ -94,7 +119,6 @@ onAuthStateChanged(auth, (user) => {
           console.log("Document written with ID: ", docRef.id); // Debugging statement
 
           alert("Book added successfully!");
-          // Optionally, redirect the user to another page or perform other actions
         } catch (error) {
           console.error("Error adding document: ", error);
           alert("Error adding document. Please try again later.");
