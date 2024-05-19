@@ -20,20 +20,21 @@ const firebaseConfig = {
   appId: "1:415676602525:web:5ed67a9357cc9e3b88dc74",
   measurementId: "G-VDFL9E4XYJ",
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
 const genreToCollection = {
-  Adventure: "adventureBooks",
-  Dystopian: "dystopianBooks",
-  Fantasy: "fantasyBooks",
-  Historical: "historicalBooks",
-  Horror: "horrorBooks",
-  "Memoir and Biography": "memoirAndBiographyBooks",
-  Romance: "romanceBooks",
-  ScienceFiction: "scienceFictionBooks",
-  Thriller: "thrillerBooks",
+  Thriller: "Thriller",
+  "Science Fiction": "ScienceFiction",
+  Adventure: "Adventure",
+  Fantasy: "Fantasy",
+  Horror: "Horror",
+  "Memoir and Biography": "MemoirAndBiography",
+  Historical: "Historical",
+  Romance: "Romance",
+  Dystopian: "Dystopia",
 };
 
 function capitalizeGenre(genre) {
@@ -41,10 +42,15 @@ function capitalizeGenre(genre) {
   return genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
 }
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is authenticated, proceed with book submission functionality
     const addBookForm = document.getElementById("addBookForm");
+
+    if (!addBookForm) {
+      console.error("addBookForm element not found.");
+      return;
+    }
 
     // Function to submit the book to Firestore
     async function submitBook(event) {
@@ -56,21 +62,36 @@ onAuthStateChanged(auth, async (user) => {
       let genre = document.getElementById("genre").value;
       const description = document.getElementById("description").value;
 
+      console.log(
+        "Form values - Author:",
+        author,
+        "Title:",
+        title,
+        "Genre:",
+        genre,
+        "Description:",
+        description
+      ); // Debugging statement
+
       // Normalize the genre input
       genre = capitalizeGenre(genre);
 
-      console.log("Selected genre:", genre); // Debugging statement
+      console.log("Normalized genre:", genre); // Debugging statement
 
       // Check if the selected genre has a corresponding collection
       if (genreToCollection.hasOwnProperty(genre)) {
         try {
           // Add a new document with a generated ID to the corresponding collection
-          await addDoc(collection(db, genreToCollection[genre]), {
-            author: author,
-            title: title,
-            genre: genre,
-            description: description,
-          });
+          const docRef = await addDoc(
+            collection(db, genreToCollection[genre]),
+            {
+              author: author,
+              title: title,
+              genre: genre,
+              description: description,
+            }
+          );
+          console.log("Document written with ID: ", docRef.id); // Debugging statement
 
           alert("Book added successfully!");
           // Optionally, redirect the user to another page or perform other actions
@@ -87,8 +108,6 @@ onAuthStateChanged(auth, async (user) => {
 
     // Add event listener for form submission
     addBookForm.addEventListener("submit", submitBook);
-
-    // Redirect user to home page on button click
   } else {
     // If the user is not authenticated, redirect to the sign-in page
     window.location.href = "register.html";
