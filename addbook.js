@@ -24,6 +24,23 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
+const genreToCollection = {
+  Adventure: "adventureBooks",
+  Dystopian: "dystopianBooks",
+  Fantasy: "fantasyBooks",
+  Historical: "historicalBooks",
+  Horror: "horrorBooks",
+  "Memoir and Biography": "memoirAndBiographyBooks",
+  Romance: "romanceBooks",
+  ScienceFiction: "scienceFictionBooks",
+  Thriller: "thrillerBooks",
+};
+
+function capitalizeGenre(genre) {
+  // Capitalize the first letter and make the rest lowercase
+  return genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase();
+}
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // User is authenticated, proceed with book submission functionality
@@ -36,13 +53,13 @@ onAuthStateChanged(auth, async (user) => {
       // Get form values
       const author = document.getElementById("author").value;
       const title = document.getElementById("title").value;
-      const genre = document.getElementById("genre").value;
+      let genre = document.getElementById("genre").value;
       const description = document.getElementById("description").value;
 
-      // Define a mapping of genres to collection names
-      const genreToCollection = {
-        /* Your genre to collection mapping */
-      };
+      // Normalize the genre input
+      genre = capitalizeGenre(genre);
+
+      console.log("Selected genre:", genre); // Debugging statement
 
       // Check if the selected genre has a corresponding collection
       if (genreToCollection.hasOwnProperty(genre)) {
@@ -63,6 +80,7 @@ onAuthStateChanged(auth, async (user) => {
         }
       } else {
         // Display an error message if the selected genre does not have a corresponding collection
+        console.log("Available genres:", Object.keys(genreToCollection)); // Debugging statement
         alert("No collection found for the selected genre.");
       }
     }
